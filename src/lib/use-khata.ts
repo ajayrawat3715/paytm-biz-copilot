@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   balanceOf,
-  iso,
+  dailyCash,
+  istToday,
   paidOf,
   seedUdhar,
   statusOf,
+  type PaymentMode,
   type Repayment,
   type UdharEntry,
 } from "./khata";
@@ -12,6 +14,14 @@ import {
 const STORAGE_KEY = "bahi-khata-udhar-v1";
 
 const makeId = () => Math.random().toString(36).slice(2, 10);
+
+export type NewUdharInput = {
+  customer: string;
+  phone: string;
+  items: string;
+  amount: number;
+  dueOn: string;
+};
 
 export function useKhata() {
   const [entries, setEntries] = useState<UdharEntry[]>(seedUdhar);
@@ -36,20 +46,29 @@ export function useKhata() {
     }
   }, [entries, hydrated]);
 
-  const addEntry = useCallback(
-    (entry: Omit<UdharEntry, "id" | "repayments">) => {
-      setEntries((prev) => [{ ...entry, id: makeId(), repayments: [] }, ...prev]);
-    },
-    [],
-  );
+  const addEntry = useCallback((input: NewUdharInput) => {
+    setEntries((prev) => [
+      {
+        ...input,
+        id: makeId(),
+        soldOn: istToday(),
+        repayments: [],
+      },
+      ...prev,
+    ]);
+  }, []);
 
   const addRepayment = useCallback(
-    (entryId: string, payment: Omit<Repayment, "id">) => {
+    (entryId: string, amount: number, mode: PaymentMode) => {
+      const payment: Repayment = {
+        id: makeId(),
+        amount,
+        mode,
+        date: istToday(),
+      };
       setEntries((prev) =>
         prev.map((e) =>
-          e.id === entryId
-            ? { ...e, repayments: [...e.repayments, { ...payment, id: makeId() }] }
-            : e,
+          e.id === entryId ? { ...e, repayments: [...e.repayments, payment] } : e,
         ),
       );
     },
@@ -57,20 +76,29 @@ export function useKhata() {
   );
 
   const totals = useMemo(() => {
-    const today = iso(new Date());
-    const outstanding = entries.reduce((sum, e) => sum + balanceOf(e), 0);
-    const collectedToday = entries.reduce(
-      (sum, e) =>
-        sum +
-        e.repayments
-          .filter((r) => r.date === today)
-          .reduce((s, r) => s + r.amount, 0),
+    const today = istToday();
+    const todaysRepayments = entries.flatMap((e) =>
+      e.repayments.filter((r) => r.date === today),
+    );
+    const byMode = (mode: PaymentMode) =>
+      todaysRepayments
+        .filter((r) => r.mode === mode)
+        .reduce((s, r) => s + r.amount, 0);
+
+    const udharCollectedToday = todaysRepayments.reduce(
+      (s, r) => s + r.amount,
       0,
     );
     const overdue = entries.filter((e) => statusOf(e) === "overdue");
+
     return {
-      outstanding,
-      collectedToday,
+      outstanding: entries.reduce((sum, e) => sum + balanceOf(e), 0),
+      udharCollectedToday,
+      collectedCash: byMode("cash"),
+      collectedPaytm: byMode("paytm_qr") + byMode("upi"),
+      cashSales: dailyCash.cashSales,
+      expenses: dailyCash.expenses,
+      netDaily: dailyCash.cashSales + udharCollectedToday - dailyCash.expenses,
       overdueCount: overdue.length,
       overdueAmount: overdue.reduce((sum, e) => sum + balanceOf(e), 0),
       openCount: entries.filter((e) => statusOf(e) !== "settled").length,
