@@ -1,11 +1,12 @@
-export type UdharStatus = "settled" | "overdue" | "due";
+export type UdharStatus = "settled" | "overdue" | "active";
+export type PaymentMode = "cash" | "paytm_qr" | "upi";
 
 export type Repayment = {
   id: string;
   amount: number;
-  /** ISO date, yyyy-mm-dd */
+  /** IST calendar date, yyyy-mm-dd */
   date: string;
-  mode: "cash" | "upi";
+  mode: PaymentMode;
 };
 
 export type UdharEntry = {
@@ -14,7 +15,7 @@ export type UdharEntry = {
   phone: string;
   items: string;
   amount: number;
-  /** ISO date, yyyy-mm-dd */
+  /** IST calendar date, yyyy-mm-dd */
   soldOn: string;
   dueOn: string;
   repayments: Repayment[];
@@ -27,9 +28,11 @@ export const shop = {
   initial: "A",
 };
 
-export const todaySales = {
-  collected: 18420,
-  usual: 21900,
+/** Counter sales settled on the spot today, and cash paid out today. */
+export const dailyCash = {
+  cashSales: 18420,
+  usualSales: 21900,
+  expenses: 1250,
   last7: [26, 34, 30, 40, 36, 48, 38, 44],
 };
 
@@ -83,37 +86,84 @@ export const opportunities: Opportunity[] = [
   },
 ];
 
-export const iso = (d: Date) => d.toISOString().slice(0, 10);
+/* ---------------------------------- IST ---------------------------------- */
 
-export const daysFromToday = (n: number) => {
-  const d = new Date();
-  d.setDate(d.getDate() + n);
-  return iso(d);
+/** Today's calendar date in Asia/Kolkata, yyyy-mm-dd. */
+export const istToday = (): string =>
+  new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Kolkata",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
+
+/** An IST calendar date n days from today, yyyy-mm-dd. */
+export const istDaysFromToday = (n: number): string => {
+  const base = new Date(istToday() + "T00:00:00Z");
+  base.setUTCDate(base.getUTCDate() + n);
+  return base.toISOString().slice(0, 10);
 };
 
-export const rupees = (n: number) =>
-  "₹" + Math.round(n).toLocaleString("en-IN");
+export const daysBetween = (from: string, to: string) =>
+  Math.round(
+    (Date.parse(to + "T00:00:00Z") - Date.parse(from + "T00:00:00Z")) / 86400000,
+  );
+
+/* -------------------------------- helpers -------------------------------- */
+
+export const rupees = (n: number) => "₹" + Math.round(n).toLocaleString("en-IN");
+
+export const modeLabel: Record<PaymentMode, string> = {
+  cash: "Cash",
+  paytm_qr: "Paytm QR",
+  upi: "UPI",
+};
 
 export const paidOf = (e: UdharEntry) =>
   e.repayments.reduce((sum, r) => sum + r.amount, 0);
 
 export const balanceOf = (e: UdharEntry) => Math.max(0, e.amount - paidOf(e));
 
+/**
+ * Settled  -> balance is zero
+ * Overdue  -> balance > 0 and due date is before today in IST
+ * Active   -> balance > 0 and due date is today or later in IST
+ * (a due date of today stays Active until 23:59:59 IST)
+ */
 export const statusOf = (e: UdharEntry): UdharStatus => {
   if (balanceOf(e) <= 0) return "settled";
-  return e.dueOn < iso(new Date()) ? "overdue" : "due";
+  return e.dueOn < istToday() ? "overdue" : "active";
 };
 
-export const daysLate = (e: UdharEntry) => {
-  const diff = Date.parse(iso(new Date())) - Date.parse(e.dueOn);
-  return Math.max(0, Math.round(diff / 86400000));
+export const statusLabel = (e: UdharEntry) => {
+  const status = statusOf(e);
+  if (status === "settled") return "Settled";
+  if (status === "overdue") return "Overdue";
+  return e.dueOn === istToday() ? "Due today" : "Active";
 };
+
+export const daysLate = (e: UdharEntry) =>
+  Math.max(0, daysBetween(e.dueOn, istToday()));
 
 export const formatDay = (isoDate: string) =>
-  new Date(isoDate + "T00:00:00").toLocaleDateString("en-IN", {
+  new Date(isoDate + "T00:00:00Z").toLocaleDateString("en-IN", {
+    timeZone: "UTC",
     day: "numeric",
     month: "short",
   });
+
+export const receiptMessage = (
+  customer: string,
+  amount: number,
+  remaining: number,
+) =>
+  `Namaste ${customer} ji, aapka ${rupees(amount)} ka bhugtan prapt hua. Baki bacha udhar: ${rupees(remaining)}. Dhanyawad - ${shop.name}.`;
+
+export const whatsappLink = (phone: string, message: string) => {
+  const digits = phone.replace(/\D/g, "");
+  const withCode = digits.length === 10 ? `91${digits}` : digits;
+  return `https://wa.me/${withCode}?text=${encodeURIComponent(message)}`;
+};
 
 export const seedUdhar = (): UdharEntry[] => [
   {
@@ -122,8 +172,8 @@ export const seedUdhar = (): UdharEntry[] => [
     phone: "98350 41122",
     items: "Atta 10kg, oil, masala",
     amount: 2400,
-    soldOn: daysFromToday(-12),
-    dueOn: daysFromToday(-6),
+    soldOn: istDaysFromToday(-12),
+    dueOn: istDaysFromToday(-6),
     repayments: [],
   },
   {
@@ -132,9 +182,11 @@ export const seedUdhar = (): UdharEntry[] => [
     phone: "97710 88204",
     items: "Monthly ration",
     amount: 5600,
-    soldOn: daysFromToday(-9),
-    dueOn: daysFromToday(-2),
-    repayments: [{ id: "r1", amount: 2000, date: daysFromToday(-4), mode: "upi" }],
+    soldOn: istDaysFromToday(-9),
+    dueOn: istDaysFromToday(-2),
+    repayments: [
+      { id: "r1", amount: 2000, date: istDaysFromToday(-4), mode: "upi" },
+    ],
   },
   {
     id: "u3",
@@ -142,8 +194,8 @@ export const seedUdhar = (): UdharEntry[] => [
     phone: "99340 77510",
     items: "Milk, curd, bread (weekly)",
     amount: 860,
-    soldOn: daysFromToday(-3),
-    dueOn: daysFromToday(4),
+    soldOn: istDaysFromToday(-3),
+    dueOn: istToday(),
     repayments: [],
   },
   {
@@ -152,11 +204,23 @@ export const seedUdhar = (): UdharEntry[] => [
     phone: "96190 33417",
     items: "Rice 25kg",
     amount: 1750,
-    soldOn: daysFromToday(-20),
-    dueOn: daysFromToday(-11),
+    soldOn: istDaysFromToday(-20),
+    dueOn: istDaysFromToday(-11),
     repayments: [
-      { id: "r2", amount: 1000, date: daysFromToday(-8), mode: "cash" },
-      { id: "r3", amount: 750, date: iso(new Date()), mode: "upi" },
+      { id: "r2", amount: 1000, date: istDaysFromToday(-8), mode: "cash" },
+      { id: "r3", amount: 750, date: istToday(), mode: "paytm_qr" },
+    ],
+  },
+  {
+    id: "u5",
+    customer: "Ravi Prasad",
+    phone: "95720 60113",
+    items: "Sugar 5kg, tea leaf",
+    amount: 640,
+    soldOn: istDaysFromToday(-6),
+    dueOn: istDaysFromToday(6),
+    repayments: [
+      { id: "r4", amount: 300, date: istToday(), mode: "cash" },
     ],
   },
 ];
