@@ -55,7 +55,7 @@ export const Route = createFileRoute("/api/chat")({
           const result = streamText({
             model: lovable.responses("openai/gpt-6-astra"),
             system: `${SYSTEM}\n\nToday's shop snapshot:\n${body.shopContext ?? "(not available)"}`,
-            messages: convertToModelMessages(body.messages ?? []),
+            messages: await convertToModelMessages(body.messages ?? []),
             providerOptions: {
               openai: {
                 forceReasoning: true,
