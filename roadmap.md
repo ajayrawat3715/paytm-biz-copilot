@@ -10,11 +10,11 @@
 
 ## Paytm AI Hackathon demo upgrade
 
-- [ ] Centralize all merchant, sales, customer, udhaar, payments, and inventory mock data
-- [ ] Upgrade the morning briefing, compact business health, and three explainable AI priorities
-- [ ] Add campaign review/send and “What if?” discount simulations with interactive success states
+- [ ] Centralize the merchant data used by the Morning Brief, three priority cards, campaign, and chat
+- [ ] Upgrade the Morning Brief and three explainable “Worth Doing Today” cards from shared mock data
+- [ ] Implement the exact 10% campaign preview, dispatch loading, and approval success flow
 - [ ] Add Paytm business insights, 7-day trend, and explicit Demo / Mock Data labeling
 - [ ] Add udhaar risk buckets, reminder preview/send flow, and inventory purchase-order preview
-- [ ] Add English / हिंदी chat mode, data-grounded suggestions, and voice-demo microphone control
+- [ ] Add English / हिंदी chat mode, three data-grounded suggestions, 400ms response state, and microphone control
 - [ ] Preserve and regression-test new udhaar, repayment, status, and WhatsApp receipt workflows
 - [ ] Verify the full 60–90 second demo path on desktop and mobile
