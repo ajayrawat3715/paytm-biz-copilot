@@ -1,45 +1,35 @@
-# Paytm AI Hackathon Demo Upgrade
+# Focused Paytm Hackathon Demo Upgrade
 
 ## Goal
-Turn the existing Bharat dashboard into a polished 60–90 second demo while preserving its warm kirana visual system and the complete bahi-khata workflow.
+Strengthen the first 60–90 seconds of the existing Bharat demo without changing its warm kirana aesthetic or current bahi-khata features.
 
 ## What will change
 
-1. **One shared demo data source**
-   - Consolidate Annapurna Kirana’s merchant profile, sales, customer, Paytm payment, udhaar, inventory, trend, campaign, and forecast figures.
-   - Keep live khata entries and repayments reactive, while ensuring dashboard cards and Bharat’s context use the same source.
+1. **Centralized demo data**
+   - Create one shared source for Annapurna Kirana’s sales, inactive customers, campaign forecast, udhaar, payments, and Parle stock figures.
+   - Wire the Morning Brief, all three priority cards, campaign preview, and Bharat responses to these exact values.
 
-2. **Sharper opening story**
-   - Upgrade the morning briefing with the 16% sales forecast and three priorities: inactive customers, Parle stock, and overdue udhaar.
-   - Add a compact Business Health row and a “Review all” action that takes the presenter through the priorities.
+2. **Morning Brief and three priorities**
+   - Show the exact greeting and 16% lower-sales forecast.
+   - Present three “Worth Doing Today” cards for 240 inactive customers, zero-stock Parle biscuits, and ₹2,800 overdue udhaar.
+   - Structure each card as problem, reason, recommended action, expected impact, plus a “Why am I seeing this?” disclosure.
 
-3. **Explainable AI recommendation cards**
-   - Restructure each card into problem, evidence, recommendation, expected impact, and primary action.
-   - Add a per-card “Why am I seeing this?” disclosure using the exact mock-data factors.
+3. **Exact campaign approval flow**
+   - “Review & send” opens a preview showing: 240 customers, 10% off from 4–8 PM, 38 expected returns, ₹6,100 sales, and ₹2,100 profit.
+   - “Approve & send” immediately enters a subtle dispatch state, then shows a green check and: “Campaign approved! 240 customers will receive the offer.”
+   - Include Edit, Cancel, Done, and automatic close after success.
 
-4. **Interactive campaign and scenario demos**
-   - Add the “Review & send” campaign modal with target, offer window, projected returns, profit, edit/cancel, and animated approval confirmation.
-   - Add “Ask Bharat: What if?” controls for 10%, 15%, and custom discounts, with side-by-side outcomes and Bharat’s profit-based recommendation.
-
-5. **Paytm Business Insights**
-   - Add the five requested payment metrics, a compact 7-day trend chart, insight pills, and a clear “Demo / Mock Data” badge.
-
-6. **Udhaar AI and inventory intelligence**
-   - Extend the existing bahi-khata area with pending/due/overdue splits, risk buckets, and a Hindi reminder preview with simulated send confirmation.
-   - Add the Parle zero-stock alert and an order-review modal for 24 units from Sharma Distributors.
-   - Preserve new-credit, repayment, status, ledger history, and WhatsApp receipt behavior.
-
-7. **Bharat chat demo controls**
-   - Add English / हिंदी mode, the requested data-grounded prompt chips, and a microphone control for presentation realism.
-   - Update the AI context and instructions so answers consistently use the centralized numbers and selected language.
+4. **Bharat chat demo controls**
+   - Add an English | हिंदी toggle at the top and a microphone icon in the composer.
+   - Use the three requested suggestion chips and provide realistic, shared-data-grounded Hinglish responses.
+   - Preserve streamed AI chat for other questions while guaranteeing a clean 400ms response state for the demo suggestions.
 
 ## Technical details
-- Keep the current TanStack Start, AI Elements chat, local browser khata persistence, and existing semantic color/type tokens.
-- Break the expanded dashboard into focused components rather than rebuilding the page.
-- Use existing dialog, sheet, button, disclosure, and chart primitives; all demo actions remain client-side simulations.
-- Ensure all content fits cleanly in the existing desktop chat-panel layout and mobile bottom-sheet experience.
+- Keep TanStack Start, AI Elements, existing responsive chat panel/sheet, local khata persistence, typography, and semantic colors.
+- Split the focused additions into small presentation components where useful; do not rebuild the dashboard.
+- Update the server AI snapshot and language instruction to use the same centralized values.
 
 ## Verification
-- Run project checks and inspect the rendered dashboard at desktop and mobile sizes.
-- Exercise campaign approval, discount comparison, reminder send, purchase-order review, chat language switching, new udhaar, and repayment updates.
-- Confirm every displayed figure and AI snapshot matches the shared mock data.
+- Check desktop and mobile layouts.
+- Exercise all three priority cards, evidence disclosures, full campaign approval flow, language toggle, microphone control, and all three suggested prompts.
+- Confirm existing new-udhaar, repayment, status, and receipt flows still work.
