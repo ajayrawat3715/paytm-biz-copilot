@@ -1,7 +1,25 @@
 import { useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { AIExplanationDialog } from "@/components/AIExplanationDialog";
 import { BahiKhata } from "@/components/BahiKhata";
+import { BasketBoosterWidget } from "@/components/BasketBoosterWidget";
+import { BharatAutopilotModal } from "@/components/BharatAutopilotModal";
+import { BusinessHealth } from "@/components/BusinessHealth";
+import { BusinessMemoryDialog } from "@/components/BusinessMemoryDialog";
+import { CampaignSimulationModal } from "@/components/CampaignSimulationModal";
 import { CopilotChat } from "@/components/CopilotChat";
+import { DailyActionPlan } from "@/components/DailyActionPlan";
+import { DemoTourBar } from "@/components/DemoTourBar";
+import { HeaderNav } from "@/components/HeaderNav";
+import { InventoryOrderModal } from "@/components/InventoryOrderModal";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { MorningBrief } from "@/components/MorningBrief";
+import { OpportunityRadar } from "@/components/OpportunityRadar";
+import { PaytmInsights } from "@/components/PaytmInsights";
+import { SoundboxWidget } from "@/components/SoundboxWidget";
+import { MerchantRoiCard } from "@/components/MerchantRoiCard";
+import { UdhaarAISection } from "@/components/UdhaarAISection";
+import { WorthDoingToday } from "@/components/WorthDoingToday";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import {
   balanceOf,
@@ -9,31 +27,33 @@ import {
   formatDay,
   glance,
   istToday,
-  opportunities,
   rupees,
   shop,
   statusLabel,
 } from "@/lib/khata";
+import { LanguageProvider, useLanguage } from "@/lib/language-context";
+import type { WorthDoingItem } from "@/lib/mock-data";
+import { translations } from "@/lib/translations";
 import { useKhata } from "@/lib/use-khata";
-import { cn } from "@/lib/utils";
+import { Brain } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Bahi-Khata Copilot — AI business partner for Paytm merchants" },
+      { title: "Bharat — AI Copilot for Kirana Stores (Paytm Hackathon)" },
       {
         name: "description",
         content:
-          "An AI copilot for Indian shopkeepers: daily sales, udhar tracking with repayments and reminders, and growth actions you can approve in one tap.",
+          "An AI copilot for Indian shopkeepers: daily sales, Paytm/UPI payment behavior, inventory reordering, udhar recovery, and growth simulations.",
       },
       {
         property: "og:title",
-        content: "Bahi-Khata Copilot — AI business partner for Paytm merchants",
+        content: "Bharat — AI Copilot for Kirana Stores",
       },
       {
         property: "og:description",
         content:
-          "Track udhar, collect repayments, and act on AI growth suggestions — in plain Hindi or English.",
+          "AI business partner for Paytm merchants: sales forecast, campaign simulations, inventory intelligence, and udhaar recovery.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -43,12 +63,21 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
+  const { language, isHindi } = useLanguage();
+  const t = translations[language];
+
   const khata = useKhata();
   const { entries, totals } = khata;
   const [done, setDone] = useState<Record<string, string>>({});
   const [chatOpen, setChatOpen] = useState(false);
 
-  const behind = dailyCash.usualSales - dailyCash.cashSales;
+  // Modals for hackathon interactive workflows
+  const [campaignModalOpen, setCampaignModalOpen] = useState(false);
+  const [inventoryModalOpen, setInventoryModalOpen] = useState(false);
+  const [udhaarReminderOpen, setUdhaarReminderOpen] = useState(false);
+  const [autopilotModalOpen, setAutopilotModalOpen] = useState(false);
+  const [memoryDialogOpen, setMemoryDialogOpen] = useState(false);
+  const [explainContext, setExplainContext] = useState<string | null>(null);
 
   const shopContext = useMemo(() => {
     const lines = entries
@@ -60,220 +89,192 @@ function Home() {
     return [
       `Shop: ${shop.name}, ${shop.area}. Owner: ${shop.owner}. Date: ${formatDay(istToday())} (IST).`,
       `Cash sales today: ${rupees(totals.cashSales)} (usual by now ${rupees(dailyCash.usualSales)}).`,
-      `Cash expenses today: ${rupees(totals.expenses)}. Net take-home today: ${rupees(totals.netDaily)}.`,
-      `Udhar collected today: ${rupees(totals.udharCollectedToday)} (${rupees(totals.collectedCash)} cash, ${rupees(totals.collectedPaytm)} UPI/Paytm).`,
+      `Paytm/UPI payments today: ₹12,840 across 126 transactions.`,
       `Total credit outstanding: ${rupees(totals.outstanding)} across ${totals.openCount} open khatas; ${rupees(totals.overdueAmount)} overdue across ${totals.overdueCount} customers.`,
-      `Repeat customers: 68% of this week's spend. Top category: Dairy (₹4,200 today). Low stock: biscuits, oil, masala.`,
+      `Overdue bucket: ₹2,800 across 5 critical customers.`,
+      `Stock alert: Parle biscuits 0 units (supplier: Sharma Distributors).`,
+      `Inactive customers: 240 lapsed accounts (target 10% offer for ₹6,100 sales).`,
+      `Total estimated business opportunity: ₹10,700 across 3 priority actions.`,
       `Udhar ledger:\n${lines}`,
-      `Pending copilot suggestions: ${opportunities
-        .filter((o) => !done[o.id])
-        .map((o) => o.title)
-        .join("; ") || "none"}.`,
     ].join("\n");
-  }, [entries, totals, done]);
+  }, [entries, totals]);
+
+  const handleTriggerAction = (item: WorthDoingItem) => {
+    if (item.actionType === "campaign") {
+      setCampaignModalOpen(true);
+    } else if (item.actionType === "inventory") {
+      setInventoryModalOpen(true);
+    } else if (item.actionType === "udhaar") {
+      setUdhaarReminderOpen(true);
+    }
+  };
+
+  const handleStepClick = (stepId: string) => {
+    switch (stepId) {
+      case "step-forecast":
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        break;
+      case "step-radar":
+        document
+          .getElementById("opportunity-radar-section")
+          ?.scrollIntoView({ behavior: "smooth" });
+        break;
+      case "step-whatif":
+        setCampaignModalOpen(true);
+        break;
+      case "step-autopilot":
+        setAutopilotModalOpen(true);
+        break;
+      case "step-memory":
+        setMemoryDialogOpen(true);
+        break;
+      case "step-paytm":
+        document
+          .getElementById("paytm-insights-section")
+          ?.scrollIntoView({ behavior: "smooth" });
+        break;
+      case "step-udhaar":
+        setUdhaarReminderOpen(true);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleChatTrigger = (type: "campaign" | "inventory" | "udhaar") => {
+    if (type === "campaign") setCampaignModalOpen(true);
+    else if (type === "inventory") setInventoryModalOpen(true);
+    else if (type === "udhaar") setUdhaarReminderOpen(true);
+  };
 
   return (
     <div className="min-h-screen bg-cream text-ink">
+      {/* Pitch Navigator Bar for Hackathon Presentation */}
+      <DemoTourBar onStepClick={handleStepClick} />
+
+      {/* Unified Multi-Page Header Navigation */}
+      <HeaderNav />
+
       <div className="mx-auto flex min-h-screen max-w-[1180px] flex-col lg:flex-row">
         <main className="flex-1 px-4 pb-32 pt-6 sm:px-7 lg:pb-12">
-          <header className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <span className="grid size-9 place-items-center rounded-[10px] bg-rust font-display text-lg font-semibold leading-none text-cream">
-                {shop.initial}
-              </span>
-              <div className="leading-tight">
-                <p className="font-display text-[15px] font-semibold">
-                  {shop.name}
-                </p>
-                <p className="text-xs text-inksoft">{shop.area}</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="hidden items-center gap-1.5 rounded-full bg-paper px-3 py-1.5 text-xs font-medium text-inksoft ring-1 ring-line sm:inline-flex">
-                <span className="size-1.5 animate-tick rounded-full bg-emerald" />
-                Copilot on
-              </span>
-              <span className="grid size-9 place-items-center rounded-full bg-sand text-xs font-semibold text-ink ring-1 ring-line">
-                {shop.owner[0]}
-              </span>
-            </div>
-          </header>
+          {/* 1. Upgraded Morning Brief & Forecast */}
+          <MorningBrief
+            collectedToday={dailyCash.cashSales + totals.udharCollectedToday}
+            onOpenCampaign={() => setCampaignModalOpen(true)}
+            onOpenInventory={() => setInventoryModalOpen(true)}
+            onOpenUdhaar={() => setUdhaarReminderOpen(true)}
+            onReviewAll={() => setAutopilotModalOpen(true)}
+          />
 
-          <section className="mt-7 animate-settle">
-            <p className="text-xs font-medium uppercase tracking-[0.14em] text-rust">
-              {new Date().toLocaleDateString("en-IN", {
-                timeZone: "Asia/Kolkata",
-                weekday: "long",
-                day: "numeric",
-                month: "long",
-              })}
-            </p>
-            <h1 className="mt-2 max-w-[40ch] text-balance font-display text-3xl font-semibold leading-tight sm:text-4xl">
-              Good morning, {shop.owner}.{" "}
-              {behind > 0 ? "Today looks a little quiet." : "Today is running ahead."}
-            </h1>
+          {/* Paytm Soundbox 4.0 Smart Voice Briefing & Chime */}
+          <SoundboxWidget />
 
-            <div className="mt-5 rounded-[20px] bg-paper p-5 ring-1 ring-line sm:p-6">
-              <div className="flex flex-wrap items-end justify-between gap-3">
-                <div>
-                  <p className="text-sm text-inksoft">Collected so far</p>
-                  <p className="mt-1 font-display text-[40px] font-semibold leading-none tracking-tight">
-                    {rupees(dailyCash.cashSales + totals.udharCollectedToday)}
-                  </p>
-                  <p className="mt-2 text-sm text-inksoft">
-                    Your usual is{" "}
-                    <span className="font-medium text-ink">
-                      {rupees(dailyCash.usualSales)}
-                    </span>
-                    {behind > 0 ? (
-                      <>
-                        {" "}
-                        — counter sales are{" "}
-                        <span className="font-medium text-rust">
-                          {rupees(behind)} behind
-                        </span>{" "}
-                        for this time of day.
-                      </>
-                    ) : (
-                      " — you are ahead for this time of day."
-                    )}
-                  </p>
-                </div>
-                <div className="flex items-end gap-1" aria-label="last 8 days sales">
-                  {dailyCash.last7.map((h, i) => (
-                    <span
-                      key={i}
-                      className={cn(
-                        "w-2 rounded-t",
-                        i === dailyCash.last7.length - 1 ? "bg-rust" : "bg-sand",
-                      )}
-                      style={{ height: `${h}px` }}
-                    />
-                  ))}
-                </div>
-              </div>
-              <p className="mt-3 text-xs text-inksoft">
-                Last 7 days ·{" "}
-                <span className="inline-flex items-center gap-1 text-emerald">
-                  <span className="size-1.5 animate-tick rounded-full bg-emerald" />
-                  live
-                </span>
-              </p>
-            </div>
-          </section>
+          {/* FEATURE 1: BHARAT OPPORTUNITY RADAR */}
+          <OpportunityRadar
+            onOpenCampaign={() => setCampaignModalOpen(true)}
+            onOpenInventory={() => setInventoryModalOpen(true)}
+            onOpenUdhaar={() => setUdhaarReminderOpen(true)}
+            onExplain={(title) => setExplainContext(title)}
+          />
 
-          <section className="mt-8">
-            <div className="flex items-baseline justify-between">
-              <h2 className="font-display text-xl font-semibold">
-                Worth doing today
-              </h2>
-              <span className="text-xs text-inksoft">
-                {opportunities.length - Object.keys(done).length} ready
-              </span>
-            </div>
+          {/* FEATURE 2: TODAY'S ACTION PLAN */}
+          <DailyActionPlan
+            onOpenCampaign={() => setCampaignModalOpen(true)}
+            onOpenInventory={() => setInventoryModalOpen(true)}
+            onOpenUdhaar={() => setUdhaarReminderOpen(true)}
+            onReviewAllActions={() => setAutopilotModalOpen(true)}
+            onExplain={(title) => setExplainContext(title)}
+          />
 
-            <div className="mt-4 flex flex-col gap-3">
-              {opportunities.map((o, i) => (
-                <article
-                  key={o.id}
-                  className="animate-settle rounded-[18px] bg-paper p-4 ring-1 ring-line sm:p-5"
-                  style={{ animationDelay: `${0.06 * (i + 1)}s` }}
-                >
-                  {done[o.id] ? (
-                    <div className="flex items-center justify-between gap-3">
-                      <div>
-                        <p className="font-display text-[17px] font-semibold leading-snug">
-                          {o.title}
-                        </p>
-                        <p className="mt-1.5 text-sm text-emerald">
-                          {done[o.id]}
-                        </p>
-                      </div>
-                      <span className="shrink-0 rounded-full bg-emerald/10 px-2.5 py-1 text-xs font-semibold text-emerald">
-                        Done
-                      </span>
-                    </div>
-                  ) : (
-                    <>
-                      <div className="flex items-start justify-between gap-3">
-                        <div>
-                          <p className="font-display text-[17px] font-semibold leading-snug">
-                            {o.title}
-                          </p>
-                          <p className="mt-1.5 max-w-[46ch] text-pretty text-sm text-inksoft">
-                            {o.body}
-                          </p>
-                        </div>
-                        <span
-                          className={cn(
-                            "shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold",
-                            o.tagTone === "gain"
-                              ? "bg-emerald/10 text-emerald"
-                              : "bg-sand text-ink",
-                          )}
-                        >
-                          {o.tag}
-                        </span>
-                      </div>
-                      <div className="mt-4 flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setDone((d) => ({ ...d, [o.id]: o.doneLabel }))
-                          }
-                          className="rounded-full bg-rust px-4 py-2.5 text-sm font-semibold text-cream ring-1 ring-rust/40"
-                        >
-                          {o.primary}
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setDone((d) => ({
-                              ...d,
-                              [o.id]: "Set aside for now.",
-                            }))
-                          }
-                          className="rounded-full px-4 py-2.5 text-sm font-medium text-inksoft"
-                        >
-                          {o.secondary}
-                        </button>
-                      </div>
-                    </>
-                  )}
-                </article>
-              ))}
-            </div>
-          </section>
+          {/* Existing "Worth Doing Today" Detailed AI Cards */}
+          <WorthDoingToday
+            done={done}
+            onTriggerAction={handleTriggerAction}
+            onSetAside={(id) =>
+              setDone((d) => ({ ...d, [id]: "Set aside for now." }))
+            }
+          />
 
+          {/* Merchant ROI Impact Card */}
+          <MerchantRoiCard />
+
+          {/* Smart Basket Booster & Counter Upsell Engine */}
+          <BasketBoosterWidget />
+
+          {/* 5. Paytm / UPI Business Insights Section */}
+          <div id="paytm-insights-section">
+            <PaytmInsights
+              onTriggerCampaign={() => setCampaignModalOpen(true)}
+            />
+          </div>
+
+          {/* 6. Udhaar AI Intelligence Section */}
+          <UdhaarAISection
+            isOpenExternal={udhaarReminderOpen}
+            onCloseExternal={() => setUdhaarReminderOpen(false)}
+            onSuccessReminder={(msg) =>
+              setDone((d) => ({ ...d, "udhaar-card": msg }))
+            }
+          />
+
+          {/* Existing Bahi-Khata Ledger Component */}
           <BahiKhata khata={khata} />
 
+          {/* 11. Business Health Section */}
+          <BusinessHealth />
+
+          {/* Existing At a Glance Strip */}
           <section className="mt-8 animate-settle">
-            <h2 className="font-display text-xl font-semibold">At a glance</h2>
+            <h2 className="font-display text-xl font-semibold text-ink">
+              {isHindi ? "एक नज़र में" : "At a glance"}
+            </h2>
             <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
               {glance.map((g) => (
                 <div
                   key={g.label}
                   className="rounded-[16px] bg-paper p-4 ring-1 ring-line"
                 >
-                  <p className="text-xs text-inksoft">{g.label}</p>
+                  <p className="text-xs text-inksoft">
+                    {isHindi && g.label === "Repeat customers"
+                      ? "पुराने ग्राहक"
+                      : isHindi && g.label === "Top category"
+                      ? "शीर्ष श्रेणी"
+                      : isHindi && g.label === "Low stock"
+                      ? "कम स्टॉक"
+                      : g.label}
+                  </p>
                   <p className="mt-1 font-display text-2xl font-semibold">
                     {g.value}
                     {g.suffix && (
                       <small className="text-base text-inksoft">{g.suffix}</small>
                     )}
                   </p>
-                  <p className="mt-1 text-xs text-inksoft">{g.note}</p>
+                  <p className="mt-1 text-xs text-inksoft">
+                    {isHindi && g.note === "of this week's spend"
+                      ? "साप्ताहिक बिक्री का"
+                      : isHindi && g.note === "₹4,200 today"
+                      ? "आज ₹4,200"
+                      : isHindi && g.note === "biscuits, oil, masala"
+                      ? "बिस्कुट, तेल, मसाला"
+                      : g.note}
+                  </p>
                 </div>
               ))}
             </div>
           </section>
         </main>
 
-        <aside className="sticky top-0 hidden h-screen w-[360px] shrink-0 flex-col border-l border-line bg-sand/40 lg:flex">
-          <CopilotChat shopContext={shopContext} className="h-full" />
+        {/* 9 & 10. Intelligent Right-Side Bharat Copilot Chat Panel */}
+        <aside className="sticky top-0 hidden h-screen w-[360px] shrink-0 flex-col border-l border-line bg-sand/30 lg:flex">
+          <CopilotChat
+            shopContext={shopContext}
+            onTriggerModal={handleChatTrigger}
+            className="h-full"
+          />
         </aside>
       </div>
 
+      {/* Mobile Floating Bar for Bharat Chat */}
       <div className="fixed inset-x-0 bottom-0 z-10 border-t border-line bg-sand/90 px-3 py-3 backdrop-blur lg:hidden">
         <button
           type="button"
@@ -285,7 +286,7 @@ function Home() {
           </span>
           <span className="flex flex-1 items-center gap-2 rounded-full bg-paper px-4 py-2.5 ring-1 ring-line">
             <span className="text-sm text-inksoft/70">
-              Ask Bharat about your shop…
+              {t.mobileAskBar}
             </span>
             <span className="ml-auto grid size-8 shrink-0 place-items-center rounded-full bg-rust text-sm text-cream">
               →
@@ -294,15 +295,68 @@ function Home() {
         </button>
       </div>
 
+      {/* Mobile Bottom Sheet for Bharat Chat */}
       <Sheet open={chatOpen} onOpenChange={setChatOpen}>
         <SheetContent
           side="bottom"
           className="h-[85vh] gap-0 border-line bg-sand/40 p-0"
         >
           <SheetTitle className="sr-only">Ask Bharat</SheetTitle>
-          <CopilotChat shopContext={shopContext} className="h-full" />
+          <CopilotChat
+            shopContext={shopContext}
+            onTriggerModal={(type) => {
+              setChatOpen(false);
+              handleChatTrigger(type);
+            }}
+            className="h-full"
+          />
         </SheetContent>
       </Sheet>
+
+      {/* FEATURE 3: BHARAT AUTOPILOT MODAL */}
+      <BharatAutopilotModal
+        open={autopilotModalOpen}
+        onOpenChange={setAutopilotModalOpen}
+        onApprovedSuccess={(summary) =>
+          setDone((d) => ({
+            ...d,
+            "campaign-card": "10% offer scheduled for 240 inactive customers (4 PM – 8 PM).",
+            "inventory-card": "Purchase order for 24 units dispatched to Sharma Distributors.",
+            "udhaar-card": "5 friendly reminders sent via WhatsApp with UPI payment link.",
+          }))
+        }
+      />
+
+      {/* FEATURE 6: BHARAT BUSINESS MEMORY DIALOG */}
+      <BusinessMemoryDialog
+        open={memoryDialogOpen}
+        onOpenChange={setMemoryDialogOpen}
+      />
+
+      {/* FEATURE 4: AI EXPLANATION & TRUST MODAL */}
+      <AIExplanationDialog
+        open={Boolean(explainContext)}
+        onOpenChange={(open) => !open && setExplainContext(null)}
+        contextTitle={explainContext ?? undefined}
+      />
+
+      {/* 3 & FEATURE 5: AI Campaign Simulation Modal with Enhanced What-If */}
+      <CampaignSimulationModal
+        open={campaignModalOpen}
+        onOpenChange={setCampaignModalOpen}
+        onSuccess={(summary) =>
+          setDone((d) => ({ ...d, "campaign-card": summary }))
+        }
+      />
+
+      {/* 7. Inventory Order Modal for Sharma Distributors */}
+      <InventoryOrderModal
+        open={inventoryModalOpen}
+        onOpenChange={setInventoryModalOpen}
+        onSuccessOrder={(summary) =>
+          setDone((d) => ({ ...d, "inventory-card": summary }))
+        }
+      />
     </div>
   );
 }
