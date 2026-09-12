@@ -1,14 +1,20 @@
-# Welcome to your Lovable project
+# Paytm Growth Partner
+
+Build the AI business partner for every Paytm merchant.
+
+Build scalable AI-led solutions that help Paytm merchants grow their business, manage operations, and serve customers better. Think beyond payments, identify opportunities where AI can become a trusted business copilot for millions of merchants.
+
+Example - How might we build an AI copilot that helps a Paytm merchant increase sales by understanding their business, identifying growth opportunities, and recommending or executing the right actions?
 
 This project was built with [Lovable](https://lovable.dev).
 
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/40dbe2f7-931f-45f4-826d-2e4be46bad8a).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +26,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
