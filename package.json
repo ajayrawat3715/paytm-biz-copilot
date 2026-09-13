@@ -8,6 +8,7 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
+    "postbuild": "node -e 'const fs=require(\"fs\");const s=fs.existsSync(\".vercel/output/static\")?\".vercel/output/static\":fs.existsSync(\".output/public\")?\".output/public\":null;if(s&&!fs.existsSync(\"dist\")){fs.cpSync(s,\"dist\",{recursive:true});}'",
     "lint": "eslint .",
     "format": "prettier --write ."
   },
