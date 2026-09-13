@@ -54,7 +54,7 @@ function AnalyticsPage() {
     <div className="min-h-screen bg-cream text-ink bg-blueprint-grid pb-28 md:pb-16">
       <HeaderNav />
 
-      <main className="mx-auto max-w-[1180px] px-4 sm:px-7 pt-6">
+      <main className="mx-auto max-w-[1440px] px-4 sm:px-7 pt-6">
         {/* Page Hero Header */}
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>

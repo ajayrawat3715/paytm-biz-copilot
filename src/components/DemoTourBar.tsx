@@ -58,7 +58,7 @@ export function DemoTourBar({ onStepClick }: DemoTourBarProps) {
 
   return (
     <div className="border-b border-line bg-cream/95 px-4 py-2 backdrop-blur">
-      <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-2.5 text-xs">
+      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-2.5 text-xs">
         <div className="flex items-center gap-2">
           <span className="grid size-5 place-items-center rounded-full bg-rust text-cream">
             <Trophy className="size-3" />
