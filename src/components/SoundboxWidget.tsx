@@ -56,7 +56,7 @@ export function SoundboxWidget() {
   };
 
   return (
-    <div className="mt-4 rounded-[20px] bg-gradient-to-r from-[#002e6e] to-[#004299] p-4 text-white shadow-sm ring-1 ring-black/10 sm:p-5">
+    <div className="mt-4 rounded-[20px] bg-gradient-to-r from-[#172033] via-[#1c2c47] to-[#00BAF2] p-4 text-white shadow-sm ring-1 ring-black/10 sm:p-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         {/* Left: Device Info */}
         <div className="flex items-center gap-3">
@@ -110,8 +110,8 @@ export function SoundboxWidget() {
             className={cn(
               "inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition-all active:scale-95 shadow-md",
               isPlaying
-                ? "bg-emerald-500 text-white animate-pulse"
-                : "bg-white text-[#002e6e] hover:bg-white/95",
+                ? "bg-emerald text-white animate-pulse"
+                : "bg-white text-[#172033] hover:bg-white/95",
             )}
           >
             {isPlaying ? (

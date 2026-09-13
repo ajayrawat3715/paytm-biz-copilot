@@ -59,7 +59,7 @@ function AnalyticsPage() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
-              <span className="rounded-full bg-[#002e6e]/10 px-2.5 py-0.5 text-xs font-bold text-[#002e6e]">
+              <span className="rounded-full bg-paytm/15 px-2.5 py-0.5 text-xs font-bold text-paytm">
                 Paytm Pulse 4.0
               </span>
               <span className="rounded-full bg-emerald/15 px-2.5 py-0.5 text-xs font-semibold text-emerald">
@@ -102,11 +102,11 @@ function AnalyticsPage() {
               <span className="text-xs text-inksoft">
                 {isHindi ? "पेटीएम साउंडबॉक्स/यूपीआई" : "Paytm Soundbox / UPI"}
               </span>
-              <span className="grid size-7 place-items-center rounded-lg bg-[#002e6e]/10 text-[#002e6e]">
+              <span className="grid size-7 place-items-center rounded-lg bg-paytm/15 text-paytm">
                 <QrCode className="size-4" />
               </span>
             </div>
-            <p className="mt-2 font-display text-2xl font-bold text-[#002e6e]">₹12,840</p>
+            <p className="mt-2 font-display text-2xl font-bold text-ink">₹12,840</p>
             <div className="mt-1 flex items-center gap-1 text-[11px] font-semibold text-emerald">
               <ArrowUpRight className="size-3" />
               <span>{isHindi ? "कुल बिक्री का 69.7%" : "69.7% of counter volume"}</span>
@@ -258,20 +258,20 @@ function AnalyticsPage() {
 
             {/* Combined Bar */}
             <div className="mt-4 h-5 w-full overflow-hidden rounded-full bg-sand flex">
-              <div className="h-full bg-[#002e6e] transition-all" style={{ width: "69.7%" }} />
-              <div className="h-full bg-amber-500 transition-all" style={{ width: "30.3%" }} />
+              <div className="h-full bg-paytm transition-all" style={{ width: "69.7%" }} />
+              <div className="h-full bg-rust transition-all" style={{ width: "30.3%" }} />
             </div>
 
             <div className="mt-3 flex justify-between text-xs">
               <div className="flex items-center gap-2">
-                <span className="size-3 rounded-full bg-[#002e6e]" />
+                <span className="size-3 rounded-full bg-paytm" />
                 <span className="font-semibold text-ink">
                   {isHindi ? "पेटीएम यूपीआई / साउंडबॉक्स" : "Paytm UPI / Soundbox"}
                 </span>
                 <span className="text-inksoft font-mono">₹12,840 (69.7%)</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="size-3 rounded-full bg-amber-500" />
+                <span className="size-3 rounded-full bg-rust" />
                 <span className="font-semibold text-ink">
                   {isHindi ? "भौतिक नकद" : "Cash"}
                 </span>
@@ -336,7 +336,7 @@ function AnalyticsPage() {
         </div>
 
         {/* Paytm Merchant Capital / Loan Pre-Approval Banner */}
-        <section className="mt-6 rounded-[22px] bg-gradient-to-r from-[#002e6e] via-[#00398a] to-[#001f4d] p-5 sm:p-6 text-white shadow-md">
+        <section className="mt-6 rounded-[22px] bg-gradient-to-r from-[#172033] via-[#1c2c47] to-[#00BAF2] p-5 sm:p-6 text-white shadow-md">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="max-w-xl">
               <div className="flex items-center gap-2">
@@ -366,9 +366,9 @@ function AnalyticsPage() {
               <button
                 type="button"
                 onClick={() => setLoanApplied(!loanApplied)}
-                className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-xs font-bold text-[#002e6e] shadow-sm hover:bg-white/90 active:scale-95 transition-all"
+                className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-xs font-bold text-[#172033] shadow-sm hover:bg-white/90 active:scale-95 transition-all"
               >
-                <Zap className="size-3.5 fill-[#002e6e]" />
+                <Zap className="size-3.5 fill-[#00BAF2] text-[#00BAF2]" />
                 <span>
                   {loanApplied
                     ? (isHindi ? "✓ आवेदन स्वीकृत (समीक्षाधीन)" : "✓ Application Dispatched")

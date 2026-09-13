@@ -25,6 +25,8 @@
   --color-emerald: var(--emerald);
   --color-sand: var(--sand);
   --color-line: var(--line);
+  --color-paytm: var(--paytm);
+  --color-primary-dark: var(--primary-dark);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -82,14 +84,17 @@
 :root {
   --radius: 1rem;
 
-  --cream: oklch(0.968 0.014 88);
-  --paper: oklch(0.993 0.006 95);
-  --ink: oklch(0.246 0.017 55);
-  --inksoft: oklch(0.464 0.022 62);
-  --rust: oklch(0.539 0.135 39);
-  --emerald: oklch(0.503 0.084 160);
-  --sand: oklch(0.929 0.021 84);
-  --line: oklch(0.899 0.024 84);
+  /* User Defined Palette */
+  --cream: #F5F7FA;          /* Background */
+  --paper: #FFFFFF;          /* Cards */
+  --primary-dark: #172033;   /* Primary dark */
+  --paytm: #00BAF2;          /* Paytm blue */
+  --rust: #E85D2A;           /* Bharat orange */
+  --emerald: #159570;        /* Green */
+  --ink: #172033;            /* Text */
+  --inksoft: #697386;        /* Secondary text */
+  --sand: #EEF2F6;           /* Subtle surface / chips */
+  --line: #E2E8F0;           /* Clean crisp card & divider border */
 
   --background: var(--cream);
   --foreground: var(--ink);
@@ -98,22 +103,22 @@
   --popover: var(--paper);
   --popover-foreground: var(--ink);
   --primary: var(--rust);
-  --primary-foreground: var(--cream);
+  --primary-foreground: #FFFFFF;
   --secondary: var(--sand);
   --secondary-foreground: var(--ink);
   --muted: var(--sand);
   --muted-foreground: var(--inksoft);
   --accent: var(--sand);
   --accent-foreground: var(--ink);
-  --destructive: oklch(0.55 0.19 27);
-  --destructive-foreground: var(--cream);
+  --destructive: #E53E3E;
+  --destructive-foreground: #FFFFFF;
   --border: var(--line);
   --input: var(--line);
   --ring: var(--rust);
   --sidebar: var(--sand);
   --sidebar-foreground: var(--ink);
   --sidebar-primary: var(--rust);
-  --sidebar-primary-foreground: var(--cream);
+  --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: var(--paper);
   --sidebar-accent-foreground: var(--ink);
   --sidebar-border: var(--line);
@@ -121,14 +126,16 @@
 }
 
 .dark {
-  --cream: oklch(0.18 0.015 60);
-  --paper: oklch(0.23 0.018 60);
-  --ink: oklch(0.96 0.01 85);
-  --inksoft: oklch(0.72 0.02 75);
-  --rust: oklch(0.65 0.16 39);
-  --emerald: oklch(0.68 0.12 160);
-  --sand: oklch(0.28 0.02 60);
-  --line: oklch(0.33 0.02 60);
+  --cream: #0B0F19;
+  --paper: #131B2B;
+  --primary-dark: #0A0E17;
+  --paytm: #00BAF2;
+  --rust: #F16E3D;
+  --emerald: #159570;
+  --ink: #F1F5F9;
+  --inksoft: #94A3B8;
+  --sand: #1E293B;
+  --line: #26354D;
 
   --background: var(--cream);
   --foreground: var(--ink);
@@ -137,22 +144,22 @@
   --popover: var(--paper);
   --popover-foreground: var(--ink);
   --primary: var(--rust);
-  --primary-foreground: oklch(0.18 0.015 60);
+  --primary-foreground: #FFFFFF;
   --secondary: var(--sand);
   --secondary-foreground: var(--ink);
   --muted: var(--sand);
   --muted-foreground: var(--inksoft);
   --accent: var(--sand);
   --accent-foreground: var(--ink);
-  --destructive: oklch(0.62 0.22 27);
-  --destructive-foreground: oklch(0.96 0.01 85);
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
   --border: var(--line);
   --input: var(--line);
   --ring: var(--rust);
   --sidebar: var(--sand);
   --sidebar-foreground: var(--ink);
   --sidebar-primary: var(--rust);
-  --sidebar-primary-foreground: oklch(0.18 0.015 60);
+  --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: var(--paper);
   --sidebar-accent-foreground: var(--ink);
   --sidebar-border: var(--line);

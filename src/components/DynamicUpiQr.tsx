@@ -77,14 +77,14 @@ export function DynamicUpiQr({
   return (
     <div className="flex flex-col items-center rounded-2xl bg-white p-3.5 ring-1 ring-line shadow-sm">
       {/* Paytm Top Banner */}
-      <div className="mb-2 flex items-center justify-between w-full px-1 border-b border-gray-100 pb-1.5">
+      <div className="mb-2 flex items-center justify-between w-full px-1 border-b border-line pb-1.5">
         <div className="flex items-center gap-1.5">
-          <span className="font-display font-bold text-xs text-[#002e6e]">
-            Pay<span className="text-[#00b9f5]">tm</span>
+          <span className="font-display font-bold text-xs text-[#172033]">
+            Pay<span className="text-[#00BAF2]">tm</span>
           </span>
-          <span className="text-[9px] font-semibold text-gray-400">| Accepted Here</span>
+          <span className="text-[9px] font-semibold text-inksoft">| Accepted Here</span>
         </div>
-        <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700">
+        <span className="rounded-full bg-emerald/10 px-2 py-0.5 text-[10px] font-bold text-emerald">
           ₹{amount.toLocaleString("en-IN")}
         </span>
       </div>
@@ -101,7 +101,7 @@ export function DynamicUpiQr({
                   y={r}
                   width={1}
                   height={1}
-                  fill="#002e6e"
+                  fill="#172033"
                 />
               ) : null,
             ),
@@ -109,8 +109,8 @@ export function DynamicUpiQr({
         </svg>
 
         {/* Center Paytm Logo Indicator */}
-        <div className="absolute inset-0 m-auto size-7 rounded-md bg-white p-0.5 shadow-sm ring-1 ring-[#002e6e]/20 flex items-center justify-center">
-          <span className="font-display text-[9px] font-black text-[#002e6e] leading-none">
+        <div className="absolute inset-0 m-auto size-7 rounded-md bg-white p-0.5 shadow-sm ring-1 ring-[#00BAF2]/30 flex items-center justify-center">
+          <span className="font-display text-[9px] font-black text-[#00BAF2] leading-none">
             ₹
           </span>
         </div>
@@ -118,16 +118,16 @@ export function DynamicUpiQr({
 
       {/* Footer Instructions */}
       <div className="mt-2 text-center">
-        <p className="text-[10px] font-semibold text-gray-700">
+        <p className="text-[10px] font-semibold text-ink">
           Scan to pay ₹{amount}
         </p>
-        <p className="text-[9px] text-gray-400">
+        <p className="text-[9px] text-inksoft">
           Paytm · GPay · PhonePe · Any UPI
         </p>
 
         <a
           href={upiUrl}
-          className="mt-1.5 inline-flex items-center gap-1 text-[10px] font-semibold text-[#002e6e] hover:underline"
+          className="mt-1.5 inline-flex items-center gap-1 text-[10px] font-semibold text-[#00BAF2] hover:underline"
         >
           <Smartphone className="size-3" />
           <span>Open in UPI App</span>
