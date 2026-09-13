@@ -3,6 +3,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { BusinessMemoryDialog } from "@/components/BusinessMemoryDialog";
 import { EveningReconciliationModal } from "@/components/EveningReconciliationModal";
 import { LanguageToggle } from "@/components/LanguageToggle";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { PaytmLoyaltyModal } from "@/components/PaytmLoyaltyModal";
 import { VoiceToLedgerModal } from "@/components/VoiceToLedgerModal";
 import { shop } from "@/lib/khata";
@@ -149,6 +150,9 @@ export function HeaderNav() {
 
             {/* Language Switcher */}
             <LanguageToggle />
+
+            {/* Day / Night Theme Toggle */}
+            <ThemeToggle />
 
             {/* Copilot Active Status */}
             <span className="hidden xl:inline-flex items-center gap-1.5 rounded-full bg-paper px-3 py-1.5 text-xs font-medium text-inksoft ring-1 ring-line">
