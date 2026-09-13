@@ -91,10 +91,9 @@ function Home() {
       `Cash sales today: ${rupees(totals.cashSales)} (usual by now ${rupees(dailyCash.usualSales)}).`,
       `Paytm/UPI payments today: ₹12,840 across 126 transactions.`,
       `Total credit outstanding: ${rupees(totals.outstanding)} across ${totals.openCount} open khatas; ${rupees(totals.overdueAmount)} overdue across ${totals.overdueCount} customers.`,
-      `Overdue bucket: ₹2,800 across 5 critical customers.`,
-      `Stock alert: Parle biscuits 0 units (supplier: Sharma Distributors).`,
+      `Overdue bucket: ₹${totals.overdueAmount} across ${totals.overdueCount} critical customers.`,
+      `Stock alert: ${totals.totalStockoutItems > 0 ? "Parle biscuits 0 units (supplier: Sharma Distributors)" : "Inventory healthy"}.`,
       `Inactive customers: 240 lapsed accounts (target 10% offer for ₹6,100 sales).`,
-      `Total estimated business opportunity: ₹10,700 across 3 priority actions.`,
       `Udhar ledger:\n${lines}`,
     ].join("\n");
   }, [entries, totals]);

@@ -7,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useKiranaData } from "@/lib/kirana-context";
 import { useLanguage } from "@/lib/language-context";
 import { udhaarAIData, type OverdueCustomer } from "@/lib/mock-data";
 import { translations } from "@/lib/translations";
@@ -45,6 +46,7 @@ export function UdhaarAISection({
 }: UdhaarAISectionProps) {
   const { language, isHindi } = useLanguage();
   const t = translations[language];
+  const { customers, totals, sendCustomerReminder } = useKiranaData();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [sendingState, setSendingState] = useState<"idle" | "sending" | "sent">("idle");
@@ -61,13 +63,18 @@ export function UdhaarAISection({
 
   const handleSendAll = () => {
     setSendingState("sending");
+    customers.forEach((c) => {
+      if (c.status === "overdue") {
+        sendCustomerReminder(c.id);
+      }
+    });
     setTimeout(() => {
       setSendingState("sent");
       if (onSuccessReminder) {
         onSuccessReminder(
           isHindi
-            ? "5 ग्राहकों को व्हाट्सएप पर पेटीएम यूपीआई लिंक के साथ रिमाइंडर भेज दिया गया।"
-            : "5 friendly reminders queued via WhatsApp with Paytm UPI links.",
+            ? `${totals.overdueCount || 5} ग्राहकों को व्हाट्सएप पर पेटीएम यूपीआई लिंक के साथ रिमाइंडर भेज दिया गया।`
+            : `${totals.overdueCount || 5} friendly reminders queued via WhatsApp with Paytm UPI links.`,
         );
       }
     }, 600);
@@ -91,7 +98,7 @@ export function UdhaarAISection({
           </p>
         </div>
         <span className="rounded-full bg-sand px-2.5 py-0.5 text-xs font-semibold text-ink">
-          {isHindi ? "कुल बकाया" : "Total"} ₹{udhaarAIData.totalPending.toLocaleString("en-IN")}{" "}
+          {isHindi ? "कुल बकाया" : "Total"} ₹{totals.outstanding.toLocaleString("en-IN")}{" "}
           {isHindi ? "पेंडिंग" : "pending"}
         </span>
       </div>
@@ -101,10 +108,10 @@ export function UdhaarAISection({
         <div className="rounded-[18px] bg-paper p-5 ring-1 ring-line">
           <p className="text-xs text-inksoft">{t.totalPending}</p>
           <p className="mt-1 font-display text-[32px] font-semibold leading-none text-ink">
-            ₹{udhaarAIData.totalPending.toLocaleString("en-IN")}
+            ₹{totals.outstanding.toLocaleString("en-IN")}
           </p>
           <p className="mt-2 text-xs text-inksoft">
-            {isHindi ? "9 ग्राहकों पर सक्रिय दुकान उधार" : "Active shop credit across 9 customers"}
+            {isHindi ? `${totals.openCount || 9} ग्राहकों पर सक्रिय दुकान उधार` : `Active shop credit across ${totals.openCount || 9} customers`}
           </p>
         </div>
 
@@ -121,10 +128,10 @@ export function UdhaarAISection({
         <div className="rounded-[18px] bg-paper p-5 ring-1 ring-line">
           <p className="text-xs text-inksoft">{t.overdue}</p>
           <p className="mt-1 font-display text-[32px] font-semibold leading-none text-rust">
-            ₹{udhaarAIData.overdue.toLocaleString("en-IN")}
+            ₹{totals.overdueAmount.toLocaleString("en-IN")}
           </p>
           <p className="mt-2 text-xs text-rust font-medium">
-            {isHindi ? "5 ग्राहक तय समय से लेट" : "5 customers past promised date"}
+            {isHindi ? `${totals.overdueCount} ग्राहक तय समय से लेट` : `${totals.overdueCount} customers past promised date`}
           </p>
         </div>
       </div>

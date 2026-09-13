@@ -1,3 +1,4 @@
+import { useKiranaData } from "@/lib/kirana-context";
 import { useLanguage } from "@/lib/language-context";
 import { opportunityRadarData, type OpportunityRadarItem } from "@/lib/mock-data";
 import { translations } from "@/lib/translations";
@@ -66,6 +67,23 @@ export function OpportunityRadar({
 }: OpportunityRadarProps) {
   const { language, isHindi } = useLanguage();
   const t = translations[language];
+  const { inventory, totals, activeCampaigns } = useKiranaData();
+
+  const parleItem = inventory.find((i) => i.id === "inv-1");
+  const isParleRestocked = parleItem ? parleItem.stock > 0 : false;
+  const isCampaignActive = !!activeCampaigns["lapsed-10"] || !!activeCampaigns["tuesday-flash"];
+  const overdueAmt = totals.overdueAmount;
+  const isUdhaarRecovered = overdueAmt === 0;
+
+  const dynamicTotalOpportunity =
+    (isCampaignActive ? 0 : 6100) +
+    (isParleRestocked ? 0 : totals.estimatedStockLoss || 1800) +
+    overdueAmt;
+
+  const activeCount =
+    (isCampaignActive ? 0 : 1) +
+    (isParleRestocked ? 0 : 1) +
+    (isUdhaarRecovered ? 0 : 1);
 
   const handleAction = (type: "campaign" | "inventory" | "udhaar") => {
     if (type === "campaign") onOpenCampaign();
@@ -88,9 +106,22 @@ export function OpportunityRadar({
           </div>
           <p className="mt-0.5 text-xs text-inksoft">{t.radarSub}</p>
         </div>
-        <span className="inline-flex items-center gap-1 rounded-full bg-emerald/10 px-2.5 py-0.5 text-xs font-semibold text-emerald">
+        <span
+          className={cn(
+            "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold",
+            activeCount === 0
+              ? "bg-emerald/15 text-emerald"
+              : "bg-emerald/10 text-emerald"
+          )}
+        >
           <Sparkles className="size-3" />
-          {isHindi ? "3 नए अवसर मिले" : "3 Live Opportunities"}
+          {activeCount === 0
+            ? isHindi
+              ? "सभी अवसर संपन्न ✨"
+              : "All Opportunities Resolved ✨"
+            : isHindi
+            ? `${activeCount} नए अवसर सक्रिय`
+            : `${activeCount} Live Opportunities`}
         </span>
       </div>
 
@@ -98,21 +129,81 @@ export function OpportunityRadar({
       <div className="mt-4 grid grid-cols-1 gap-3.5 md:grid-cols-3">
         {opportunityRadarData.items.map((item) => {
           const hi = HINDI_RADAR_ITEMS[item.id];
-          const title = isHindi && hi ? hi.title : item.title;
-          const desc = isHindi && hi ? hi.desc : item.desc;
-          const reason = isHindi && hi ? hi.reason : item.reason;
-          const action = isHindi && hi ? hi.recommendedAction : item.recommendedAction;
-          const btnText = isHindi && hi ? hi.buttonText : item.buttonText;
-          const badge = isHindi && hi ? hi.badge : item.badge;
+          let title = isHindi && hi ? hi.title : item.title;
+          let desc = isHindi && hi ? hi.desc : item.desc;
+          let reason = isHindi && hi ? hi.reason : item.reason;
+          let action = isHindi && hi ? hi.recommendedAction : item.recommendedAction;
+          let btnText = isHindi && hi ? hi.buttonText : item.buttonText;
+          let badge = isHindi && hi ? hi.badge : item.badge;
+          let displayAmount = item.opportunityAmount;
+          let isCardResolved = false;
+
+          if (item.id === "radar-inactive") {
+            if (isCampaignActive) {
+              isCardResolved = true;
+              displayAmount = 0;
+              badge = isHindi ? "अभियान सक्रिय" : "Campaign Active";
+              desc = isHindi
+                ? "10% शाम का ऑफर ग्राहकों को भेजा जा चुका है।"
+                : "10% evening offer sent to inactive customers.";
+              reason = isHindi
+                ? "अभियान सक्रिय है, ऑर्डर आने शुरू हो गए हैं।"
+                : "Offer is live; customer orders underway.";
+              action = isHindi ? "अभियान की स्थिति जांचें।" : "Monitor campaign performance.";
+              btnText = isHindi ? "अभियान देखें" : "View Campaign";
+            }
+          } else if (item.id === "radar-stock") {
+            if (isParleRestocked) {
+              isCardResolved = true;
+              displayAmount = 0;
+              badge = isHindi ? "स्टॉक सुरक्षित" : "Restocked & Safe";
+              desc = isHindi
+                ? `पारले बिस्कुट अब स्टॉक में है (${parleItem?.stock} पैकेट)।`
+                : `Parle biscuits restocked (${parleItem?.stock} units in inventory).`;
+              reason = isHindi
+                ? `स्टॉक ${parleItem?.stock} पैकेट है। शाम की चाय भीड़ सुरक्षित।`
+                : `Stock is ${parleItem?.stock} units. Evening rush protected.`;
+              action = isHindi ? "इन्वेंटरी स्वस्थ स्थिति में है।" : "Inventory is at healthy level.";
+              btnText = isHindi ? "इन्वेंटरी देखें" : "View Inventory";
+            } else if (totals.estimatedStockLoss > 0) {
+              displayAmount = totals.estimatedStockLoss;
+            }
+          } else if (item.id === "radar-udhaar") {
+            displayAmount = overdueAmt;
+            if (isUdhaarRecovered) {
+              isCardResolved = true;
+              badge = isHindi ? "पूर्ण वसूली" : "Fully Recovered";
+              desc = isHindi
+                ? "सभी पुराने उधार का भुगतान हो चुका है।"
+                : "All overdue customer balances cleared.";
+              reason = isHindi
+                ? "कोई भी ग्राहक तय समय से लेट नहीं है।"
+                : "0 overdue customers remaining.";
+              action = isHindi ? "खाता संतुलित और अद्यतित है।" : "Ledger is balanced and healthy.";
+              btnText = isHindi ? "खाता देखें" : "View Khata";
+            } else if (totals.overdueCount < 5) {
+              reason = isHindi
+                ? `${totals.overdueCount} ग्राहकों पर ₹${overdueAmt} बकाया है।`
+                : `${totals.overdueCount} customer(s) with ₹${overdueAmt} pending.`;
+            }
+          }
 
           return (
             <div
               key={item.id}
-              className="flex flex-col justify-between rounded-[20px] bg-paper p-5 ring-1 ring-line transition-all hover:ring-rust/30 hover:shadow-sm"
+              className={cn(
+                "flex flex-col justify-between rounded-[20px] bg-paper p-5 ring-1 transition-all hover:ring-rust/30 hover:shadow-sm",
+                isCardResolved ? "ring-emerald/40 bg-emerald/[0.02]" : "ring-line"
+              )}
             >
               <div>
                 <div className="flex items-center justify-between gap-1">
-                  <span className="rounded-full bg-sand px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-inksoft">
+                  <span
+                    className={cn(
+                      "rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider",
+                      isCardResolved ? "bg-emerald/15 text-emerald" : "bg-sand text-inksoft"
+                    )}
+                  >
                     {badge}
                   </span>
                   {onExplain && (
@@ -133,12 +224,34 @@ export function OpportunityRadar({
                 <p className="mt-1 text-xs text-inksoft">{desc}</p>
 
                 {/* Estimated Opportunity Box */}
-                <div className="mt-3 rounded-xl bg-cream/70 p-3 ring-1 ring-line/60">
+                <div
+                  className={cn(
+                    "mt-3 rounded-xl p-3 ring-1",
+                    isCardResolved
+                      ? "bg-emerald/5 ring-emerald/20"
+                      : "bg-cream/70 ring-line/60"
+                  )}
+                >
                   <p className="text-[10px] font-semibold uppercase tracking-wider text-inksoft">
-                    {isHindi ? "अनुमानित अवसर" : "Estimated opportunity"}
+                    {isCardResolved
+                      ? isHindi
+                        ? "अवसर स्थिति"
+                        : "Opportunity Status"
+                      : isHindi
+                      ? "अनुमानित अवसर"
+                      : "Estimated opportunity"}
                   </p>
-                  <p className="mt-0.5 font-display text-xl font-bold text-rust">
-                    ₹{item.opportunityAmount.toLocaleString("en-IN")}
+                  <p
+                    className={cn(
+                      "mt-0.5 font-display text-xl font-bold",
+                      isCardResolved ? "text-emerald" : "text-rust"
+                    )}
+                  >
+                    {isCardResolved
+                      ? isHindi
+                        ? "सुरक्षित / पूर्ण ✓"
+                        : "Protected / Resolved ✓"
+                      : `₹${displayAmount.toLocaleString("en-IN")}`}
                   </p>
                 </div>
 
@@ -163,7 +276,12 @@ export function OpportunityRadar({
               <button
                 type="button"
                 onClick={() => handleAction(item.type)}
-                className="mt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-rust py-2.5 text-xs font-semibold text-cream shadow-sm ring-1 ring-rust/40 hover:opacity-95 active:scale-[0.98]"
+                className={cn(
+                  "mt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs font-semibold shadow-sm ring-1 hover:opacity-95 active:scale-[0.98]",
+                  isCardResolved
+                    ? "bg-emerald text-white ring-emerald/40"
+                    : "bg-rust text-cream ring-rust/40"
+                )}
               >
                 <span>{btnText}</span>
                 <ArrowRight className="size-3" />
@@ -181,7 +299,7 @@ export function OpportunityRadar({
               {t.totalOpportunity}
             </p>
             <p className="font-display text-2xl font-bold text-ink sm:text-3xl">
-              ₹{opportunityRadarData.totalOpportunity.toLocaleString("en-IN")}
+              ₹{dynamicTotalOpportunity.toLocaleString("en-IN")}
             </p>
           </div>
 

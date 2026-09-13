@@ -8,6 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useLanguage } from "@/lib/language-context";
+import { useKiranaData } from "@/lib/kirana-context";
 import { campaignSimulationData } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 import {
@@ -35,6 +36,7 @@ export function CampaignSimulationModal({
   onSuccess,
 }: CampaignSimulationModalProps) {
   const { isHindi } = useLanguage();
+  const { launchCampaign } = useKiranaData();
   const [selectedTier, setSelectedTier] = useState<"10" | "15" | "custom">("10");
   const [customDiscount, setCustomDiscount] = useState<number>(12);
   const [isSending, setIsSending] = useState<boolean>(false);
@@ -85,6 +87,7 @@ export function CampaignSimulationModal({
   };
 
   const handleFinish = () => {
+    launchCampaign("lapsed-10");
     onSuccess(
       isHindi
         ? `${activeStats.discount}% ऑफर ${targetCount} निष्क्रिय ग्राहकों के लिए स्वीकृत (${campaignTiming})।`

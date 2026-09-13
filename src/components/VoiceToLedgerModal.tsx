@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/lib/language-context";
+import { useKiranaData } from "@/lib/kirana-context";
 import { playPaytmChime, speakSoundboxAlert } from "@/lib/soundbox-audio";
 import { translations } from "@/lib/translations";
 import { cn } from "@/lib/utils";
@@ -41,6 +42,7 @@ export function VoiceToLedgerModal({
   onRecordSuccess,
 }: VoiceToLedgerModalProps) {
   const { language, isHindi } = useLanguage();
+  const { applyVoiceTransaction } = useKiranaData();
   const t = translations[language];
 
   const [isListening, setIsListening] = useState(false);
@@ -209,6 +211,14 @@ export function VoiceToLedgerModal({
       : `Recorded ₹${parsedData.amount} in ${parsedData.customer}'s khata.`;
 
     speakSoundboxAlert(confirmMessage, isHindi ? "hi" : "en");
+
+    // 3. Mutate live reactive store
+    applyVoiceTransaction({
+      customer: parsedData.customer,
+      items: parsedData.items,
+      amount: parsedData.amount,
+      type: parsedData.type,
+    });
 
     setIsRecorded(true);
 

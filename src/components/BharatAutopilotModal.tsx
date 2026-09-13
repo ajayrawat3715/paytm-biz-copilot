@@ -10,6 +10,7 @@ import {
 import { useLanguage } from "@/lib/language-context";
 import { bharatAutopilotData } from "@/lib/mock-data";
 import { translations } from "@/lib/translations";
+import { useKiranaData } from "@/lib/kirana-context";
 import { cn } from "@/lib/utils";
 import {
   Bot,
@@ -68,6 +69,7 @@ export function BharatAutopilotModal({
 }: BharatAutopilotModalProps) {
   const { language, isHindi } = useLanguage();
   const t = translations[language];
+  const { approveAutopilotActions } = useKiranaData();
 
   const [selectedActions, setSelectedActions] = useState<Record<string, boolean>>({
     "auto-1": true,
@@ -98,6 +100,7 @@ export function BharatAutopilotModal({
   };
 
   const handleFinish = () => {
+    approveAutopilotActions();
     onApprovedSuccess(
       isHindi
         ? "भारत ऑटोपायलट: 3 व्यावसायिक कार्रवाइयां सफलतापूर्वक तैयार व स्वीकृत की गईं (₹10,700 अवसर)।"

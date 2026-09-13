@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { LanguageProvider } from "../lib/language-context";
 import { ThemeProvider } from "../lib/theme-context";
+import { KiranaDataProvider } from "../lib/kirana-context";
 
 function NotFoundComponent() {
   return (
@@ -134,8 +135,10 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <LanguageProvider>
         <ThemeProvider>
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-          <Outlet />
+          <KiranaDataProvider>
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <Outlet />
+          </KiranaDataProvider>
         </ThemeProvider>
       </LanguageProvider>
     </QueryClientProvider>

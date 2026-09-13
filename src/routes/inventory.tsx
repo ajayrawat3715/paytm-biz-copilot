@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { HeaderNav } from "@/components/HeaderNav";
+import { useKiranaData } from "@/lib/kirana-context";
 import { useLanguage } from "@/lib/language-context";
-import { inventoryCatalog, type InventoryItem } from "@/lib/mock-data";
+import { type InventoryItem } from "@/lib/mock-data";
 import { translations } from "@/lib/translations";
 import { cn } from "@/lib/utils";
 import {
@@ -39,6 +40,7 @@ export const Route = createFileRoute("/inventory")({
 
 function InventoryPage() {
   const { language, isHindi } = useLanguage();
+  const { inventory, orderInventoryStock, totals } = useKiranaData();
   const t = translations[language];
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -47,7 +49,7 @@ function InventoryPage() {
   const [orderSentMap, setOrderSentMap] = useState<Record<string, boolean>>({});
   const [safetyDays, setSafetyDays] = useState<number>(3);
 
-  const filteredItems = inventoryCatalog.filter((item) => {
+  const filteredItems = inventory.filter((item) => {
     const matchesSearch =
       item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.supplier.toLowerCase().includes(searchTerm.toLowerCase());
@@ -59,6 +61,7 @@ function InventoryPage() {
   });
 
   const handleSendOrder = (item: InventoryItem) => {
+    orderInventoryStock(item.id, item.reorderLevel);
     setOrderSentMap((prev) => ({ ...prev, [item.id]: true }));
     setSelectedOrder(null);
   };
@@ -126,9 +129,11 @@ function InventoryPage() {
               </span>
               <AlertTriangle className="size-4 text-red-500" />
             </div>
-            <p className="mt-2 font-display text-2xl font-bold text-red-600">1 SKU</p>
+            <p className="mt-2 font-display text-2xl font-bold text-red-600">
+              {inventory.filter((i) => i.stock === 0).length} SKUs
+            </p>
             <p className="mt-1 text-[11px] text-inksoft">
-              Parle-G 250g ({isHindi ? "शाम की चाय भीड़ से पहले 0 यूनिट" : "0 units before evening rush"})
+              {inventory.filter((i) => i.stock === 0).map((i) => i.name.split(" ")[0]).join(", ") || (isHindi ? "कोई शून्य स्टॉक नहीं है" : "All items in stock")}
             </p>
           </div>
 
@@ -139,7 +144,9 @@ function InventoryPage() {
               </span>
               <Clock className="size-4 text-amber-500" />
             </div>
-            <p className="mt-2 font-display text-2xl font-bold text-amber-600">3 SKUs</p>
+            <p className="mt-2 font-display text-2xl font-bold text-amber-600">
+              {inventory.filter((i) => i.stock > 0 && i.daysRemaining < 1).length} SKUs
+            </p>
             <p className="mt-1 text-[11px] text-inksoft">
               Fortune Oil, Maggi Noodles, Good Day Butter
             </p>
@@ -152,7 +159,9 @@ function InventoryPage() {
               </span>
               <CheckCircle2 className="size-4 text-emerald" />
             </div>
-            <p className="mt-2 font-display text-2xl font-bold text-emerald">4 SKUs</p>
+            <p className="mt-2 font-display text-2xl font-bold text-emerald">
+              {inventory.filter((i) => i.status === "healthy" && i.daysRemaining >= 1).length} SKUs
+            </p>
             <p className="mt-1 text-[11px] text-inksoft">
               Tata Salt, Aashirvaad Atta, Surf Excel, Tea
             </p>
@@ -280,32 +289,43 @@ function InventoryPage() {
                       </td>
 
                       <td className="px-4 py-4 text-right sm:px-6">
-                        {isSent ? (
-                          <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald">
-                            <CheckCircle2 className="size-3.5" />
-                            {isHindi ? "ऑर्डर भेजा गया" : "PO Dispatched"}
-                          </span>
-                        ) : (
+                        <div className="flex items-center justify-end gap-1.5">
                           <button
                             type="button"
-                            onClick={() => setSelectedOrder(item)}
-                            className={cn(
-                              "inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold transition-all active:scale-95 shadow-sm",
-                              item.status === "out_of_stock"
-                                ? "bg-rust text-cream hover:bg-rust/90 animate-pulse"
-                                : item.status === "low_stock"
-                                ? "bg-amber-600 text-white hover:bg-amber-700"
-                                : "bg-sand text-ink hover:bg-paper ring-1 ring-line"
-                            )}
+                            onClick={() => orderInventoryStock(item.id, 10)}
+                            title={isHindi ? "+10 यूनिट स्टॉक जोड़ें" : "+10 Units Stock"}
+                            className="rounded-full bg-sand px-2.5 py-1 text-[11px] font-bold text-ink hover:bg-paper ring-1 ring-line active:scale-95 transition-all"
                           >
-                            <MessageSquare className="size-3" />
-                            <span>
-                              {item.status === "out_of_stock"
-                                ? (isHindi ? "तुरंत मंगाएं (24)" : "Order 24 Now")
-                                : (isHindi ? "व्हाट्सएप ऑर्डर" : "Reorder")}
-                            </span>
+                            +10
                           </button>
-                        )}
+
+                          {isSent ? (
+                            <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald">
+                              <CheckCircle2 className="size-3.5" />
+                              {isHindi ? "ऑर्डर भेजा गया" : "PO Dispatched"}
+                            </span>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() => setSelectedOrder(item)}
+                              className={cn(
+                                "inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold transition-all active:scale-95 shadow-sm",
+                                item.status === "out_of_stock"
+                                  ? "bg-rust text-cream hover:bg-rust/90 animate-pulse"
+                                  : item.status === "low_stock"
+                                  ? "bg-amber-600 text-white hover:bg-amber-700"
+                                  : "bg-sand text-ink hover:bg-paper ring-1 ring-line"
+                              )}
+                            >
+                              <MessageSquare className="size-3" />
+                              <span>
+                                {item.status === "out_of_stock"
+                                  ? (isHindi ? "तुरंत मंगाएं (24)" : "Order 24 Now")
+                                  : (isHindi ? "व्हाट्सएप ऑर्डर" : "Reorder")}
+                              </span>
+                            </button>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   );

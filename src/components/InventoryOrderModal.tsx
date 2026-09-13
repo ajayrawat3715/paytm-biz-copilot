@@ -7,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useKiranaData } from "@/lib/kirana-context";
 import { inventoryIntelligenceData } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 import {
@@ -32,6 +33,7 @@ export function InventoryOrderModal({
   onOpenChange,
   onSuccessOrder,
 }: InventoryOrderModalProps) {
+  const { orderInventoryStock } = useKiranaData();
   const [isOrdering, setIsOrdering] = useState(false);
   const [isOrdered, setIsOrdered] = useState(false);
   const [reorderUnits, setReorderUnits] = useState(24);
@@ -41,6 +43,7 @@ export function InventoryOrderModal({
 
   const handlePlaceOrder = () => {
     setIsOrdering(true);
+    orderInventoryStock("inv-1", reorderUnits);
     setTimeout(() => {
       setIsOrdering(false);
       setIsOrdered(true);
