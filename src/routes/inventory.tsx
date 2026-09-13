@@ -82,7 +82,7 @@ function InventoryPage() {
                 {isHindi ? "शर्मा डिस्ट्रीब्यूटर्स कनेक्टेड" : "Sharma Distributors Connected"}
               </span>
             </div>
-            <h1 className="mt-1.5 font-sans text-2xl font-semibold text-ink sm:text-3xl">
+            <h1 className="mt-2 font-sans text-2xl sm:text-3xl font-bold tracking-[-0.025em] text-ink">
               {t.invTitle}
             </h1>
             <p className="mt-1 text-sm text-inksoft">
@@ -129,7 +129,7 @@ function InventoryPage() {
               </span>
               <AlertTriangle className="size-4 text-rust" />
             </div>
-            <p className="mt-2 font-sans text-2xl font-semibold text-rust tabular-nums">
+            <p className="mt-2 font-sans text-2xl font-bold text-rust tabular-nums tracking-[-0.02em]">
               {inventory.filter((i) => i.stock === 0).length} SKUs
             </p>
             <p className="mt-1 text-[11px] text-inksoft">
@@ -144,7 +144,7 @@ function InventoryPage() {
               </span>
               <Clock className="size-4 text-warning" />
             </div>
-            <p className="mt-2 font-sans text-2xl font-semibold text-warning tabular-nums">
+            <p className="mt-2 font-sans text-2xl font-bold text-warning tabular-nums tracking-[-0.02em]">
               {inventory.filter((i) => i.stock > 0 && i.daysRemaining < 1).length} SKUs
             </p>
             <p className="mt-1 text-[11px] text-inksoft">
@@ -159,7 +159,7 @@ function InventoryPage() {
               </span>
               <CheckCircle2 className="size-4 text-emerald" />
             </div>
-            <p className="mt-2 font-sans text-2xl font-semibold text-emerald tabular-nums">
+            <p className="mt-2 font-sans text-2xl font-bold text-emerald tabular-nums tracking-[-0.02em]">
               {inventory.filter((i) => i.status === "healthy" && i.daysRemaining >= 1).length} SKUs
             </p>
             <p className="mt-1 text-[11px] text-inksoft">

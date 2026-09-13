@@ -93,10 +93,10 @@ export function HeaderNav() {
                   key={item.to}
                   to={item.to}
                   className={cn(
-                    "flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-medium transition-all",
+                    "flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[14px] leading-tight transition-all",
                     isActive
                       ? "bg-rust text-cream shadow-2xs font-semibold"
-                      : "text-inksoft hover:text-ink hover:bg-paper/70"
+                      : "text-inksoft hover:text-ink hover:bg-paper/70 font-medium"
                   )}
                 >
                   <Icon className={cn("size-3.5", isActive ? "text-cream" : "text-inksoft")} />
@@ -112,7 +112,7 @@ export function HeaderNav() {
             <button
               type="button"
               onClick={() => setVoiceModalOpen(true)}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-rust/10 px-3 py-1.5 text-xs sm:text-sm font-medium text-rust ring-1 ring-rust/30 hover:bg-rust/20 active:scale-95 transition-all shadow-2xs"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-rust/10 px-3 py-1.5 text-xs sm:text-[14px] font-semibold text-rust ring-1 ring-rust/30 hover:bg-rust/20 active:scale-95 transition-all shadow-2xs"
             >
               <Mic className="size-3.5 text-rust animate-pulse" />
               <span>{t.voiceLedgerBtn}</span>
@@ -122,7 +122,7 @@ export function HeaderNav() {
             <button
               type="button"
               onClick={() => setDukanBandiModalOpen(true)}
-              className="hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-ink px-3 py-1.5 text-xs sm:text-sm font-medium text-warning-light ring-1 ring-line hover:bg-ink/90 active:scale-95 transition-all shadow-2xs"
+              className="hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-ink px-3 py-1.5 text-xs sm:text-[14px] font-semibold text-warning-light ring-1 ring-line hover:bg-ink/90 active:scale-95 transition-all shadow-2xs"
             >
               <Moon className="size-3.5 text-warning" />
               <span>{t.dukanBandiBtn}</span>
@@ -132,7 +132,7 @@ export function HeaderNav() {
             <button
               type="button"
               onClick={() => setLoyaltyModalOpen(true)}
-              className="hidden md:inline-flex items-center gap-1.5 rounded-xl bg-emerald-light px-3 py-1.5 text-xs sm:text-sm font-medium text-emerald ring-1 ring-emerald/30 hover:bg-emerald-light/80 active:scale-95 transition-all shadow-2xs"
+              className="hidden md:inline-flex items-center gap-1.5 rounded-xl bg-emerald-light px-3 py-1.5 text-xs sm:text-[14px] font-semibold text-emerald ring-1 ring-emerald/30 hover:bg-emerald-light/80 active:scale-95 transition-all shadow-2xs"
             >
               <Award className="size-3.5 text-emerald" />
               <span>{t.loyaltyBtn}</span>
@@ -142,7 +142,7 @@ export function HeaderNav() {
             <button
               type="button"
               onClick={() => setMemoryDialogOpen(true)}
-              className="hidden lg:inline-flex items-center gap-1.5 rounded-xl bg-sand/80 px-3 py-1.5 text-xs sm:text-sm font-medium text-ink ring-1 ring-line hover:bg-paper transition-colors"
+              className="hidden lg:inline-flex items-center gap-1.5 rounded-xl bg-sand/80 px-3 py-1.5 text-xs sm:text-[14px] font-semibold text-ink ring-1 ring-line hover:bg-paper transition-colors"
             >
               <Brain className="size-3.5 text-rust" />
               <span>{t.memoryBadge}</span>

@@ -55,7 +55,7 @@ export function BahiKhata({ khata }: { khata: Khata }) {
       <div className="mt-4 grid grid-cols-1 gap-3 lg:grid-cols-3">
         <div className="rounded-2xl bg-paper p-5 ring-1 ring-line shadow-2xs">
           <p className="text-sm text-inksoft">Total credit outstanding</p>
-          <p className="mt-1 font-sans text-[34px] font-semibold leading-none tracking-tight tabular-nums text-ink">
+          <p className="mt-1 font-sans text-[34px] font-bold leading-none tracking-[-0.02em] tabular-nums text-ink">
             {rupees(totals.outstanding)}
           </p>
           <p className="mt-2 text-sm text-inksoft">
@@ -69,7 +69,7 @@ export function BahiKhata({ khata }: { khata: Khata }) {
 
         <div className="rounded-2xl bg-paper p-5 ring-1 ring-line shadow-2xs">
           <p className="text-sm text-inksoft">Today's udhar collections</p>
-          <p className="mt-1 font-sans text-[34px] font-semibold leading-none tracking-tight text-emerald tabular-nums">
+          <p className="mt-1 font-sans text-[34px] font-bold leading-none tracking-[-0.02em] text-emerald tabular-nums">
             {rupees(totals.udharCollectedToday)}
           </p>
           <p className="mt-2 text-sm text-inksoft">
@@ -86,7 +86,7 @@ export function BahiKhata({ khata }: { khata: Khata }) {
 
         <div className="rounded-2xl bg-paper p-5 ring-1 ring-line shadow-2xs">
           <p className="text-sm text-inksoft">Net daily balance</p>
-          <p className="mt-1 font-sans text-[34px] font-semibold leading-none tracking-tight tabular-nums text-ink">
+          <p className="mt-1 font-sans text-[34px] font-bold leading-none tracking-[-0.02em] tabular-nums text-ink">
             {rupees(totals.netDaily)}
           </p>
           <div className="mt-2.5 flex flex-wrap gap-1.5 text-xs">

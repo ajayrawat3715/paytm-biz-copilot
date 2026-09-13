@@ -104,7 +104,7 @@ function CampaignsPage() {
                 {isHindi ? "मार्जिन सुरक्षा सक्रिय" : "Gross Margin Guard Active"}
               </span>
             </div>
-            <h1 className="mt-2 font-sans text-2xl sm:text-3xl font-semibold tracking-tight text-ink">
+            <h1 className="mt-2 font-sans text-2xl sm:text-3xl font-bold tracking-[-0.025em] text-ink">
               {t.campaignPageTitle}
             </h1>
             <p className="mt-1 text-sm text-inksoft">
@@ -114,7 +114,7 @@ function CampaignsPage() {
 
           <div className="rounded-xl bg-paper px-3.5 py-2 ring-1 ring-line text-xs font-medium text-ink flex items-center gap-2 shadow-2xs">
             <Sparkles className="size-4 text-rust" />
-            <span className="tabular-nums">{isHindi ? "अनुमानित अतिरिक्त लाभ: +₹2,100" : "Predicted Net Lift: +₹2,100"}</span>
+            <span className="tabular-nums font-semibold">{isHindi ? "अनुमानित अतिरिक्त लाभ: +₹2,100" : "Predicted Net Lift: +₹2,100"}</span>
           </div>
         </div>
 
@@ -124,7 +124,7 @@ function CampaignsPage() {
             <div>
               <div className="flex items-center gap-2">
                 <Sliders className="size-4 text-rust" />
-                <h2 className="font-sans text-lg font-semibold text-ink">
+                <h2 className="font-sans text-[20px] sm:text-[22px] font-bold text-ink leading-[1.2] tracking-[-0.02em]">
                   {isHindi ? "एआई 'व्हाट-इफ़' (What-If) डिस्काउंट सैंडबॉक्स" : "Interactive 'What-If' Discount Simulator"}
                 </h2>
               </div>
@@ -162,7 +162,7 @@ function CampaignsPage() {
                 <span>{isHindi ? "अनुमानित लौटने वाले ग्राहक" : "Expected Returning Customers"}</span>
                 <Users className="size-3.5 text-inksoft" />
               </span>
-              <p className="mt-2 font-sans text-2xl font-semibold tabular-nums text-ink">
+              <p className="mt-2 font-sans text-2xl sm:text-[28px] font-bold tabular-nums tracking-[-0.02em] text-ink">
                 {currentScenario.customers} {isHindi ? "ग्राहक" : "footfalls"}
               </p>
               <p className="mt-1 text-[11px] text-inksoft">
@@ -175,7 +175,7 @@ function CampaignsPage() {
                 <span>{isHindi ? "अनुमानित कुल बिक्री (Gross)" : "Projected Gross Revenue"}</span>
                 <TrendingUp className="size-3.5 text-inksoft" />
               </span>
-              <p className="mt-2 font-sans text-2xl font-semibold tabular-nums text-ink">
+              <p className="mt-2 font-sans text-2xl sm:text-[28px] font-bold tabular-nums tracking-[-0.02em] text-ink">
                 ₹{currentScenario.revenue.toLocaleString("en-IN")}
               </p>
               <p className="mt-1 text-[11px] text-inksoft">
@@ -188,7 +188,7 @@ function CampaignsPage() {
                 <span>{isHindi ? "अनुमानित शुद्ध लाभ (Net Profit)" : "Estimated Net Profit"}</span>
                 <Sparkles className="size-3.5 text-emerald" />
               </span>
-              <p className="mt-2 font-sans text-2xl font-semibold tabular-nums text-emerald">
+              <p className="mt-2 font-sans text-2xl sm:text-[28px] font-bold tabular-nums tracking-[-0.02em] text-emerald">
                 ₹{currentScenario.profit.toLocaleString("en-IN")}
               </p>
               <p className="mt-1 text-[11px] font-semibold text-emerald">

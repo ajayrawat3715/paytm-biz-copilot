@@ -90,10 +90,10 @@ export function UdhaarAISection({
     <section className="mt-8 animate-settle">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <div>
-          <h2 className="font-sans text-xl font-semibold text-ink">
+          <h2 className="font-sans text-[22px] sm:text-[24px] font-bold text-ink leading-[1.2] tracking-[-0.02em]">
             {t.udhaarTitle}
           </h2>
-          <p className="text-xs text-inksoft">
+          <p className="mt-0.5 text-xs text-inksoft">
             {t.udhaarSub}
           </p>
         </div>
@@ -107,7 +107,7 @@ export function UdhaarAISection({
       <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
         <div className="rounded-2xl bg-paper p-5 ring-1 ring-line shadow-2xs">
           <p className="text-xs text-inksoft">{t.totalPending}</p>
-          <p className="mt-1 font-sans text-[32px] sm:text-[36px] font-semibold leading-none text-ink tabular-nums">
+          <p className="mt-1 font-sans text-[32px] sm:text-[36px] font-bold leading-none text-ink tabular-nums tracking-[-0.02em]">
             ₹{totals.outstanding.toLocaleString("en-IN")}
           </p>
           <p className="mt-2 text-xs text-inksoft">
@@ -117,7 +117,7 @@ export function UdhaarAISection({
 
         <div className="rounded-2xl bg-paper p-5 ring-1 ring-line shadow-2xs">
           <p className="text-xs text-inksoft">{t.dueToday}</p>
-          <p className="mt-1 font-sans text-[32px] sm:text-[36px] font-semibold leading-none text-ink tabular-nums">
+          <p className="mt-1 font-sans text-[32px] sm:text-[36px] font-bold leading-none text-ink tabular-nums tracking-[-0.02em]">
             ₹{udhaarAIData.dueToday.toLocaleString("en-IN")}
           </p>
           <p className="mt-2 text-xs text-emerald font-medium">
@@ -127,7 +127,7 @@ export function UdhaarAISection({
 
         <div className="rounded-2xl bg-paper p-5 ring-1 ring-line shadow-2xs">
           <p className="text-xs text-inksoft">{t.overdue}</p>
-          <p className="mt-1 font-sans text-[32px] sm:text-[36px] font-semibold leading-none text-rust tabular-nums">
+          <p className="mt-1 font-sans text-[32px] sm:text-[36px] font-bold leading-none text-rust tabular-nums tracking-[-0.02em]">
             ₹{totals.overdueAmount.toLocaleString("en-IN")}
           </p>
           <p className="mt-2 text-xs text-rust font-medium">

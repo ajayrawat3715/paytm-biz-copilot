@@ -210,7 +210,7 @@ export function BasketBoosterWidget() {
               >
                 <div>
                   <div className="flex items-center gap-2">
-                    <p className="font-display text-xs font-bold text-ink">{combo.title}</p>
+                    <p className="font-sans text-xs font-bold text-ink">{combo.title}</p>
                     <span className="rounded bg-emerald/15 px-1.5 py-0.2 text-[9px] font-bold text-emerald">
                       {combo.margin} margin
                     </span>
@@ -222,8 +222,8 @@ export function BasketBoosterWidget() {
                 </div>
 
                 <div className="text-right shrink-0">
-                  <span className="text-[10px] text-inksoft line-through">₹{combo.mrp}</span>
-                  <p className="font-display text-sm font-bold text-rust">₹{combo.comboPrice}</p>
+                  <span className="text-[10px] text-inksoft line-through tabular-nums">₹{combo.mrp}</span>
+                  <p className="font-sans text-sm font-bold text-rust tabular-nums">₹{combo.comboPrice}</p>
                   <button
                     type="button"
                     onClick={() => {

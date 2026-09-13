@@ -79,12 +79,12 @@ export function DynamicUpiQr({
       {/* Paytm Top Banner */}
       <div className="mb-2 flex items-center justify-between w-full px-1 border-b border-line pb-1.5">
         <div className="flex items-center gap-1.5">
-          <span className="font-display font-bold text-xs text-[#172033]">
+          <span className="font-sans font-bold text-xs text-[#172033]">
             Pay<span className="text-[#00BAF2]">tm</span>
           </span>
           <span className="text-[9px] font-semibold text-inksoft">| Accepted Here</span>
         </div>
-        <span className="rounded-full bg-emerald/10 px-2 py-0.5 text-[10px] font-bold text-emerald">
+        <span className="rounded-full bg-emerald/10 px-2 py-0.5 text-[10px] font-bold text-emerald tabular-nums">
           ₹{amount.toLocaleString("en-IN")}
         </span>
       </div>
@@ -110,7 +110,7 @@ export function DynamicUpiQr({
 
         {/* Center Paytm Logo Indicator */}
         <div className="absolute inset-0 m-auto size-7 rounded-md bg-white p-0.5 shadow-sm ring-1 ring-[#00BAF2]/30 flex items-center justify-center">
-          <span className="font-display text-[9px] font-black text-[#00BAF2] leading-none">
+          <span className="font-sans text-[9px] font-black text-[#00BAF2] leading-none">
             ₹
           </span>
         </div>

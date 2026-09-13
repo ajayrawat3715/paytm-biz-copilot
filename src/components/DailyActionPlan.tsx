@@ -78,7 +78,7 @@ export function DailyActionPlan({
             <span className="grid size-6 place-items-center rounded-lg bg-rust/10 text-rust">
               <ListTodo className="size-3.5" />
             </span>
-            <h2 className="font-sans text-xl font-semibold text-ink">
+            <h2 className="font-sans text-[22px] sm:text-[24px] font-bold text-ink leading-[1.2] tracking-[-0.02em]">
               {t.actionPlanTitle}
             </h2>
           </div>

@@ -50,19 +50,19 @@ export function MorningBrief({
   return (
     <section className="mt-7 animate-settle">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="text-xs font-medium uppercase tracking-[0.14em] text-rust">
+        <p className="text-xs font-semibold uppercase tracking-[0.04em] text-rust">
           {formattedDate} · IST
         </p>
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-sand/80 px-2.5 py-0.5 text-[11px] font-medium text-inksoft ring-1 ring-line">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-sand/80 px-2.5 py-0.5 text-[11px] font-semibold text-inksoft ring-1 ring-line">
           <Sparkles className="size-3 text-rust" />
           {isHindi ? "एआई प्रभात इनसाइट्स सक्रिय" : "AI Morning Intelligence Active"}
         </span>
       </div>
 
-      <h1 className="mt-3 text-balance font-sans text-3xl font-semibold leading-[1.08] tracking-tight text-ink sm:text-[44px] lg:text-[48px]">
+      <h1 className="mt-3 text-balance font-sans text-[34px] sm:text-[42px] lg:text-[50px] font-bold leading-[1.08] tracking-[-0.025em] text-ink">
         {t.morningGreeting}
       </h1>
-      <p className="mt-1 text-balance font-sans text-xl font-medium leading-[1.15] tracking-tight text-inksoft sm:text-[28px] lg:text-[32px]">
+      <p className="mt-1.5 text-balance font-sans text-[22px] sm:text-[30px] lg:text-[38px] font-semibold leading-[1.15] tracking-[-0.02em] text-inksoft">
         {t.quietSubtitle}
       </p>
 
@@ -72,11 +72,11 @@ export function MorningBrief({
           <div className="space-y-1.5">
             <div className="flex items-center gap-2 text-rust">
               <TrendingDown className="size-4" />
-              <span className="text-xs font-semibold uppercase tracking-wider">
+              <span className="text-xs font-semibold uppercase tracking-[0.04em]">
                 {t.forecastTitle}
               </span>
             </div>
-            <p className="font-sans text-xl font-semibold text-ink sm:text-2xl">
+            <p className="font-sans text-xl font-bold text-ink sm:text-2xl leading-[1.2]">
               {t.forecastText(currentDayName)}
             </p>
             <p className="text-xs text-inksoft sm:text-[13px] leading-relaxed">
@@ -85,8 +85,8 @@ export function MorningBrief({
           </div>
 
           <div className="text-right">
-            <p className="text-xs text-inksoft">{t.collectedSoFar}</p>
-            <p className="mt-0.5 font-sans text-3xl font-semibold leading-none text-ink tabular-nums sm:text-[40px]">
+            <p className="text-xs font-medium text-inksoft">{t.collectedSoFar}</p>
+            <p className="mt-0.5 font-sans text-3xl sm:text-[40px] font-bold leading-none text-ink tabular-nums tracking-[-0.02em]">
               {rupees(collectedToday)}
             </p>
             <div className="mt-2.5 flex items-center justify-end gap-1" aria-label="last 8 days trend">

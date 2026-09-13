@@ -21,7 +21,7 @@ export function BusinessHealth() {
         <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
           <p className="text-xs text-inksoft">{t.sales}</p>
           <div className="mt-1 flex items-baseline gap-1.5">
-            <span className="font-sans text-2xl font-semibold text-emerald tabular-nums">
+            <span className="font-sans text-2xl font-bold text-emerald tabular-nums tracking-[-0.02em]">
               ↑ 8%
             </span>
             <span className="text-[11px] text-inksoft">
@@ -37,7 +37,7 @@ export function BusinessHealth() {
         <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
           <p className="text-xs text-inksoft">{t.customers}</p>
           <div className="mt-1 flex items-baseline gap-1.5">
-            <span className="font-sans text-2xl font-semibold text-emerald tabular-nums">
+            <span className="font-sans text-2xl font-bold text-emerald tabular-nums tracking-[-0.02em]">
               ↑ 12%
             </span>
             <span className="text-[11px] text-inksoft">
@@ -53,7 +53,7 @@ export function BusinessHealth() {
         <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
           <p className="text-xs text-inksoft">{t.inventory}</p>
           <div className="mt-1 flex items-baseline gap-1.5">
-            <span className="font-sans text-2xl font-semibold text-warning tabular-nums">
+            <span className="font-sans text-2xl font-bold text-warning tabular-nums tracking-[-0.02em]">
               {isHindi ? "3 आइटम" : "3 items"}
             </span>
           </div>
@@ -66,7 +66,7 @@ export function BusinessHealth() {
         <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
           <p className="text-xs text-inksoft">{t.udhaar}</p>
           <div className="mt-1 flex items-baseline gap-1.5">
-            <span className="font-sans text-2xl font-semibold text-ink tabular-nums">
+            <span className="font-sans text-2xl font-bold text-ink tabular-nums tracking-[-0.02em]">
               ₹12,840
             </span>
           </div>

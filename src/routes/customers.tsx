@@ -136,7 +136,7 @@ function CustomersPage() {
                 {isHindi ? "84% समय पर वसूली दर" : "84% On-Time Recovery Rate"}
               </span>
             </div>
-            <h1 className="mt-1.5 font-sans text-2xl sm:text-3xl font-semibold text-ink">
+            <h1 className="mt-2 font-sans text-2xl sm:text-3xl font-bold tracking-[-0.025em] text-ink">
               {t.khataPageTitle}
             </h1>
             <p className="mt-1 text-sm text-inksoft">
@@ -172,7 +172,7 @@ function CustomersPage() {
               <span className="text-xs text-inksoft">{isHindi ? "कुल बकाया उधार" : "Total Credit Outstanding"}</span>
               <Wallet className="size-4 text-inksoft" />
             </div>
-            <p className="mt-2 font-sans text-2xl font-semibold text-ink tabular-nums">
+            <p className="mt-2 font-sans text-2xl sm:text-[28px] font-bold text-ink tabular-nums tracking-[-0.02em]">
               ₹{totals.outstanding.toLocaleString("en-IN")}
             </p>
             <p className="mt-1 text-[11px] text-inksoft">
@@ -185,7 +185,7 @@ function CustomersPage() {
               <span className="text-xs text-inksoft">{isHindi ? "अतिदेय (Overdue) राशि" : "Overdue Bucket"}</span>
               <ShieldAlert className="size-4 text-rust" />
             </div>
-            <p className="mt-2 font-sans text-2xl font-semibold text-rust tabular-nums">
+            <p className="mt-2 font-sans text-2xl sm:text-[28px] font-bold text-rust tabular-nums tracking-[-0.02em]">
               ₹{totals.overdueAmount.toLocaleString("en-IN")}
             </p>
             <p className="mt-1 text-[11px] text-rust font-semibold">
@@ -198,7 +198,7 @@ function CustomersPage() {
               <span className="text-xs text-inksoft">{isHindi ? "आज की वसूली" : "Collected Today"}</span>
               <Coins className="size-4 text-emerald" />
             </div>
-            <p className="mt-2 font-sans text-2xl font-semibold text-emerald tabular-nums">
+            <p className="mt-2 font-sans text-2xl sm:text-[28px] font-bold text-emerald tabular-nums tracking-[-0.02em]">
               ₹{totals.udharCollectedToday.toLocaleString("en-IN")}
             </p>
             <p className="mt-1 text-[11px] text-emerald font-semibold">
@@ -211,7 +211,7 @@ function CustomersPage() {
               <span className="text-xs text-inksoft">{isHindi ? "सुप्त (Inactive) ग्राहक" : "Inactive Cohort"}</span>
               <Clock className="size-4 text-warning" />
             </div>
-            <p className="mt-2 font-sans text-2xl font-semibold text-ink tabular-nums">240 {isHindi ? "खाते" : "Accounts"}</p>
+            <p className="mt-2 font-sans text-2xl sm:text-[28px] font-bold text-ink tabular-nums tracking-[-0.02em]">240 {isHindi ? "खाते" : "Accounts"}</p>
             <p className="mt-1 text-[11px] text-rust font-semibold">
               {isHindi ? "10% ऑफर से ₹6,100 अवसर" : "Target 10% offer for ₹6.1k sales"}
             </p>

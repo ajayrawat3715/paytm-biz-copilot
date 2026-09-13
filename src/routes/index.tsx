@@ -224,14 +224,14 @@ function Home() {
 
           {/* Existing At a Glance Strip */}
           <section className="mt-8 animate-settle">
-            <h2 className="font-display text-xl font-semibold text-ink">
+            <h2 className="font-sans text-[22px] sm:text-[24px] font-bold text-ink leading-[1.2] tracking-[-0.02em]">
               {isHindi ? "एक नज़र में" : "At a glance"}
             </h2>
             <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
               {glance.map((g) => (
                 <div
                   key={g.label}
-                  className="rounded-[16px] bg-paper p-4 ring-1 ring-line"
+                  className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs"
                 >
                   <p className="text-xs text-inksoft">
                     {isHindi && g.label === "Repeat customers"
@@ -242,7 +242,7 @@ function Home() {
                       ? "कम स्टॉक"
                       : g.label}
                   </p>
-                  <p className="mt-1 font-display text-2xl font-semibold">
+                  <p className="mt-1 font-sans text-2xl font-bold tabular-nums tracking-[-0.02em] text-ink">
                     {g.value}
                     {g.suffix && (
                       <small className="text-base text-inksoft">{g.suffix}</small>

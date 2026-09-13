@@ -100,7 +100,7 @@ export function OpportunityRadar({
             <span className="grid size-6 place-items-center rounded-lg bg-rust/10 text-rust">
               <Radar className="size-3.5 animate-pulse" />
             </span>
-            <h2 className="font-sans text-xl font-semibold text-ink">
+            <h2 className="font-sans text-[22px] sm:text-[24px] font-bold text-ink leading-[1.2] tracking-[-0.02em]">
               {t.radarTitle}
             </h2>
           </div>
@@ -310,7 +310,7 @@ export function OpportunityRadar({
             <p className="text-xs font-semibold uppercase tracking-wider text-inksoft">
               {t.totalOpportunity}
             </p>
-            <p className="font-sans text-2xl sm:text-3xl font-semibold text-ink tabular-nums">
+            <p className="font-sans text-3xl sm:text-4xl font-bold text-ink tabular-nums tracking-[-0.02em]">
               ₹{dynamicTotalOpportunity.toLocaleString("en-IN")}
             </p>
           </div>

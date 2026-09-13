@@ -53,7 +53,7 @@ export function PaytmInsights({ onTriggerCampaign }: PaytmInsightsProps) {
           <div className="grid size-6 place-items-center rounded-lg bg-[#00BAF2] text-white shadow-2xs">
             <QrCode className="size-3.5" />
           </div>
-          <h2 className="font-sans text-xl font-semibold text-ink">
+          <h2 className="font-sans text-[22px] sm:text-[24px] font-bold text-ink leading-[1.2] tracking-[-0.02em]">
             {t.paytmInsightsTitle}
           </h2>
         </div>
@@ -67,7 +67,7 @@ export function PaytmInsights({ onTriggerCampaign }: PaytmInsightsProps) {
       <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
         <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
           <p className="text-xs text-inksoft">{t.todayPayments}</p>
-          <p className="mt-1 font-sans text-2xl font-semibold text-ink sm:text-[26px] tabular-nums">
+          <p className="mt-1 font-sans text-2xl font-bold text-ink sm:text-[26px] tabular-nums tracking-[-0.02em]">
             ₹{paytmInsightsData.todayPayments.toLocaleString("en-IN")}
           </p>
           <p className="mt-1 text-[11px] text-inksoft">{t.todayPaymentsSub}</p>
@@ -75,7 +75,7 @@ export function PaytmInsights({ onTriggerCampaign }: PaytmInsightsProps) {
 
         <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
           <p className="text-xs text-inksoft">{t.upiTxns}</p>
-          <p className="mt-1 font-sans text-2xl font-semibold text-ink sm:text-[26px] tabular-nums">
+          <p className="mt-1 font-sans text-2xl font-bold text-ink sm:text-[26px] tabular-nums tracking-[-0.02em]">
             {paytmInsightsData.upiTransactions}
           </p>
           <p className="mt-1 text-[11px] text-emerald font-medium">{t.upiTxnsSub}</p>
@@ -83,7 +83,7 @@ export function PaytmInsights({ onTriggerCampaign }: PaytmInsightsProps) {
 
         <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
           <p className="text-xs text-inksoft">{t.avgTxn}</p>
-          <p className="mt-1 font-sans text-2xl font-semibold text-ink sm:text-[26px] tabular-nums">
+          <p className="mt-1 font-sans text-2xl font-bold text-ink sm:text-[26px] tabular-nums tracking-[-0.02em]">
             ₹{paytmInsightsData.averageTransaction}
           </p>
           <p className="mt-1 text-[11px] text-inksoft">{t.avgTxnSub}</p>
@@ -91,7 +91,7 @@ export function PaytmInsights({ onTriggerCampaign }: PaytmInsightsProps) {
 
         <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
           <p className="text-xs text-inksoft">{t.repeatCust}</p>
-          <p className="mt-1 font-sans text-2xl font-semibold text-ink sm:text-[26px] tabular-nums">
+          <p className="mt-1 font-sans text-2xl font-bold text-ink sm:text-[26px] tabular-nums tracking-[-0.02em]">
             {paytmInsightsData.repeatCustomers}%
           </p>
           <p className="mt-1 text-[11px] text-inksoft">{t.repeatCustSub}</p>
@@ -99,7 +99,7 @@ export function PaytmInsights({ onTriggerCampaign }: PaytmInsightsProps) {
 
         <div className="col-span-2 rounded-2xl bg-paper p-4 ring-1 ring-line sm:col-span-1 shadow-2xs">
           <p className="text-xs text-inksoft">{t.upiRev}</p>
-          <p className="mt-1 font-sans text-2xl font-semibold text-emerald sm:text-[26px] tabular-nums">
+          <p className="mt-1 font-sans text-2xl font-bold text-emerald sm:text-[26px] tabular-nums tracking-[-0.02em]">
             ₹{paytmInsightsData.upiRevenue.toLocaleString("en-IN")}
           </p>
           <p className="mt-1 text-[11px] text-inksoft">{t.upiRevSub}</p>
