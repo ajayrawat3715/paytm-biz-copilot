@@ -6,10 +6,21 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
+// Auto-detect deployment target (Vercel, Netlify, Cloudflare Pages, etc.)
+const getPreset = () => {
+  if (process.env.VERCEL) return "vercel";
+  if (process.env.NETLIFY) return "netlify";
+  if (process.env.CF_PAGES) return "cloudflare-pages";
+  return process.env.NITRO_PRESET;
+};
+
+const activePreset = getPreset();
+
 export default defineConfig({
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  ...(activePreset ? { nitro: { preset: activePreset } } : {}),
 });
