@@ -6,8 +6,14 @@ export function getGeminiApiKey(): string {
       const stored = localStorage.getItem("bharat_gemini_api_key");
       if (stored && stored.trim()) return stored.trim();
     }
-    if (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_GEMINI_API_KEY) {
-      return import.meta.env.VITE_GEMINI_API_KEY.trim();
+    if (typeof import.meta !== "undefined" && import.meta.env) {
+      const env = import.meta.env as Record<string, string | undefined>;
+      if (env.GEMINI_API_KEY && env.GEMINI_API_KEY.trim()) return env.GEMINI_API_KEY.trim();
+      if (env.VITE_GEMINI_API_KEY && env.VITE_GEMINI_API_KEY.trim()) return env.VITE_GEMINI_API_KEY.trim();
+    }
+    if (typeof process !== "undefined" && process.env) {
+      if (process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY.trim()) return process.env.GEMINI_API_KEY.trim();
+      if (process.env.VITE_GEMINI_API_KEY && process.env.VITE_GEMINI_API_KEY.trim()) return process.env.VITE_GEMINI_API_KEY.trim();
     }
   } catch {
     // fallback
@@ -18,7 +24,11 @@ export function getGeminiApiKey(): string {
 export function setGeminiApiKey(key: string): void {
   try {
     if (typeof window !== "undefined") {
-      localStorage.setItem("bharat_gemini_api_key", key.trim());
+      if (key && key.trim()) {
+        localStorage.setItem("bharat_gemini_api_key", key.trim());
+      } else {
+        localStorage.removeItem("bharat_gemini_api_key");
+      }
     }
   } catch {
     // ignore
@@ -27,8 +37,10 @@ export function setGeminiApiKey(key: string): void {
 
 export function getGeminiModel(): string {
   try {
-    if (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_GEMINI_MODEL) {
-      return import.meta.env.VITE_GEMINI_MODEL.trim();
+    if (typeof import.meta !== "undefined" && import.meta.env) {
+      const env = import.meta.env as Record<string, string | undefined>;
+      if (env.GEMINI_MODEL && env.GEMINI_MODEL.trim()) return env.GEMINI_MODEL.trim();
+      if (env.VITE_GEMINI_MODEL && env.VITE_GEMINI_MODEL.trim()) return env.VITE_GEMINI_MODEL.trim();
     }
   } catch {
     // fallback
@@ -68,7 +80,7 @@ Guidelines:
 3. Structure: Keep responses crisp and structured (bullet points with bold key metrics like ₹ and percentages). Keep to 3-5 high-impact points so it reads quickly on mobile counters.
 4. Always prioritize actionable steps: e.g. reordering Parle biscuits before 5 PM, sending polite UPI payment links for ₹2,800 overdue credit, or launching the 10% flash discount.`;
 
-function detectSuggestedAction(
+export function detectSuggestedAction(
   query: string,
   responseText: string,
   lang: LanguageMode,
@@ -157,11 +169,6 @@ export async function askGeminiCopilot({
   const apiKey = getGeminiApiKey();
   const model = getGeminiModel();
 
-  if (!apiKey) {
-    console.info("No Gemini API key detected, using local Kirana copilot.");
-    return getCopilotResponse(q, effectiveLang);
-  }
-
   // If Hindi script is present or lang is 'hi', ensure Hindi response
   const hasDevanagari = /[\u0900-\u097F]/.test(q);
   const effectiveLang: LanguageMode = hasDevanagari || lang === "hi" ? "hi" : "en";
@@ -171,59 +178,95 @@ ${shopContext ? `Current Screen Context: ${shopContext}\n` : ""}Merchant Query: 
 
 Remember: If language is Hindi, reply in pure, natural Devanagari Hindi. Address Ramesh ji respectfully. Provide practical numbers with ₹.`;
 
-  const candidateModels = Array.from(new Set([model, "gemini-3.6-flash", "gemini-flash-latest"]));
+  // 1. If we have a direct client API key, call Google Gemini directly
+  if (apiKey) {
+    const candidateModels = Array.from(new Set([model, "gemini-3.6-flash", "gemini-flash-latest"]));
 
-  for (const m of candidateModels) {
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 9000);
+    for (const m of candidateModels) {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 9000);
 
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${apiKey}`;
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${apiKey}`;
 
-      const res = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        signal: controller.signal,
-        body: JSON.stringify({
-          contents: [
-            {
-              role: "user",
-              parts: [{ text: `${STORE_SYSTEM_PROMPT}\n\n---\n\n${userPrompt}` }],
-            },
-          ],
-          generationConfig: {
-            temperature: 0.65,
-            maxOutputTokens: 1000,
+        const res = await fetch(endpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
-        }),
-      });
+          signal: controller.signal,
+          body: JSON.stringify({
+            contents: [
+              {
+                role: "user",
+                parts: [{ text: `${STORE_SYSTEM_PROMPT}\n\n---\n\n${userPrompt}` }],
+              },
+            ],
+            generationConfig: {
+              temperature: 0.65,
+              maxOutputTokens: 1000,
+            },
+          }),
+        });
 
-      clearTimeout(timeoutId);
+        clearTimeout(timeoutId);
 
-      if (res.ok) {
-        const data = await res.json();
-        const candidateText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (res.ok) {
+          const data = await res.json();
+          const candidateText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
-        if (candidateText && typeof candidateText === "string") {
-          const trimmedText = candidateText.trim();
-          const suggestedAction = detectSuggestedAction(q, trimmedText, effectiveLang);
+          if (candidateText && typeof candidateText === "string") {
+            const trimmedText = candidateText.trim();
+            const suggestedAction = detectSuggestedAction(q, trimmedText, effectiveLang);
 
-          return {
-            text: trimmedText,
-            suggestedAction,
-          };
+            return {
+              text: trimmedText,
+              suggestedAction,
+            };
+          }
+        } else {
+          console.warn(`Model ${m} returned HTTP ${res.status}, trying next fallback.`);
         }
-      } else {
-        console.warn(`Model ${m} returned HTTP ${res.status}, trying fallback model.`);
+      } catch (err) {
+        console.warn(`Direct client attempt with model ${m} failed:`, err);
       }
-    } catch (err) {
-      console.warn(`Attempt with model ${m} failed:`, err);
     }
   }
 
-  // All online models failed or timed out — seamlessly fallback to instant offline copilot
+  // 2. Try calling serverless API endpoint /api/chat (which reads process.env.GEMINI_API_KEY on Vercel)
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 9000);
+
+    const serverRes = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      signal: controller.signal,
+      body: JSON.stringify({
+        query: q,
+        lang: effectiveLang,
+        shopContext,
+      }),
+    });
+
+    clearTimeout(timeoutId);
+
+    if (serverRes.ok) {
+      const serverData = await serverRes.json();
+      if (serverData?.text && typeof serverData.text === "string") {
+        const trimmedText = serverData.text.trim();
+        const suggestedAction = detectSuggestedAction(q, trimmedText, effectiveLang);
+        return {
+          text: trimmedText,
+          suggestedAction,
+        };
+      }
+    }
+  } catch (serverErr) {
+    console.warn("Server API /api/chat call failed:", serverErr);
+  }
+
+  // 3. Fallback to local rule-based Kirana copilot intelligence
   console.info("Using local Kirana AI fallback engine.");
   return getCopilotResponse(q, effectiveLang);
 }

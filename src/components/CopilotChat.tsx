@@ -17,18 +17,21 @@ import {
 } from "@/components/ai-elements/prompt-input";
 import { Shimmer } from "@/components/ai-elements/shimmer";
 import { getCopilotResponse, type LanguageMode } from "@/lib/copilot-ai";
-import { askGeminiCopilot } from "@/lib/gemini";
+import { askGeminiCopilot, getGeminiApiKey, setGeminiApiKey } from "@/lib/gemini";
 import { shop } from "@/lib/khata";
 import { useLanguage } from "@/lib/language-context";
 import { cn } from "@/lib/utils";
 import {
   ArrowRight,
+  Check,
+  Key,
   Languages,
   Mic,
   MicOff,
   Sparkles,
   Volume2,
   VolumeX,
+  X,
 } from "lucide-react";
 
 interface ChatMessage {
@@ -62,6 +65,28 @@ export function CopilotChat({
   const [isSpeaking, setIsSpeaking] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const [apiKey, setApiKey] = useState(() => getGeminiApiKey());
+  const [isKeyModalOpen, setIsKeyModalOpen] = useState(false);
+  const [tempKeyInput, setTempKeyInput] = useState("");
+  const [isKeySaved, setIsKeySaved] = useState(false);
+
+  const handleOpenKeyModal = () => {
+    setTempKeyInput(apiKey);
+    setIsKeySaved(false);
+    setIsKeyModalOpen(true);
+  };
+
+  const handleSaveKey = (keyToSave: string) => {
+    const trimmed = keyToSave.trim();
+    setGeminiApiKey(trimmed);
+    setApiKey(trimmed);
+    setIsKeySaved(true);
+    setTimeout(() => {
+      setIsKeyModalOpen(false);
+      setIsKeySaved(false);
+    }, 800);
+  };
 
   const initialGreeting = useMemo(() => {
     return lang === "hi"
@@ -170,8 +195,8 @@ export function CopilotChat({
   };
 
   return (
-    <div className={cn("flex min-h-0 flex-col bg-paper/60", className)}>
-      {/* Header with Language Toggle */}
+    <div className={cn("relative flex min-h-0 flex-col bg-paper/60", className)}>
+      {/* Header with Language Toggle & Key Settings */}
       <div className="flex items-center justify-between border-b border-line px-5 py-4">
         <div className="flex items-center gap-2.5">
           <span className="grid size-9 shrink-0 place-items-center rounded-[10px] bg-ink font-display text-base font-semibold text-cream">
@@ -182,9 +207,20 @@ export function CopilotChat({
               <p className="font-display text-[15px] font-semibold leading-tight text-ink">
                 {lang === "hi" ? "भारत — किराना कोपायलट" : "Bharat, your copilot"}
               </p>
-              <span className="rounded-full bg-rust/10 px-1.5 py-0.2 text-[9px] font-bold text-rust">
-                Gemini AI
-              </span>
+              <button
+                type="button"
+                onClick={handleOpenKeyModal}
+                className={cn(
+                  "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-bold transition-all",
+                  apiKey
+                    ? "bg-emerald/10 text-emerald hover:bg-emerald/15"
+                    : "bg-rust/10 text-rust hover:bg-rust/15",
+                )}
+                title={apiKey ? "Gemini AI Active (Click to view/change key)" : "Click to enter Gemini API Key"}
+              >
+                <Key className="size-2.5" />
+                <span>{apiKey ? "Gemini Active" : "Add Key"}</span>
+              </button>
             </div>
             <p className="text-xs text-inksoft">
               <span className="mr-1 inline-block size-1.5 animate-tick rounded-full bg-emerald align-middle" />
@@ -394,6 +430,83 @@ export function CopilotChat({
           </p>
         )}
       </div>
+
+      {/* Interactive Gemini Key Modal */}
+      {isKeyModalOpen && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-ink/40 p-4 backdrop-blur-xs">
+          <div className="w-full max-w-sm rounded-2xl bg-paper p-4 shadow-xl ring-1 ring-line animate-settle">
+            <div className="flex items-center justify-between border-b border-line pb-2.5">
+              <div className="flex items-center gap-1.5 font-display text-sm font-semibold text-ink">
+                <Key className="size-4 text-rust" />
+                <span>{lang === "hi" ? "Google Gemini API कुंजी" : "Google Gemini API Key"}</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsKeyModalOpen(false)}
+                className="rounded-full p-1 text-inksoft hover:bg-sand hover:text-ink transition-colors"
+              >
+                <X className="size-4" />
+              </button>
+            </div>
+
+            <p className="mt-2 text-xs text-inksoft leading-relaxed">
+              {lang === "hi"
+                ? "चैटबॉट को रियल-टाइम जेमिनी एआई से संचालित करने के लिए अपनी API Key दर्ज करें। यह आपके ब्राउज़र में सुरक्षित रहेगी।"
+                : "Enter your Gemini API Key to power live dynamic Kirana responses. Stored securely in your browser session."}
+            </p>
+
+            <div className="mt-3">
+              <input
+                type="password"
+                value={tempKeyInput}
+                onChange={(e) => setTempKeyInput(e.target.value)}
+                placeholder="Enter Gemini API key (AIzaSy...)..."
+                className="w-full rounded-xl border border-line bg-sand/50 px-3 py-2 text-xs font-mono text-ink outline-none focus:border-rust"
+              />
+            </div>
+
+            {isKeySaved && (
+              <p className="mt-2 flex items-center gap-1 text-[11px] font-semibold text-emerald animate-settle">
+                <Check className="size-3.5" />
+                <span>{lang === "hi" ? "सफलतापूर्वक सहेजा गया!" : "Key saved & activated!"}</span>
+              </p>
+            )}
+
+            <div className="mt-3.5 flex items-center justify-between gap-2">
+              {apiKey ? (
+                <button
+                  type="button"
+                  onClick={() => handleSaveKey("")}
+                  className="text-[10px] text-rust underline hover:text-rust/80 transition-colors"
+                >
+                  {lang === "hi" ? "कुंजी हटाएं (Clear)" : "Clear key"}
+                </button>
+              ) : (
+                <span className="text-[10px] text-inksoft">
+                  {lang === "hi" ? "Google AI Studio कुंजी पेस्ट करें" : "Paste key from Google AI Studio"}
+                </span>
+              )}
+
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => setIsKeyModalOpen(false)}
+                  className="rounded-xl px-3 py-1.5 text-xs text-inksoft hover:bg-sand transition-colors"
+                >
+                  {lang === "hi" ? "रद्द करें" : "Cancel"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleSaveKey(tempKeyInput)}
+                  className="rounded-xl bg-ink px-3 py-1.5 text-xs font-semibold text-cream hover:bg-ink/90 transition-colors"
+                >
+                  {lang === "hi" ? "सहेजें" : "Save Key"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

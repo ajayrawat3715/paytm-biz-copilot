@@ -16,7 +16,26 @@ const getPreset = () => {
 
 const activePreset = getPreset();
 
+const geminiKey =
+  process.env.GEMINI_API_KEY ||
+  process.env.VITE_GEMINI_API_KEY ||
+  "";
+
+const geminiModel =
+  process.env.GEMINI_MODEL ||
+  process.env.VITE_GEMINI_MODEL ||
+  "gemini-3.6-flash";
+
 export default defineConfig({
+  vite: {
+    envPrefix: ["VITE_", "GEMINI_"],
+    define: {
+      "import.meta.env.GEMINI_API_KEY": JSON.stringify(geminiKey),
+      "import.meta.env.VITE_GEMINI_API_KEY": JSON.stringify(geminiKey),
+      "import.meta.env.GEMINI_MODEL": JSON.stringify(geminiModel),
+      "import.meta.env.VITE_GEMINI_MODEL": JSON.stringify(geminiModel),
+    },
+  },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
