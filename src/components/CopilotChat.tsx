@@ -20,6 +20,7 @@ import { getCopilotResponse, type LanguageMode } from "@/lib/copilot-ai";
 import { askGeminiCopilot, getGeminiApiKey, setGeminiApiKey } from "@/lib/gemini";
 import { shop } from "@/lib/khata";
 import { useLanguage } from "@/lib/language-context";
+import { cn } from "@/lib/utils";
 import {
   ArrowRight,
   Check,
