@@ -159,10 +159,12 @@ function Home() {
           {/* 1. Upgraded Morning Brief & Forecast */}
           <MorningBrief
             collectedToday={dailyCash.cashSales + totals.udharCollectedToday}
+            totals={totals}
             onOpenCampaign={() => setCampaignModalOpen(true)}
             onOpenInventory={() => setInventoryModalOpen(true)}
             onOpenUdhaar={() => setUdhaarReminderOpen(true)}
             onReviewAll={() => setAutopilotModalOpen(true)}
+            onExplain={(title) => setExplainContext(title)}
           />
 
           {/* Paytm Soundbox 4.0 Smart Voice Briefing & Chime */}

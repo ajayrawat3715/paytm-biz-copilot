@@ -99,7 +99,8 @@ export function DailyActionPlan({
 
       {/* 3 Ranked Priorities */}
       <div className="mt-4 grid grid-cols-1 gap-3.5 md:grid-cols-3">
-        {actionPlanData.items.map((item) => {
+        {actionPlanData.items.map((item, idx) => {
+          const itemNum = String(idx + 1).padStart(2, "0");
           const hi = HINDI_PLAN_ITEMS[item.id];
           const badge = isHindi && hi ? hi.priorityBadge : item.priorityBadge;
           const title = isHindi && hi ? hi.title : item.title;
@@ -125,9 +126,14 @@ export function DailyActionPlan({
             >
               <div>
                 <div className="flex items-center justify-between gap-1">
-                  <span className="text-[11px] font-semibold uppercase tracking-wider text-ink">
-                    {badge}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="inline-flex size-5 items-center justify-center rounded-md bg-sand text-[11px] font-bold tabular-nums text-ink ring-1 ring-line">
+                      {itemNum}
+                    </span>
+                    <span className="text-[11px] font-semibold uppercase tracking-wider text-ink">
+                      {badge}
+                    </span>
+                  </div>
                   {onExplain && (
                     <button
                       type="button"
@@ -140,7 +146,7 @@ export function DailyActionPlan({
                   )}
                 </div>
 
-                <h3 className="mt-2.5 font-sans text-[16px] font-semibold text-ink leading-snug">
+                <h3 className="mt-3 font-sans text-[16px] font-semibold text-ink leading-snug">
                   "{title}"
                 </h3>
 

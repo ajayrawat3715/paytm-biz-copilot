@@ -181,13 +181,13 @@ function InventoryPage() {
             />
           </div>
 
-          <div className="flex items-center gap-1 rounded-full bg-sand/60 p-1 ring-1 ring-line">
+          <div className="flex flex-wrap items-center rounded-2xl bg-paper p-1 ring-1 ring-line">
             <button
               type="button"
               onClick={() => setFilterCategory("all")}
               className={cn(
-                "rounded-full px-3 py-1 text-xs font-semibold transition-all",
-                filterCategory === "all" ? "bg-paper text-ink shadow-sm" : "text-inksoft hover:text-ink"
+                "rounded-xl px-3 py-1.5 text-xs font-semibold transition-all",
+                filterCategory === "all" ? "bg-ink text-cream shadow-2xs" : "text-inksoft hover:text-ink"
               )}
             >
               {isHindi ? "सभी सामान (8)" : "All Items (8)"}
@@ -196,8 +196,8 @@ function InventoryPage() {
               type="button"
               onClick={() => setFilterCategory("critical")}
               className={cn(
-                "rounded-full px-3 py-1 text-xs font-semibold transition-all",
-                filterCategory === "critical" ? "bg-red-500 text-white shadow-sm" : "text-inksoft hover:text-ink"
+                "rounded-xl px-3 py-1.5 text-xs font-semibold transition-all",
+                filterCategory === "critical" ? "bg-warning text-cream shadow-2xs" : "text-inksoft hover:text-ink"
               )}
             >
               {isHindi ? "⚠️ कम स्टॉक (4)" : "⚠️ Needs Restock (4)"}
@@ -206,8 +206,8 @@ function InventoryPage() {
               type="button"
               onClick={() => setFilterCategory("healthy")}
               className={cn(
-                "rounded-full px-3 py-1 text-xs font-semibold transition-all",
-                filterCategory === "healthy" ? "bg-emerald text-white shadow-sm" : "text-inksoft hover:text-ink"
+                "rounded-xl px-3 py-1.5 text-xs font-semibold transition-all",
+                filterCategory === "healthy" ? "bg-emerald text-white shadow-2xs" : "text-inksoft hover:text-ink"
               )}
             >
               {isHindi ? "सुरक्षित (4)" : "Healthy (4)"}
@@ -216,7 +216,7 @@ function InventoryPage() {
         </div>
 
         {/* Inventory SKU Table */}
-        <div className="mt-4 overflow-hidden rounded-[20px] bg-paper ring-1 ring-line shadow-sm">
+        <div className="mt-4 overflow-hidden rounded-2xl bg-paper ring-1 ring-line shadow-2xs">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead className="border-b border-line bg-sand/40 text-inksoft uppercase tracking-wider font-semibold text-[10px]">
@@ -235,7 +235,7 @@ function InventoryPage() {
                   return (
                     <tr key={item.id} className="hover:bg-sand/20 transition-colors">
                       <td className="px-4 py-4 sm:px-6">
-                        <p className="font-display font-semibold text-sm text-ink">{item.name}</p>
+                        <p className="font-sans font-semibold text-sm text-ink">{item.name}</p>
                         <p className="text-[11px] text-inksoft">{item.category}</p>
                       </td>
 
@@ -243,18 +243,18 @@ function InventoryPage() {
                         <div className="flex items-center gap-2">
                           <span
                             className={cn(
-                              "font-display text-sm font-bold",
+                              "font-sans text-sm font-bold tabular-nums",
                               item.status === "out_of_stock"
-                                ? "text-red-600 font-extrabold"
+                                ? "text-warning font-bold"
                                 : item.status === "low_stock"
-                                ? "text-amber-600"
+                                ? "text-warning"
                                 : "text-ink"
                             )}
                           >
                             {item.stock} {item.unit}
                           </span>
                           {item.status === "out_of_stock" && (
-                            <span className="rounded-full bg-red-100 px-2 py-0.5 text-[9px] font-bold text-red-700">
+                            <span className="rounded-full bg-warning-light px-2 py-0.5 text-[9px] font-bold text-warning ring-1 ring-warning/30">
                               {isHindi ? "खत्म" : "OUT"}
                             </span>
                           )}
@@ -270,10 +270,10 @@ function InventoryPage() {
                           className={cn(
                             "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-bold",
                             item.daysRemaining === 0
-                              ? "bg-red-100 text-red-700"
+                              ? "bg-warning-light text-warning ring-1 ring-warning/30"
                               : item.daysRemaining < 1
-                              ? "bg-amber-100 text-amber-800"
-                              : "bg-emerald/15 text-emerald"
+                              ? "bg-warning-light text-warning"
+                              : "bg-emerald-light text-emerald"
                           )}
                         >
                           <Clock className="size-3" />
@@ -294,7 +294,7 @@ function InventoryPage() {
                             type="button"
                             onClick={() => orderInventoryStock(item.id, 10)}
                             title={isHindi ? "+10 यूनिट स्टॉक जोड़ें" : "+10 Units Stock"}
-                            className="rounded-full bg-sand px-2.5 py-1 text-[11px] font-bold text-ink hover:bg-paper ring-1 ring-line active:scale-95 transition-all"
+                            className="rounded-xl bg-sand px-2.5 py-1 text-[11px] font-bold text-ink hover:bg-paper ring-1 ring-line active:scale-95 transition-all"
                           >
                             +10
                           </button>
