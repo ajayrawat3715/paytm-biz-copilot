@@ -129,14 +129,14 @@ function CustomersPage() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
-              <span className="rounded-full bg-rust-light px-2.5 py-0.5 text-xs font-semibold text-rust">
+              <span className="rounded-full bg-rust/15 px-2.5 py-0.5 text-xs font-bold text-rust">
                 {isHindi ? "डिजिटल बही-खाता व ग्राहक संबंध" : "Digital Ledger & CRM"}
               </span>
-              <span className="rounded-full bg-emerald-light px-2.5 py-0.5 text-xs font-semibold text-emerald">
+              <span className="rounded-full bg-emerald/15 px-2.5 py-0.5 text-xs font-semibold text-emerald">
                 {isHindi ? "84% समय पर वसूली दर" : "84% On-Time Recovery Rate"}
               </span>
             </div>
-            <h1 className="mt-2 font-sans text-2xl sm:text-3xl font-bold tracking-[-0.025em] text-ink">
+            <h1 className="mt-1.5 font-display text-2xl font-bold text-ink sm:text-3xl">
               {t.khataPageTitle}
             </h1>
             <p className="mt-1 text-sm text-inksoft">
@@ -148,7 +148,7 @@ function CustomersPage() {
             <button
               type="button"
               onClick={() => setNewUdharOpen(true)}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-rust px-4 py-2 text-xs font-semibold text-cream shadow-2xs hover:bg-rust/95 active:scale-95 transition-all"
+              className="inline-flex items-center gap-1.5 rounded-full bg-rust px-4 py-2 text-xs font-bold text-cream shadow-sm hover:bg-rust/90 active:scale-95 transition-all"
             >
               <Plus className="size-4" />
               <span>{isHindi ? "+ नया उधार लिखें" : "+ Add New Udhaar"}</span>
@@ -158,53 +158,21 @@ function CustomersPage() {
               type="button"
               onClick={resetToDefault}
               title={isHindi ? "डेटा को प्रारंभिक स्थिति में लाएं" : "Reset data to default"}
-              className="rounded-xl bg-sand p-2 text-inksoft hover:text-ink hover:bg-sand/80 ring-1 ring-line transition-colors"
+              className="rounded-full bg-sand p-2 text-inksoft hover:text-ink hover:bg-sand/80 ring-1 ring-line transition-colors"
             >
               <RotateCcw className="size-3.5" />
             </button>
           </div>
         </div>
 
-        {/* Top Bharat AI Credit Insight Banner */}
-        <div className="mt-6 rounded-2xl bg-paper p-5 ring-1 ring-rust/35 border-l-4 border-l-rust shadow-xs">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex items-start gap-3">
-              <span className="grid size-8 place-items-center rounded-xl bg-rust/10 text-rust shrink-0 mt-0.5">
-                <Sparkles className="size-4" />
-              </span>
-              <div>
-                <p className="text-xs font-bold uppercase tracking-wider text-rust">
-                  {isHindi ? "✦ भारत उधार इनसाइट" : "✦ BHARAT CREDIT INTELLIGENCE"}
-                </p>
-                <p className="mt-1 font-sans text-sm sm:text-base font-semibold text-ink leading-snug">
-                  {isHindi
-                    ? "5 ग्राहकों में कुल ₹2,800 अतिदेय (overdue) है। भारत पिछले भुगतान व्यवहार को देखते हुए राजेश कुमार और सुनीता देवी को पहले याद दिलाने की अनुशंसा करता है।"
-                    : "₹2,800 is overdue across 5 customers. Bharat recommends reminding Rajesh Kumar & Sunita Devi because of their previous payment behavior."}
-                </p>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => {
-                setActiveTab("overdue");
-                setSearchTerm("");
-              }}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-rust px-4 py-2 text-xs font-semibold text-cream shadow-2xs hover:bg-rust/95 active:scale-95 transition-all shrink-0"
-            >
-              <span>{isHindi ? "रिमाइंडर समीक्षा करें →" : "Review reminders →"}</span>
-            </button>
-          </div>
-        </div>
-
         {/* 4 Summary Cards — Live Synced */}
-        <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
+        <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line">
             <div className="flex items-center justify-between">
               <span className="text-xs text-inksoft">{isHindi ? "कुल बकाया उधार" : "Total Credit Outstanding"}</span>
               <Wallet className="size-4 text-inksoft" />
             </div>
-            <p className="mt-2 font-sans text-2xl sm:text-[28px] font-bold text-ink tabular-nums tracking-[-0.02em]">
+            <p className="mt-2 font-display text-2xl font-bold text-ink">
               ₹{totals.outstanding.toLocaleString("en-IN")}
             </p>
             <p className="mt-1 text-[11px] text-inksoft">
@@ -212,25 +180,25 @@ function CustomersPage() {
             </p>
           </div>
 
-          <div className="rounded-2xl bg-paper p-4 ring-1 ring-line border-l-[3px] border-l-rust shadow-2xs">
+          <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line border-l-4 border-l-red-500">
             <div className="flex items-center justify-between">
               <span className="text-xs text-inksoft">{isHindi ? "अतिदेय (Overdue) राशि" : "Overdue Bucket"}</span>
-              <ShieldAlert className="size-4 text-rust" />
+              <ShieldAlert className="size-4 text-red-500" />
             </div>
-            <p className="mt-2 font-sans text-2xl sm:text-[28px] font-bold text-rust tabular-nums tracking-[-0.02em]">
+            <p className="mt-2 font-display text-2xl font-bold text-red-600">
               ₹{totals.overdueAmount.toLocaleString("en-IN")}
             </p>
-            <p className="mt-1 text-[11px] text-rust font-semibold">
+            <p className="mt-1 text-[11px] text-red-600 font-semibold">
               {totals.overdueCount} {isHindi ? "ग्राहकों पर अति ध्यान आवश्यक" : "customers overdue"}
             </p>
           </div>
 
-          <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
+          <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line">
             <div className="flex items-center justify-between">
               <span className="text-xs text-inksoft">{isHindi ? "आज की वसूली" : "Collected Today"}</span>
               <Coins className="size-4 text-emerald" />
             </div>
-            <p className="mt-2 font-sans text-2xl sm:text-[28px] font-bold text-emerald tabular-nums tracking-[-0.02em]">
+            <p className="mt-2 font-display text-2xl font-bold text-emerald">
               ₹{totals.udharCollectedToday.toLocaleString("en-IN")}
             </p>
             <p className="mt-1 text-[11px] text-emerald font-semibold">
@@ -238,12 +206,12 @@ function CustomersPage() {
             </p>
           </div>
 
-          <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
+          <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line">
             <div className="flex items-center justify-between">
               <span className="text-xs text-inksoft">{isHindi ? "सुप्त (Inactive) ग्राहक" : "Inactive Cohort"}</span>
-              <Clock className="size-4 text-warning" />
+              <Clock className="size-4 text-amber-500" />
             </div>
-            <p className="mt-2 font-sans text-2xl sm:text-[28px] font-bold text-ink tabular-nums tracking-[-0.02em]">240 {isHindi ? "खाते" : "Accounts"}</p>
+            <p className="mt-2 font-display text-2xl font-bold text-ink">240 {isHindi ? "खाते" : "Accounts"}</p>
             <p className="mt-1 text-[11px] text-rust font-semibold">
               {isHindi ? "10% ऑफर से ₹6,100 अवसर" : "Target 10% offer for ₹6.1k sales"}
             </p>
@@ -259,7 +227,7 @@ function CustomersPage() {
               className={cn(
                 "rounded-xl px-3.5 py-1.5 text-xs font-semibold transition-all",
                 activeTab === "overdue"
-                  ? "bg-rust text-cream shadow-2xs"
+                  ? "bg-red-500 text-white shadow-xs"
                   : "text-inksoft hover:text-ink",
               )}
             >
@@ -330,17 +298,17 @@ function CustomersPage() {
               <div
                 key={cust.id}
                 className={cn(
-                  "rounded-2xl bg-paper p-5 ring-1 transition-all shadow-2xs",
-                  isOverdue ? "ring-warning/35 border-l-4 border-l-warning" : "ring-line",
+                  "rounded-[22px] bg-paper p-4.5 ring-1 transition-all shadow-xs",
+                  isOverdue ? "ring-red-200 border-l-4 border-l-red-500" : "ring-line",
                 )}
               >
                 {/* Header row */}
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     <div className="flex items-center gap-2">
-                      <h3 className="font-sans text-base font-bold text-ink">{cust.name}</h3>
+                      <h3 className="font-display text-base font-bold text-ink">{cust.name}</h3>
                       {cust.riskLevel === "high" && (
-                        <span className="rounded-full bg-warning-light px-2 py-0.5 text-[10px] font-bold text-warning ring-1 ring-warning/30">
+                        <span className="rounded bg-red-100 px-1.5 py-0.2 text-[9px] font-bold text-red-700">
                           {isHindi ? "उच्च ध्यान" : "High Attention"}
                         </span>
                       )}
@@ -349,7 +317,7 @@ function CustomersPage() {
                   </div>
 
                   <div className="text-right">
-                    <p className="font-sans text-lg font-bold text-ink tabular-nums">
+                    <p className="font-display text-lg font-bold text-ink">
                       {isInactive ? "₹6,100 Exp" : `₹${cust.balance.toLocaleString("en-IN")}`}
                     </p>
                     <p className="text-[10px] text-inksoft">
@@ -376,7 +344,7 @@ function CustomersPage() {
                       <button
                         type="button"
                         onClick={() => handleOpenRepayModal(cust)}
-                        className="inline-flex items-center gap-1 rounded-xl bg-emerald/15 px-3 py-1.5 text-xs font-semibold text-emerald hover:bg-emerald/25 transition-all shadow-2xs"
+                        className="inline-flex items-center gap-1 rounded-full bg-emerald/10 px-3 py-1.5 text-xs font-bold text-emerald hover:bg-emerald/15 transition-all shadow-xs"
                       >
                         <Coins className="size-3.5" />
                         <span>{isHindi ? "पेमेंट लें" : "Repay"}</span>
@@ -388,7 +356,7 @@ function CustomersPage() {
                       <button
                         type="button"
                         onClick={() => setActiveQrId(isQrOpen ? null : cust.id)}
-                        className="inline-flex items-center gap-1 rounded-xl bg-sand px-3 py-1.5 text-xs font-semibold text-ink ring-1 ring-line hover:bg-paper transition-all"
+                        className="inline-flex items-center gap-1 rounded-full bg-sand px-3 py-1.5 text-xs font-semibold text-ink ring-1 ring-line hover:bg-paper transition-all"
                       >
                         <QrCode className="size-3.5 text-rust" />
                         <span>

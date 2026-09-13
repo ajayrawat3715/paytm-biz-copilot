@@ -56,26 +56,26 @@ export function SoundboxWidget() {
   };
 
   return (
-    <div className="mt-4 rounded-2xl bg-[#172033] p-4 text-white ring-1 ring-black/20 sm:p-5 shadow-2xs">
+    <div className="mt-4 rounded-[20px] bg-gradient-to-r from-[#002e6e] to-[#004299] p-4 text-white shadow-sm ring-1 ring-black/10 sm:p-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         {/* Left: Device Info */}
         <div className="flex items-center gap-3">
-          <div className="relative grid size-11 place-items-center rounded-xl bg-white/10 ring-1 ring-white/15">
-            <Speaker className="size-5 text-[#00BAF2]" />
-            <span className="absolute -top-1 -right-1 size-2 rounded-full bg-emerald animate-ping" />
-            <span className="absolute -top-1 -right-1 size-2 rounded-full bg-emerald" />
+          <div className="relative grid size-11 place-items-center rounded-2xl bg-white/10 ring-1 ring-white/20 backdrop-blur">
+            <Speaker className="size-6 text-white" />
+            <span className="absolute -top-1 -right-1 size-2.5 rounded-full bg-emerald-400 animate-ping" />
+            <span className="absolute -top-1 -right-1 size-2.5 rounded-full bg-emerald-400" />
           </div>
 
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-semibold tracking-wider uppercase text-[#00BAF2]">
+              <span className="text-[10px] font-bold tracking-widest uppercase text-white/70">
                 Paytm Soundbox 4.0
               </span>
-              <span className="rounded-full bg-[#00BAF2]/20 px-2 py-0.5 text-[9px] font-medium text-[#00BAF2] ring-1 ring-[#00BAF2]/30">
+              <span className="rounded-full bg-white/20 px-2 py-0.2 text-[9px] font-semibold text-white">
                 AI Voice Synced
               </span>
             </div>
-            <p className="font-sans text-sm font-semibold sm:text-base text-white">
+            <p className="font-display text-sm font-semibold sm:text-base">
               {isHindi ? "पेटीएम साउंडबॉक्स वॉयस ब्रीफिंग" : "Paytm Soundbox Morning Briefing"}
             </p>
           </div>
@@ -87,9 +87,9 @@ export function SoundboxWidget() {
           <button
             type="button"
             onClick={() => setVoiceModalOpen(true)}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-white/10 px-3 py-1.5 text-xs font-semibold text-white ring-1 ring-white/20 hover:bg-white/15 active:scale-95 transition-all shadow-2xs"
+            className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1.5 text-xs font-bold text-white ring-1 ring-white/30 hover:bg-white/25 active:scale-95 transition-all shadow-sm"
           >
-            <Mic className="size-3.5 text-warning" />
+            <Mic className="size-3.5 text-amber-300" />
             <span>{isHindi ? "बोल के खाता" : "Voice Khata"}</span>
           </button>
 
@@ -97,9 +97,9 @@ export function SoundboxWidget() {
           <button
             type="button"
             onClick={handleTestChime}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-white/10 px-3 py-1.5 text-xs font-semibold text-white/90 ring-1 ring-white/20 hover:bg-white/15 active:scale-95 transition-all shadow-2xs"
+            className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-white/90 ring-1 ring-white/20 hover:bg-white/20 active:scale-95 transition-all"
           >
-            <BellRing className="size-3.5 text-[#00BAF2]" />
+            <BellRing className="size-3.5" />
             <span>{isHindi ? "₹800 साउंडबॉक्स चाइम" : "Test ₹800 Chime"}</span>
           </button>
 
@@ -108,10 +108,10 @@ export function SoundboxWidget() {
             type="button"
             onClick={handlePlayBrief}
             className={cn(
-              "inline-flex items-center gap-2 rounded-xl px-3.5 py-1.5 text-xs font-semibold transition-all active:scale-95 shadow-2xs",
+              "inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition-all active:scale-95 shadow-md",
               isPlaying
-                ? "bg-emerald text-white animate-pulse"
-                : "bg-paper text-ink hover:bg-cream",
+                ? "bg-emerald-500 text-white animate-pulse"
+                : "bg-white text-[#002e6e] hover:bg-white/95",
             )}
           >
             {isPlaying ? (
@@ -122,7 +122,7 @@ export function SoundboxWidget() {
             ) : (
               <>
                 <Volume2 className="size-4 text-rust" />
-                <span>{isHindi ? "प्रभात साउंडबॉक्स सुनें" : "Play Audio Brief"}</span>
+                <span>{isHindi ? "प्रभात साउंडबॉक्स संदेश सुनें" : "Play Morning Audio Brief"}</span>
               </>
             )}
           </button>
@@ -131,15 +131,15 @@ export function SoundboxWidget() {
 
       {/* Live Voice Status Transcript Box */}
       {isPlaying && activeSpeech && (
-        <div className="mt-3 flex items-center gap-2 rounded-xl bg-black/30 p-2.5 text-xs text-white/90 ring-1 ring-white/10 animate-settle">
-          <Radio className="size-3.5 animate-pulse text-emerald shrink-0" />
+        <div className="mt-3 flex items-center gap-2 rounded-xl bg-black/20 p-2.5 text-xs text-white/90 animate-settle">
+          <Radio className="size-3.5 animate-pulse text-emerald-400 shrink-0" />
           <span className="font-medium truncate italic">
             "{activeSpeech}"
           </span>
           <div className="ml-auto flex items-end gap-0.5 h-3">
-            <span className="w-1 bg-emerald animate-bounce h-2" />
-            <span className="w-1 bg-emerald animate-bounce h-3" style={{ animationDelay: "0.15s" }} />
-            <span className="w-1 bg-emerald animate-bounce h-1.5" style={{ animationDelay: "0.3s" }} />
+            <span className="w-1 bg-emerald-400 animate-bounce h-2" />
+            <span className="w-1 bg-emerald-400 animate-bounce h-3" style={{ animationDelay: "0.15s" }} />
+            <span className="w-1 bg-emerald-400 animate-bounce h-1.5" style={{ animationDelay: "0.3s" }} />
           </div>
         </div>
       )}

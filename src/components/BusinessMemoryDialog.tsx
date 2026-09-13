@@ -51,7 +51,7 @@ export function BusinessMemoryDialog({
               <Brain className="size-5" />
             </span>
             <div>
-              <DialogTitle className="font-sans text-xl font-semibold text-ink">
+              <DialogTitle className="font-display text-xl font-semibold text-ink">
                 {t.memoryTitle}
               </DialogTitle>
               <DialogDescription className="text-xs text-inksoft">

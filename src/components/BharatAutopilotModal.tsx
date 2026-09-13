@@ -13,6 +13,7 @@ import { translations } from "@/lib/translations";
 import { useKiranaData } from "@/lib/kirana-context";
 import { cn } from "@/lib/utils";
 import {
+  Bot,
   CheckCircle2,
   Clock,
   ExternalLink,

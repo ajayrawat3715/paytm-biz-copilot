@@ -13,7 +13,7 @@ import { campaignSimulationData } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 import {
   ArrowRight,
-  Brain,
+  Bot,
   CheckCircle2,
   Clock,
   Loader2,
@@ -186,8 +186,8 @@ export function CampaignSimulationModal({
             <div className="mt-3.5 rounded-2xl bg-sand/30 p-4 ring-1 ring-line">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1.5">
-                  <Sparkles className="size-4 text-rust" />
-                  <p className="font-sans text-sm font-semibold text-ink">
+                  <Bot className="size-4 text-rust" />
+                  <p className="font-display text-sm font-semibold text-ink">
                     {isHindi ? "भारत से पूछें: यदि मैं 15% छूट दूं तो?" : "Ask Bharat: What if?"}
                   </p>
                 </div>

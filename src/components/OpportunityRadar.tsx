@@ -97,10 +97,10 @@ export function OpportunityRadar({
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <div>
           <div className="flex items-center gap-2">
-            <span className="grid size-6 place-items-center rounded-lg bg-rust/10 text-rust">
+            <span className="grid size-6 place-items-center rounded-md bg-rust/10 text-rust">
               <Radar className="size-3.5 animate-pulse" />
             </span>
-            <h2 className="font-sans text-[22px] sm:text-[24px] font-bold text-ink leading-[1.2] tracking-[-0.02em]">
+            <h2 className="font-display text-xl font-semibold text-ink">
               {t.radarTitle}
             </h2>
           </div>
@@ -110,8 +110,8 @@ export function OpportunityRadar({
           className={cn(
             "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold",
             activeCount === 0
-              ? "bg-emerald-light text-emerald"
-              : "bg-emerald-light text-emerald"
+              ? "bg-emerald/15 text-emerald"
+              : "bg-emerald/10 text-emerald"
           )}
         >
           <Sparkles className="size-3" />
@@ -188,30 +188,20 @@ export function OpportunityRadar({
             }
           }
 
-          const isAIPrimary = item.id === "radar-inactive" && !isCardResolved;
-
           return (
             <div
               key={item.id}
               className={cn(
-                "flex flex-col justify-between rounded-2xl p-5 ring-1 transition-all shadow-2xs",
-                isCardResolved
-                  ? "ring-emerald/40 bg-emerald-light/20"
-                  : isAIPrimary
-                  ? "ring-rust/35 bg-rust-light/35 hover:bg-rust-light/50"
-                  : "ring-line bg-paper hover:bg-cream/40"
+                "flex flex-col justify-between rounded-[20px] bg-paper p-5 ring-1 transition-all hover:ring-rust/30 hover:shadow-sm",
+                isCardResolved ? "ring-emerald/40 bg-emerald/[0.02]" : "ring-line"
               )}
             >
               <div>
                 <div className="flex items-center justify-between gap-1">
                   <span
                     className={cn(
-                      "rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider",
-                      isCardResolved
-                        ? "bg-emerald-light text-emerald"
-                        : isAIPrimary
-                        ? "bg-rust/15 text-rust"
-                        : "bg-sand text-inksoft"
+                      "rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider",
+                      isCardResolved ? "bg-emerald/15 text-emerald" : "bg-sand text-inksoft"
                     )}
                   >
                     {badge}
@@ -220,7 +210,7 @@ export function OpportunityRadar({
                     <button
                       type="button"
                       onClick={() => onExplain(title)}
-                      className="inline-flex items-center gap-1 text-[11px] font-medium text-inksoft hover:text-rust transition-colors"
+                      className="inline-flex items-center gap-1 text-[11px] font-medium text-inksoft hover:text-rust"
                     >
                       <HelpCircle className="size-3" />
                       {isHindi ? "क्यों?" : "Why?"}
@@ -228,19 +218,17 @@ export function OpportunityRadar({
                   )}
                 </div>
 
-                <h3 className="mt-2.5 font-sans text-[16px] font-semibold text-ink leading-snug">
+                <h3 className="mt-2.5 font-display text-base font-semibold text-ink leading-snug">
                   {title}
                 </h3>
-                <p className="mt-1 text-xs text-inksoft leading-relaxed">{desc}</p>
+                <p className="mt-1 text-xs text-inksoft">{desc}</p>
 
                 {/* Estimated Opportunity Box */}
                 <div
                   className={cn(
                     "mt-3 rounded-xl p-3 ring-1",
                     isCardResolved
-                      ? "bg-emerald-light/40 ring-emerald/20"
-                      : isAIPrimary
-                      ? "bg-paper/80 ring-rust/20"
+                      ? "bg-emerald/5 ring-emerald/20"
                       : "bg-cream/70 ring-line/60"
                   )}
                 >
@@ -255,7 +243,7 @@ export function OpportunityRadar({
                   </p>
                   <p
                     className={cn(
-                      "mt-0.5 font-sans text-xl font-semibold tabular-nums",
+                      "mt-0.5 font-display text-xl font-bold",
                       isCardResolved ? "text-emerald" : "text-rust"
                     )}
                   >
@@ -273,13 +261,13 @@ export function OpportunityRadar({
                     <span className="font-semibold text-ink">
                       {isHindi ? "कारण: " : "Reason: "}
                     </span>
-                    <span className="text-inksoft leading-relaxed">{reason}</span>
+                    <span className="text-inksoft">{reason}</span>
                   </div>
                   <div>
                     <span className="font-semibold text-ink">
                       {isHindi ? "सिफारिश: " : "Action: "}
                     </span>
-                    <span className="text-inksoft leading-relaxed">{action}</span>
+                    <span className="text-inksoft">{action}</span>
                   </div>
                 </div>
               </div>
@@ -289,10 +277,10 @@ export function OpportunityRadar({
                 type="button"
                 onClick={() => handleAction(item.type)}
                 className={cn(
-                  "mt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-xl py-2 text-xs font-semibold shadow-2xs ring-1 transition-all active:scale-[0.98]",
+                  "mt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs font-semibold shadow-sm ring-1 hover:opacity-95 active:scale-[0.98]",
                   isCardResolved
-                    ? "bg-emerald text-cream ring-emerald hover:bg-emerald/90"
-                    : "bg-rust text-cream ring-rust hover:bg-rust/95"
+                    ? "bg-emerald text-white ring-emerald/40"
+                    : "bg-rust text-cream ring-rust/40"
                 )}
               >
                 <span>{btnText}</span>
@@ -304,13 +292,13 @@ export function OpportunityRadar({
       </div>
 
       {/* Bottom Total Opportunity Strip & Non-Guaranteed Disclaimer */}
-      <div className="mt-4 rounded-2xl bg-paper p-4 ring-1 ring-line sm:p-5 shadow-2xs">
+      <div className="mt-4 rounded-[18px] bg-sand/40 p-4 ring-1 ring-line sm:p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-inksoft">
               {t.totalOpportunity}
             </p>
-            <p className="font-sans text-3xl sm:text-4xl font-bold text-ink tabular-nums tracking-[-0.02em]">
+            <p className="font-display text-2xl font-bold text-ink sm:text-3xl">
               ₹{dynamicTotalOpportunity.toLocaleString("en-IN")}
             </p>
           </div>

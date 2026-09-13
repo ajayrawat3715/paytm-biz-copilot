@@ -50,56 +50,56 @@ export function PaytmInsights({ onTriggerCampaign }: PaytmInsightsProps) {
     <section className="mt-8 animate-settle">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <div className="flex items-center gap-2">
-          <div className="grid size-6 place-items-center rounded-lg bg-[#00BAF2] text-white shadow-2xs">
+          <div className="grid size-6 place-items-center rounded-md bg-[#002e6e] text-white">
             <QrCode className="size-3.5" />
           </div>
-          <h2 className="font-sans text-[22px] sm:text-[24px] font-bold text-ink leading-[1.2] tracking-[-0.02em]">
+          <h2 className="font-display text-xl font-semibold text-ink">
             {t.paytmInsightsTitle}
           </h2>
         </div>
         <span className="inline-flex items-center gap-1 rounded-full bg-sand px-2.5 py-0.5 text-[11px] font-medium text-inksoft ring-1 ring-line">
-          <Info className="size-3 text-[#00BAF2]" />
+          <Info className="size-3 text-rust" />
           {t.paytmDemoBadge}
         </span>
       </div>
 
       {/* 5 Core Metric Tiles */}
       <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-        <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
+        <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line">
           <p className="text-xs text-inksoft">{t.todayPayments}</p>
-          <p className="mt-1 font-sans text-2xl font-bold text-ink sm:text-[26px] tabular-nums tracking-[-0.02em]">
+          <p className="mt-1 font-display text-2xl font-semibold text-ink sm:text-[26px]">
             ₹{paytmInsightsData.todayPayments.toLocaleString("en-IN")}
           </p>
           <p className="mt-1 text-[11px] text-inksoft">{t.todayPaymentsSub}</p>
         </div>
 
-        <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
+        <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line">
           <p className="text-xs text-inksoft">{t.upiTxns}</p>
-          <p className="mt-1 font-sans text-2xl font-bold text-ink sm:text-[26px] tabular-nums tracking-[-0.02em]">
+          <p className="mt-1 font-display text-2xl font-semibold text-ink sm:text-[26px]">
             {paytmInsightsData.upiTransactions}
           </p>
           <p className="mt-1 text-[11px] text-emerald font-medium">{t.upiTxnsSub}</p>
         </div>
 
-        <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
+        <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line">
           <p className="text-xs text-inksoft">{t.avgTxn}</p>
-          <p className="mt-1 font-sans text-2xl font-bold text-ink sm:text-[26px] tabular-nums tracking-[-0.02em]">
+          <p className="mt-1 font-display text-2xl font-semibold text-ink sm:text-[26px]">
             ₹{paytmInsightsData.averageTransaction}
           </p>
           <p className="mt-1 text-[11px] text-inksoft">{t.avgTxnSub}</p>
         </div>
 
-        <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
+        <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line">
           <p className="text-xs text-inksoft">{t.repeatCust}</p>
-          <p className="mt-1 font-sans text-2xl font-bold text-ink sm:text-[26px] tabular-nums tracking-[-0.02em]">
+          <p className="mt-1 font-display text-2xl font-semibold text-ink sm:text-[26px]">
             {paytmInsightsData.repeatCustomers}%
           </p>
           <p className="mt-1 text-[11px] text-inksoft">{t.repeatCustSub}</p>
         </div>
 
-        <div className="col-span-2 rounded-2xl bg-paper p-4 ring-1 ring-line sm:col-span-1 shadow-2xs">
+        <div className="col-span-2 rounded-[18px] bg-paper p-4 ring-1 ring-line sm:col-span-1">
           <p className="text-xs text-inksoft">{t.upiRev}</p>
-          <p className="mt-1 font-sans text-2xl font-bold text-emerald sm:text-[26px] tabular-nums tracking-[-0.02em]">
+          <p className="mt-1 font-display text-2xl font-semibold text-emerald sm:text-[26px]">
             ₹{paytmInsightsData.upiRevenue.toLocaleString("en-IN")}
           </p>
           <p className="mt-1 text-[11px] text-inksoft">{t.upiRevSub}</p>
@@ -107,21 +107,21 @@ export function PaytmInsights({ onTriggerCampaign }: PaytmInsightsProps) {
       </div>
 
       {/* 7-Day Payment Trend Chart */}
-      <div className="mt-4 rounded-2xl bg-paper p-5 ring-1 ring-line sm:p-6 shadow-2xs">
+      <div className="mt-4 rounded-[20px] bg-paper p-5 ring-1 ring-line sm:p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h3 className="font-sans text-base font-semibold text-ink">
+            <h3 className="font-display text-base font-semibold text-ink">
               {t.trendTitle}
             </h3>
             <p className="text-xs text-inksoft">{t.trendSub}</p>
           </div>
           <div className="flex items-center gap-3 text-xs font-medium">
             <span className="flex items-center gap-1.5">
-              <span className="size-2.5 rounded-xs bg-[#00BAF2]" />
+              <span className="size-2.5 rounded-sm bg-[#002e6e]" />
               {isHindi ? "पेटीएम यूपीआई" : "Paytm UPI"}
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="size-2.5 rounded-xs bg-sand" />
+              <span className="size-2.5 rounded-sm bg-sand" />
               {isHindi ? "नकद" : "Cash"}
             </span>
           </div>
@@ -140,24 +140,24 @@ export function PaytmInsights({ onTriggerCampaign }: PaytmInsightsProps) {
                 className="group flex flex-1 flex-col items-center gap-1.5"
               >
                 <div className="relative flex w-full max-w-[42px] flex-col items-center justify-end rounded-t-lg bg-cream/40 p-0.5">
-                  <div className="pointer-events-none absolute -top-12 z-10 hidden whitespace-nowrap rounded-lg bg-ink px-2.5 py-1 text-[10px] text-cream opacity-0 shadow-sm transition-opacity group-hover:block group-hover:opacity-100">
-                    <p className="font-semibold tabular-nums">
+                  <div className="pointer-events-none absolute -top-12 z-10 hidden whitespace-nowrap rounded-md bg-ink px-2 py-1 text-[10px] text-cream opacity-0 shadow transition-opacity group-hover:block group-hover:opacity-100">
+                    <p className="font-semibold">
                       ₹{item.total.toLocaleString("en-IN")}
                     </p>
-                    <p className="text-[9px] opacity-80 tabular-nums">
+                    <p className="text-[9px] opacity-80">
                       UPI: ₹{item.upi.toLocaleString("en-IN")} | Cash: ₹
                       {item.cash.toLocaleString("en-IN")}
                     </p>
                   </div>
 
                   <span
-                    className="w-full rounded-t-xs bg-sand transition-all"
+                    className="w-full rounded-t-sm bg-sand transition-all"
                     style={{ height: `${cashHeight}px` }}
                   />
                   <span
                     className={cn(
-                      "w-full rounded-t-xs transition-all",
-                      isToday ? "bg-rust" : "bg-[#00BAF2]",
+                      "w-full rounded-t-sm transition-all",
+                      isToday ? "bg-rust" : "bg-[#002e6e]",
                     )}
                     style={{ height: `${upiHeight}px` }}
                   />
@@ -189,7 +189,7 @@ export function PaytmInsights({ onTriggerCampaign }: PaytmInsightsProps) {
         {insightsList.map((insight, idx) => (
           <div
             key={insight.id}
-            className="flex flex-col justify-between rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs"
+            className="flex flex-col justify-between rounded-[18px] bg-paper p-4 ring-1 ring-line"
           >
             <div>
               <div className="flex items-center gap-1.5 text-rust">
@@ -201,7 +201,7 @@ export function PaytmInsights({ onTriggerCampaign }: PaytmInsightsProps) {
               <p className="mt-2 text-xs font-semibold text-ink leading-snug">
                 "{insight.text}"
               </p>
-              <p className="mt-1.5 text-[11px] text-inksoft leading-relaxed">
+              <p className="mt-1.5 text-[11px] text-inksoft">
                 {insight.metric}
               </p>
             </div>

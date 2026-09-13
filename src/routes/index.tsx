@@ -159,12 +159,10 @@ function Home() {
           {/* 1. Upgraded Morning Brief & Forecast */}
           <MorningBrief
             collectedToday={dailyCash.cashSales + totals.udharCollectedToday}
-            totals={totals}
             onOpenCampaign={() => setCampaignModalOpen(true)}
             onOpenInventory={() => setInventoryModalOpen(true)}
             onOpenUdhaar={() => setUdhaarReminderOpen(true)}
             onReviewAll={() => setAutopilotModalOpen(true)}
-            onExplain={(title) => setExplainContext(title)}
           />
 
           {/* Paytm Soundbox 4.0 Smart Voice Briefing & Chime */}
@@ -226,14 +224,14 @@ function Home() {
 
           {/* Existing At a Glance Strip */}
           <section className="mt-8 animate-settle">
-            <h2 className="font-sans text-[22px] sm:text-[24px] font-bold text-ink leading-[1.2] tracking-[-0.02em]">
+            <h2 className="font-display text-xl font-semibold text-ink">
               {isHindi ? "एक नज़र में" : "At a glance"}
             </h2>
             <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
               {glance.map((g) => (
                 <div
                   key={g.label}
-                  className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs"
+                  className="rounded-[16px] bg-paper p-4 ring-1 ring-line"
                 >
                   <p className="text-xs text-inksoft">
                     {isHindi && g.label === "Repeat customers"
@@ -244,7 +242,7 @@ function Home() {
                       ? "कम स्टॉक"
                       : g.label}
                   </p>
-                  <p className="mt-1 font-sans text-2xl font-bold tabular-nums tracking-[-0.02em] text-ink">
+                  <p className="mt-1 font-display text-2xl font-semibold">
                     {g.value}
                     {g.suffix && (
                       <small className="text-base text-inksoft">{g.suffix}</small>
@@ -266,31 +264,30 @@ function Home() {
         </main>
 
         {/* 9 & 10. Intelligent Right-Side Bharat Copilot Chat Panel */}
-        <aside className="sticky top-0 hidden h-screen w-[380px] shrink-0 flex-col border-l border-line bg-paper lg:flex">
+        <aside className="sticky top-0 hidden h-screen w-[360px] shrink-0 flex-col border-l border-line bg-sand/30 lg:flex">
           <CopilotChat
             shopContext={shopContext}
             onTriggerModal={handleChatTrigger}
-            onExplain={(title) => setExplainContext(title)}
             className="h-full"
           />
         </aside>
       </div>
 
       {/* Mobile Floating Bar for Bharat Chat */}
-      <div className="fixed inset-x-0 bottom-0 z-10 border-t border-line bg-paper/90 px-3 py-3 backdrop-blur lg:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-10 border-t border-line bg-sand/90 px-3 py-3 backdrop-blur lg:hidden">
         <button
           type="button"
           onClick={() => setChatOpen(true)}
           className="mx-auto flex w-full max-w-[1180px] items-center gap-2"
         >
-          <span className="grid size-10 shrink-0 place-items-center rounded-full bg-rust font-sans font-semibold text-cream">
+          <span className="grid size-10 shrink-0 place-items-center rounded-full bg-ink font-display text-cream">
             भ
           </span>
-          <span className="flex flex-1 items-center gap-2 rounded-full bg-paper px-4 py-2.5 ring-1 ring-line shadow-xs">
-            <span className="text-xs font-medium text-inksoft">
+          <span className="flex flex-1 items-center gap-2 rounded-full bg-paper px-4 py-2.5 ring-1 ring-line">
+            <span className="text-sm text-inksoft/70">
               {t.mobileAskBar}
             </span>
-            <span className="ml-auto grid size-7 shrink-0 place-items-center rounded-full bg-rust text-xs text-cream">
+            <span className="ml-auto grid size-8 shrink-0 place-items-center rounded-full bg-rust text-sm text-cream">
               →
             </span>
           </span>
@@ -301,7 +298,7 @@ function Home() {
       <Sheet open={chatOpen} onOpenChange={setChatOpen}>
         <SheetContent
           side="bottom"
-          className="h-[88vh] gap-0 border-line bg-paper p-0"
+          className="h-[85vh] gap-0 border-line bg-sand/40 p-0"
         >
           <SheetTitle className="sr-only">Ask Bharat</SheetTitle>
           <CopilotChat
@@ -309,10 +306,6 @@ function Home() {
             onTriggerModal={(type) => {
               setChatOpen(false);
               handleChatTrigger(type);
-            }}
-            onExplain={(title) => {
-              setChatOpen(false);
-              setExplainContext(title);
             }}
             className="h-full"
           />

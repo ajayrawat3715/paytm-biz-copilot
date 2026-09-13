@@ -75,14 +75,14 @@ function InventoryPage() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
-              <span className="rounded-full bg-rust-light px-2.5 py-0.5 text-xs font-semibold text-rust">
+              <span className="rounded-full bg-rust/15 px-2.5 py-0.5 text-xs font-bold text-rust">
                 {isHindi ? "किराना स्टॉक इंटेलिजेंस" : "Kirana Stock Intelligence"}
               </span>
-              <span className="rounded-full bg-emerald-light px-2.5 py-0.5 text-xs font-semibold text-emerald">
+              <span className="rounded-full bg-emerald/15 px-2.5 py-0.5 text-xs font-semibold text-emerald">
                 {isHindi ? "शर्मा डिस्ट्रीब्यूटर्स कनेक्टेड" : "Sharma Distributors Connected"}
               </span>
             </div>
-            <h1 className="mt-2 font-sans text-2xl sm:text-3xl font-bold tracking-[-0.025em] text-ink">
+            <h1 className="mt-1.5 font-display text-2xl font-bold text-ink sm:text-3xl">
               {t.invTitle}
             </h1>
             <p className="mt-1 text-sm text-inksoft">
@@ -91,7 +91,7 @@ function InventoryPage() {
           </div>
 
           {/* Safety Stock Buffer Quick Pill */}
-          <div className="flex items-center gap-2 rounded-2xl bg-paper px-4 py-2 ring-1 ring-line text-xs shadow-2xs">
+          <div className="flex items-center gap-2 rounded-2xl bg-paper px-4 py-2 ring-1 ring-line text-xs shadow-sm">
             <Sliders className="size-4 text-rust" />
             <div>
               <p className="text-[11px] text-inksoft">
@@ -105,14 +105,14 @@ function InventoryPage() {
               <button
                 type="button"
                 onClick={() => setSafetyDays(Math.max(2, safetyDays - 1))}
-                className="grid size-6 place-items-center rounded-md bg-sand hover:bg-sand/80 font-bold transition-colors"
+                className="grid size-6 place-items-center rounded bg-sand hover:bg-sand/80 font-bold"
               >
                 -
               </button>
               <button
                 type="button"
                 onClick={() => setSafetyDays(Math.min(5, safetyDays + 1))}
-                className="grid size-6 place-items-center rounded-md bg-sand hover:bg-sand/80 font-bold transition-colors"
+                className="grid size-6 place-items-center rounded bg-sand hover:bg-sand/80 font-bold"
               >
                 +
               </button>
@@ -122,14 +122,14 @@ function InventoryPage() {
 
         {/* 3 Overview Metric Cards */}
         <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
-          <div className="rounded-2xl bg-paper p-4 ring-1 ring-line border-l-[3px] border-l-rust shadow-2xs">
+          <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line border-l-4 border-l-red-500">
             <div className="flex items-center justify-between">
               <span className="text-xs text-inksoft">
                 {isHindi ? "शून्य स्टॉक (तत्काल आर्डर)" : "Out of Stock (Urgent)"}
               </span>
-              <AlertTriangle className="size-4 text-rust" />
+              <AlertTriangle className="size-4 text-red-500" />
             </div>
-            <p className="mt-2 font-sans text-2xl font-bold text-rust tabular-nums tracking-[-0.02em]">
+            <p className="mt-2 font-display text-2xl font-bold text-red-600">
               {inventory.filter((i) => i.stock === 0).length} SKUs
             </p>
             <p className="mt-1 text-[11px] text-inksoft">
@@ -137,14 +137,14 @@ function InventoryPage() {
             </p>
           </div>
 
-          <div className="rounded-2xl bg-paper p-4 ring-1 ring-line border-l-[3px] border-l-warning shadow-2xs">
+          <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line border-l-4 border-l-amber-500">
             <div className="flex items-center justify-between">
               <span className="text-xs text-inksoft">
                 {isHindi ? "कम स्टॉक (< 1 दिन शेष)" : "Low Stock (< 1 Day Left)"}
               </span>
-              <Clock className="size-4 text-warning" />
+              <Clock className="size-4 text-amber-500" />
             </div>
-            <p className="mt-2 font-sans text-2xl font-bold text-warning tabular-nums tracking-[-0.02em]">
+            <p className="mt-2 font-display text-2xl font-bold text-amber-600">
               {inventory.filter((i) => i.stock > 0 && i.daysRemaining < 1).length} SKUs
             </p>
             <p className="mt-1 text-[11px] text-inksoft">
@@ -152,14 +152,14 @@ function InventoryPage() {
             </p>
           </div>
 
-          <div className="rounded-2xl bg-paper p-4 ring-1 ring-line border-l-[3px] border-l-emerald shadow-2xs">
+          <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line border-l-4 border-l-emerald">
             <div className="flex items-center justify-between">
               <span className="text-xs text-inksoft">
                 {isHindi ? "सुरक्षित बफर स्टॉक" : "Healthy Stock Buffer"}
               </span>
               <CheckCircle2 className="size-4 text-emerald" />
             </div>
-            <p className="mt-2 font-sans text-2xl font-bold text-emerald tabular-nums tracking-[-0.02em]">
+            <p className="mt-2 font-display text-2xl font-bold text-emerald">
               {inventory.filter((i) => i.status === "healthy" && i.daysRemaining >= 1).length} SKUs
             </p>
             <p className="mt-1 text-[11px] text-inksoft">
@@ -181,13 +181,13 @@ function InventoryPage() {
             />
           </div>
 
-          <div className="flex flex-wrap items-center rounded-2xl bg-paper p-1 ring-1 ring-line">
+          <div className="flex items-center gap-1 rounded-full bg-sand/60 p-1 ring-1 ring-line">
             <button
               type="button"
               onClick={() => setFilterCategory("all")}
               className={cn(
-                "rounded-xl px-3 py-1.5 text-xs font-semibold transition-all",
-                filterCategory === "all" ? "bg-ink text-cream shadow-2xs" : "text-inksoft hover:text-ink"
+                "rounded-full px-3 py-1 text-xs font-semibold transition-all",
+                filterCategory === "all" ? "bg-paper text-ink shadow-sm" : "text-inksoft hover:text-ink"
               )}
             >
               {isHindi ? "सभी सामान (8)" : "All Items (8)"}
@@ -196,8 +196,8 @@ function InventoryPage() {
               type="button"
               onClick={() => setFilterCategory("critical")}
               className={cn(
-                "rounded-xl px-3 py-1.5 text-xs font-semibold transition-all",
-                filterCategory === "critical" ? "bg-warning text-cream shadow-2xs" : "text-inksoft hover:text-ink"
+                "rounded-full px-3 py-1 text-xs font-semibold transition-all",
+                filterCategory === "critical" ? "bg-red-500 text-white shadow-sm" : "text-inksoft hover:text-ink"
               )}
             >
               {isHindi ? "⚠️ कम स्टॉक (4)" : "⚠️ Needs Restock (4)"}
@@ -206,8 +206,8 @@ function InventoryPage() {
               type="button"
               onClick={() => setFilterCategory("healthy")}
               className={cn(
-                "rounded-xl px-3 py-1.5 text-xs font-semibold transition-all",
-                filterCategory === "healthy" ? "bg-emerald text-white shadow-2xs" : "text-inksoft hover:text-ink"
+                "rounded-full px-3 py-1 text-xs font-semibold transition-all",
+                filterCategory === "healthy" ? "bg-emerald text-white shadow-sm" : "text-inksoft hover:text-ink"
               )}
             >
               {isHindi ? "सुरक्षित (4)" : "Healthy (4)"}
@@ -216,7 +216,7 @@ function InventoryPage() {
         </div>
 
         {/* Inventory SKU Table */}
-        <div className="mt-4 overflow-hidden rounded-2xl bg-paper ring-1 ring-line shadow-2xs">
+        <div className="mt-4 overflow-hidden rounded-[20px] bg-paper ring-1 ring-line shadow-sm">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead className="border-b border-line bg-sand/40 text-inksoft uppercase tracking-wider font-semibold text-[10px]">
@@ -235,7 +235,7 @@ function InventoryPage() {
                   return (
                     <tr key={item.id} className="hover:bg-sand/20 transition-colors">
                       <td className="px-4 py-4 sm:px-6">
-                        <p className="font-sans font-semibold text-sm text-ink">{item.name}</p>
+                        <p className="font-display font-semibold text-sm text-ink">{item.name}</p>
                         <p className="text-[11px] text-inksoft">{item.category}</p>
                       </td>
 
@@ -243,18 +243,18 @@ function InventoryPage() {
                         <div className="flex items-center gap-2">
                           <span
                             className={cn(
-                              "font-sans text-sm font-bold tabular-nums",
+                              "font-display text-sm font-bold",
                               item.status === "out_of_stock"
-                                ? "text-warning font-bold"
+                                ? "text-red-600 font-extrabold"
                                 : item.status === "low_stock"
-                                ? "text-warning"
+                                ? "text-amber-600"
                                 : "text-ink"
                             )}
                           >
                             {item.stock} {item.unit}
                           </span>
                           {item.status === "out_of_stock" && (
-                            <span className="rounded-full bg-warning-light px-2 py-0.5 text-[9px] font-bold text-warning ring-1 ring-warning/30">
+                            <span className="rounded-full bg-red-100 px-2 py-0.5 text-[9px] font-bold text-red-700">
                               {isHindi ? "खत्म" : "OUT"}
                             </span>
                           )}
@@ -270,10 +270,10 @@ function InventoryPage() {
                           className={cn(
                             "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-bold",
                             item.daysRemaining === 0
-                              ? "bg-warning-light text-warning ring-1 ring-warning/30"
+                              ? "bg-red-100 text-red-700"
                               : item.daysRemaining < 1
-                              ? "bg-warning-light text-warning"
-                              : "bg-emerald-light text-emerald"
+                              ? "bg-amber-100 text-amber-800"
+                              : "bg-emerald/15 text-emerald"
                           )}
                         >
                           <Clock className="size-3" />
@@ -294,7 +294,7 @@ function InventoryPage() {
                             type="button"
                             onClick={() => orderInventoryStock(item.id, 10)}
                             title={isHindi ? "+10 यूनिट स्टॉक जोड़ें" : "+10 Units Stock"}
-                            className="rounded-xl bg-sand px-2.5 py-1 text-[11px] font-bold text-ink hover:bg-paper ring-1 ring-line active:scale-95 transition-all"
+                            className="rounded-full bg-sand px-2.5 py-1 text-[11px] font-bold text-ink hover:bg-paper ring-1 ring-line active:scale-95 transition-all"
                           >
                             +10
                           </button>

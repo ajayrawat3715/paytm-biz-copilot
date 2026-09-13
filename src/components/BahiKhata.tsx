@@ -41,7 +41,7 @@ export function BahiKhata({ khata }: { khata: Khata }) {
     <section className="mt-8 animate-settle">
       <div className="flex items-baseline justify-between gap-3">
         <div>
-          <h2 className="font-sans text-xl font-semibold text-ink">
+          <h2 className="font-display text-xl font-semibold">
             Today's bahi-khata
           </h2>
           <p className="text-xs text-inksoft">
@@ -53,50 +53,50 @@ export function BahiKhata({ khata }: { khata: Khata }) {
 
       {/* three totals */}
       <div className="mt-4 grid grid-cols-1 gap-3 lg:grid-cols-3">
-        <div className="rounded-2xl bg-paper p-5 ring-1 ring-line shadow-2xs">
+        <div className="rounded-[18px] bg-paper p-5 ring-1 ring-line">
           <p className="text-sm text-inksoft">Total credit outstanding</p>
-          <p className="mt-1 font-sans text-[34px] font-bold leading-none tracking-[-0.02em] tabular-nums text-ink">
+          <p className="mt-1 font-display text-[34px] font-semibold leading-none tracking-tight">
             {rupees(totals.outstanding)}
           </p>
           <p className="mt-2 text-sm text-inksoft">
             {totals.openCount} khatas open ·{" "}
-            <span className="font-semibold text-rust tabular-nums">
+            <span className="font-medium text-rust">
               {rupees(totals.overdueAmount)} overdue
             </span>{" "}
             across {totals.overdueCount}
           </p>
         </div>
 
-        <div className="rounded-2xl bg-paper p-5 ring-1 ring-line shadow-2xs">
+        <div className="rounded-[18px] bg-paper p-5 ring-1 ring-line">
           <p className="text-sm text-inksoft">Today's udhar collections</p>
-          <p className="mt-1 font-sans text-[34px] font-bold leading-none tracking-[-0.02em] text-emerald tabular-nums">
+          <p className="mt-1 font-display text-[34px] font-semibold leading-none tracking-tight text-emerald">
             {rupees(totals.udharCollectedToday)}
           </p>
           <p className="mt-2 text-sm text-inksoft">
-            <span className="font-medium text-ink tabular-nums">
+            <span className="font-medium text-ink">
               {rupees(totals.collectedCash)}
             </span>{" "}
             cash ·{" "}
-            <span className="font-medium text-ink tabular-nums">
+            <span className="font-medium text-ink">
               {rupees(totals.collectedPaytm)}
             </span>{" "}
             UPI / Paytm
           </p>
         </div>
 
-        <div className="rounded-2xl bg-paper p-5 ring-1 ring-line shadow-2xs">
+        <div className="rounded-[18px] bg-paper p-5 ring-1 ring-line">
           <p className="text-sm text-inksoft">Net daily balance</p>
-          <p className="mt-1 font-sans text-[34px] font-bold leading-none tracking-[-0.02em] tabular-nums text-ink">
+          <p className="mt-1 font-display text-[34px] font-semibold leading-none tracking-tight">
             {rupees(totals.netDaily)}
           </p>
           <div className="mt-2.5 flex flex-wrap gap-1.5 text-xs">
-            <span className="rounded-full bg-sand px-2.5 py-1 font-medium tabular-nums">
+            <span className="rounded-full bg-sand px-2.5 py-1 font-medium">
               Cash sales {rupees(totals.cashSales)}
             </span>
-            <span className="rounded-full bg-emerald-light px-2.5 py-1 font-semibold text-emerald tabular-nums">
+            <span className="rounded-full bg-emerald/10 px-2.5 py-1 font-medium text-emerald">
               Udhar back {rupees(totals.udharCollectedToday)}
             </span>
-            <span className="rounded-full bg-rust-light px-2.5 py-1 font-semibold text-rust tabular-nums">
+            <span className="rounded-full bg-rust/10 px-2.5 py-1 font-medium text-rust">
               Expenses −{rupees(totals.expenses)}
             </span>
           </div>
@@ -104,12 +104,12 @@ export function BahiKhata({ khata }: { khata: Khata }) {
       </div>
 
       {/* per-customer ledger */}
-      <div className="mt-4 rounded-2xl bg-paper ring-1 ring-line shadow-2xs overflow-hidden">
-        <div className="flex items-baseline justify-between px-5 pt-4 pb-1">
-          <p className="font-sans text-[17px] font-semibold text-ink">
+      <div className="mt-4 rounded-[18px] bg-paper ring-1 ring-line">
+        <div className="flex items-baseline justify-between px-5 pt-4">
+          <p className="font-display text-[17px] font-semibold">
             Who owes you
           </p>
-          <span className="text-xs text-inksoft tabular-nums">
+          <span className="text-xs text-inksoft">
             {rupees(totals.repaidTotal)} of {rupees(totals.lentTotal)} recovered
           </span>
         </div>
@@ -122,19 +122,19 @@ export function BahiKhata({ khata }: { khata: Khata }) {
                 <button
                   type="button"
                   onClick={() => openLedger(entry)}
-                  className="flex w-full items-center justify-between gap-3 px-5 py-4 text-left hover:bg-cream transition-colors"
+                  className="flex w-full items-center justify-between gap-3 px-5 py-4 text-left hover:bg-cream"
                 >
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
-                      <p className="font-sans text-[15px] font-semibold text-ink">
+                      <p className="font-display text-[16px] font-semibold">
                         {entry.customer}
                       </p>
                       <UdharBadge entry={entry} />
                     </div>
-                    <p className="mt-1 truncate text-xs sm:text-sm text-inksoft">
+                    <p className="mt-1 truncate text-sm text-inksoft">
                       {entry.items} · due {formatDay(entry.dueOn)}
                       {status === "overdue" && (
-                        <span className="text-rust font-medium">
+                        <span className="text-rust">
                           {" "}
                           · {daysLate(entry)} days late
                         </span>
@@ -144,7 +144,7 @@ export function BahiKhata({ khata }: { khata: Khata }) {
                   <div className="shrink-0 text-right">
                     <p
                       className={cn(
-                        "font-sans text-[18px] font-semibold tabular-nums",
+                        "font-display text-[19px] font-semibold",
                         status === "settled" ? "text-inksoft" : "text-ink",
                       )}
                     >

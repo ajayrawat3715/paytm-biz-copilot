@@ -75,10 +75,10 @@ export function DailyActionPlan({
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <div>
           <div className="flex items-center gap-2">
-            <span className="grid size-6 place-items-center rounded-lg bg-rust/10 text-rust">
+            <span className="grid size-6 place-items-center rounded-md bg-rust/10 text-rust">
               <ListTodo className="size-3.5" />
             </span>
-            <h2 className="font-sans text-[22px] sm:text-[24px] font-bold text-ink leading-[1.2] tracking-[-0.02em]">
+            <h2 className="font-display text-xl font-semibold text-ink">
               {t.actionPlanTitle}
             </h2>
           </div>
@@ -89,7 +89,7 @@ export function DailyActionPlan({
         <button
           type="button"
           onClick={onReviewAllActions}
-          className="inline-flex items-center gap-1.5 rounded-xl bg-ink px-4 py-2 text-xs font-semibold text-cream shadow-2xs hover:bg-ink/90 active:scale-[0.98] transition-all"
+          className="inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-xs font-semibold text-cream shadow-sm hover:bg-ink/90 active:scale-[0.98]"
         >
           <Sparkles className="size-3.5 text-rust" />
           <span>{t.reviewAllActions}</span>
@@ -99,8 +99,7 @@ export function DailyActionPlan({
 
       {/* 3 Ranked Priorities */}
       <div className="mt-4 grid grid-cols-1 gap-3.5 md:grid-cols-3">
-        {actionPlanData.items.map((item, idx) => {
-          const itemNum = String(idx + 1).padStart(2, "0");
+        {actionPlanData.items.map((item) => {
           const hi = HINDI_PLAN_ITEMS[item.id];
           const badge = isHindi && hi ? hi.priorityBadge : item.priorityBadge;
           const title = isHindi && hi ? hi.title : item.title;
@@ -108,37 +107,28 @@ export function DailyActionPlan({
           const impact = isHindi && hi ? hi.impact : item.impact;
           const btnText = isHindi && hi ? hi.buttonText : item.buttonText;
 
-          const isWarning = item.priorityColor === "red";
-          const isGrowth = item.priorityColor === "orange";
-          const isCash = item.priorityColor === "green";
-
           return (
             <div
               key={item.id}
               className={cn(
-                "flex flex-col justify-between rounded-2xl bg-paper p-5 ring-1 ring-line transition-all shadow-2xs",
-                isWarning
-                  ? "border-l-[3px] border-l-warning hover:bg-warning-light/15"
-                  : isGrowth
-                  ? "border-l-[3px] border-l-rust bg-rust-light/25 hover:bg-rust-light/35"
-                  : "border-l-[3px] border-l-emerald hover:bg-emerald-light/15",
+                "flex flex-col justify-between rounded-[20px] bg-paper p-5 ring-1 ring-line transition-all hover:shadow-sm",
+                item.priorityColor === "red"
+                  ? "border-l-4 border-l-red-500"
+                  : item.priorityColor === "orange"
+                  ? "border-l-4 border-l-amber-500"
+                  : "border-l-4 border-l-emerald-500",
               )}
             >
               <div>
                 <div className="flex items-center justify-between gap-1">
-                  <div className="flex items-center gap-2">
-                    <span className="inline-flex size-5 items-center justify-center rounded-md bg-sand text-[11px] font-bold tabular-nums text-ink ring-1 ring-line">
-                      {itemNum}
-                    </span>
-                    <span className="text-[11px] font-semibold uppercase tracking-wider text-ink">
-                      {badge}
-                    </span>
-                  </div>
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-ink">
+                    {badge}
+                  </span>
                   {onExplain && (
                     <button
                       type="button"
                       onClick={() => onExplain(title)}
-                      className="inline-flex items-center gap-1 text-[11px] font-medium text-inksoft hover:text-rust transition-colors"
+                      className="inline-flex items-center gap-1 text-[11px] font-medium text-inksoft hover:text-rust"
                     >
                       <HelpCircle className="size-3" />
                       {isHindi ? "क्यों?" : "Why?"}
@@ -146,7 +136,7 @@ export function DailyActionPlan({
                   )}
                 </div>
 
-                <h3 className="mt-3 font-sans text-[16px] font-semibold text-ink leading-snug">
+                <h3 className="mt-2.5 font-display text-base font-semibold text-ink leading-snug">
                   "{title}"
                 </h3>
 
@@ -161,7 +151,7 @@ export function DailyActionPlan({
                     <span className="font-semibold text-ink">
                       {isHindi ? "प्रभाव: " : "Impact: "}
                     </span>
-                    <span className="font-semibold text-emerald leading-relaxed">
+                    <span className="font-medium text-emerald leading-relaxed">
                       {impact}
                     </span>
                   </div>
@@ -171,7 +161,7 @@ export function DailyActionPlan({
               <button
                 type="button"
                 onClick={() => handleAction(item.type)}
-                className="mt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-sand py-2 text-xs font-semibold text-ink ring-1 ring-line hover:bg-paper active:scale-[0.98] transition-all"
+                className="mt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-sand py-2.5 text-xs font-semibold text-ink ring-1 ring-line hover:bg-paper active:scale-[0.98]"
               >
                 <span>{btnText}</span>
                 <ArrowRight className="size-3 text-rust" />

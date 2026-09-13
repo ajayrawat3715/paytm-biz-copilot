@@ -90,14 +90,14 @@ export function UdhaarAISection({
     <section className="mt-8 animate-settle">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <div>
-          <h2 className="font-sans text-[22px] sm:text-[24px] font-bold text-ink leading-[1.2] tracking-[-0.02em]">
+          <h2 className="font-display text-xl font-semibold text-ink">
             {t.udhaarTitle}
           </h2>
-          <p className="mt-0.5 text-xs text-inksoft">
+          <p className="text-xs text-inksoft">
             {t.udhaarSub}
           </p>
         </div>
-        <span className="rounded-full bg-sand px-2.5 py-0.5 text-xs font-semibold text-ink tabular-nums">
+        <span className="rounded-full bg-sand px-2.5 py-0.5 text-xs font-semibold text-ink">
           {isHindi ? "कुल बकाया" : "Total"} ₹{totals.outstanding.toLocaleString("en-IN")}{" "}
           {isHindi ? "पेंडिंग" : "pending"}
         </span>
@@ -105,9 +105,9 @@ export function UdhaarAISection({
 
       {/* 3 Top Figures */}
       <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-        <div className="rounded-2xl bg-paper p-5 ring-1 ring-line shadow-2xs">
+        <div className="rounded-[18px] bg-paper p-5 ring-1 ring-line">
           <p className="text-xs text-inksoft">{t.totalPending}</p>
-          <p className="mt-1 font-sans text-[32px] sm:text-[36px] font-bold leading-none text-ink tabular-nums tracking-[-0.02em]">
+          <p className="mt-1 font-display text-[32px] font-semibold leading-none text-ink">
             ₹{totals.outstanding.toLocaleString("en-IN")}
           </p>
           <p className="mt-2 text-xs text-inksoft">
@@ -115,9 +115,9 @@ export function UdhaarAISection({
           </p>
         </div>
 
-        <div className="rounded-2xl bg-paper p-5 ring-1 ring-line shadow-2xs">
+        <div className="rounded-[18px] bg-paper p-5 ring-1 ring-line">
           <p className="text-xs text-inksoft">{t.dueToday}</p>
-          <p className="mt-1 font-sans text-[32px] sm:text-[36px] font-bold leading-none text-ink tabular-nums tracking-[-0.02em]">
+          <p className="mt-1 font-display text-[32px] font-semibold leading-none text-ink">
             ₹{udhaarAIData.dueToday.toLocaleString("en-IN")}
           </p>
           <p className="mt-2 text-xs text-emerald font-medium">
@@ -125,9 +125,9 @@ export function UdhaarAISection({
           </p>
         </div>
 
-        <div className="rounded-2xl bg-paper p-5 ring-1 ring-line shadow-2xs">
+        <div className="rounded-[18px] bg-paper p-5 ring-1 ring-line">
           <p className="text-xs text-inksoft">{t.overdue}</p>
-          <p className="mt-1 font-sans text-[32px] sm:text-[36px] font-bold leading-none text-rust tabular-nums tracking-[-0.02em]">
+          <p className="mt-1 font-display text-[32px] font-semibold leading-none text-rust">
             ₹{totals.overdueAmount.toLocaleString("en-IN")}
           </p>
           <p className="mt-2 text-xs text-rust font-medium">
@@ -137,7 +137,7 @@ export function UdhaarAISection({
       </div>
 
       {/* Risk Categorization Buckets */}
-      <div className="mt-4 rounded-2xl bg-paper p-5 ring-1 ring-line sm:p-6 shadow-2xs">
+      <div className="mt-4 rounded-[20px] bg-paper p-5 ring-1 ring-line sm:p-6">
         <p className="text-xs font-semibold uppercase tracking-wider text-inksoft">
           {t.riskSegmentation}
         </p>
@@ -155,32 +155,32 @@ export function UdhaarAISection({
               <div
                 key={bucket.label}
                 className={cn(
-                  "rounded-xl p-4 ring-1 shadow-2xs",
+                  "rounded-xl p-4 ring-1",
                   bucket.tone === "emerald"
-                    ? "bg-emerald-light/40 ring-emerald/30"
+                    ? "bg-emerald/5 ring-emerald/20"
                     : bucket.tone === "amber"
-                    ? "bg-warning-light/40 ring-warning/30"
-                    : "bg-rust-light/40 ring-rust/30",
+                    ? "bg-amber-500/5 ring-amber-500/20"
+                    : "bg-rust/5 ring-rust/20",
                 )}
               >
                 <div className="flex items-center justify-between">
                   <p
                     className={cn(
-                      "text-xs font-semibold uppercase tracking-wider",
+                      "text-xs font-semibold",
                       bucket.tone === "emerald"
                         ? "text-emerald"
                         : bucket.tone === "amber"
-                        ? "text-warning"
+                        ? "text-amber-800"
                         : "text-rust",
                     )}
                   >
                     {label}
                   </p>
-                  <span className="text-[11px] text-inksoft tabular-nums font-medium">
+                  <span className="text-[11px] text-inksoft">
                     {bucket.count} {isHindi ? "ग्राहक" : "customers"}
                   </span>
                 </div>
-                <p className="mt-2 font-sans text-2xl font-semibold text-ink tabular-nums">
+                <p className="mt-2 font-display text-2xl font-semibold text-ink">
                   ₹{bucket.amount.toLocaleString("en-IN")}
                 </p>
                 <p className="mt-1 text-[11px] text-inksoft leading-relaxed">
@@ -192,9 +192,9 @@ export function UdhaarAISection({
         </div>
 
         {/* Bharat AI Recommendation Banner */}
-        <div className="mt-5 flex flex-wrap items-center justify-between gap-4 rounded-xl bg-rust-light/35 p-4 ring-1 ring-rust/30">
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-4 rounded-xl bg-cream p-4 ring-1 ring-line">
           <div className="flex items-start gap-3">
-            <span className="grid size-7 shrink-0 place-items-center rounded-lg bg-rust text-xs font-bold text-cream">
+            <span className="grid size-7 shrink-0 place-items-center rounded-full bg-ink text-xs font-bold text-cream">
               भ
             </span>
             <div>
@@ -212,7 +212,7 @@ export function UdhaarAISection({
           <button
             type="button"
             onClick={() => setModalVisible(true)}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-rust px-4 py-2 text-xs font-semibold text-cream shadow-2xs ring-1 ring-rust/40 hover:bg-rust/95 active:scale-[0.98] transition-all"
+            className="inline-flex items-center gap-1.5 rounded-full bg-rust px-4 py-2 text-xs font-semibold text-cream shadow-sm ring-1 ring-rust/40 hover:opacity-95 active:scale-[0.98]"
           >
             {t.reviewReminders}
             <ArrowRight className="size-3" />
