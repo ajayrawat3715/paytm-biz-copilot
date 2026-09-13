@@ -147,7 +147,7 @@ function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-cream text-ink">
+    <div className="min-h-screen bg-cream text-ink bg-blueprint-grid">
       {/* Pitch Navigator Bar for Hackathon Presentation */}
       <DemoTourBar onStepClick={handleStepClick} />
 

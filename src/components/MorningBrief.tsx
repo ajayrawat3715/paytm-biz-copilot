@@ -69,25 +69,190 @@ export function MorningBrief({
   const overdueAmt = totals?.overdueAmount ?? 2800;
 
   return (
-    <section className="mt-7 animate-settle">
-      {/* Date & Copilot Status Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="text-xs font-semibold uppercase tracking-[0.04em] text-rust">
-          {formattedDate} · IST
-        </p>
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-sand/80 px-2.5 py-0.5 text-[11px] font-semibold text-inksoft ring-1 ring-line">
-          <Sparkles className="size-3 text-rust" />
-          {isHindi ? "एआई प्रभात इनसाइट्स सक्रिय" : "AI Morning Intelligence Active"}
-        </span>
-      </div>
+    <section className="mt-4 animate-settle">
+      {/* LUXURY BANKING HERO (Roohi Koohi Reference) */}
+      <div className="relative overflow-hidden rounded-3xl bg-[#0E121B] p-6 sm:p-8 lg:p-10 ring-1 ring-[#1F2637] shadow-2xl bg-blueprint-grid">
+        {/* Subtle Ambient Radial Glow */}
+        <div className="pointer-events-none absolute -right-20 -top-20 size-96 rounded-full bg-[#0D62FE]/15 blur-3xl" />
+        <div className="pointer-events-none absolute -left-20 -bottom-20 size-96 rounded-full bg-[#00BAF2]/10 blur-3xl" />
 
-      {/* Hero Greeting & Business Status */}
-      <h1 className="mt-3 text-balance font-sans text-[34px] sm:text-[42px] lg:text-[50px] font-bold leading-[1.08] tracking-[-0.025em] text-ink">
-        {t.morningGreeting}
-      </h1>
-      <p className="mt-1.5 text-balance font-sans text-[22px] sm:text-[30px] lg:text-[36px] font-semibold leading-[1.15] tracking-[-0.02em] text-inksoft">
-        {t.quietSubtitle}
-      </p>
+        {/* Brand status badge row */}
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-[#0D62FE]">
+              BHARAT COPILOT
+            </span>
+            <span className="text-[#1F2637]">|</span>
+            <span className="text-xs text-[#8E98AA]">
+              {formattedDate} · IST
+            </span>
+          </div>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-[#161C28] px-3 py-1 text-[11px] font-semibold text-[#8E98AA] ring-1 ring-[#1F2637]">
+            <span className="size-1.5 rounded-full bg-[#10B981] animate-tick" />
+            {isHindi ? "पेटीएम एआई लाइव" : "Paytm AI Engine Live"}
+          </span>
+        </div>
+
+        {/* 2-Column Main Hero Section */}
+        <div className="relative z-10 mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-center">
+          {/* Left Column: Headline & Stacked 3D Cards Visual */}
+          <div className="lg:col-span-7">
+            {/* The Signature Headline with Instrument Serif Italic */}
+            <h1 className="font-sans text-[36px] sm:text-[46px] lg:text-[54px] font-bold leading-[1.05] tracking-[-0.03em] text-white">
+              {isHindi ? (
+                <>
+                  स्मार्ट किराना <br />
+                  सच्ची <span className="font-editorial text-[1.18em] font-normal tracking-normal text-white">आर्थिक</span>{" "}
+                  <span className="font-editorial text-[1.18em] font-normal tracking-normal text-white">स्वतंत्रता</span>{" "}
+                  के लिए
+                </>
+              ) : (
+                <>
+                  Intelligent Kirana <br />
+                  for True <span className="font-editorial text-[1.18em] font-normal tracking-normal text-white">Financial</span> <br />
+                  <span className="font-editorial text-[1.18em] font-normal tracking-normal text-white">Freedom</span>
+                </>
+              )}
+            </h1>
+
+            <p className="mt-3 text-sm sm:text-base text-[#8E98AA] leading-relaxed max-w-md">
+              {isHindi
+                ? "सुप्रभात, रमेश जी। अन्नपूर्णा किराना स्टोर के लिए दैनिक बिक्री, उधार वसूली और स्टॉक इनसाइट्स सक्रिय हैं।"
+                : "Good morning, Ramesh. Annapurna Kirana is live with daily credit recovery, Paytm UPI pulse, and predictive stock AI."}
+            </p>
+
+            {/* The Stacked 3D Payment Cards Visual with Circular Star Badge */}
+            <div className="relative mt-8 h-48 sm:h-52 w-full max-w-[420px]">
+              {/* Card 1 (Yellow / Gold, angled back left, like Yurnero) */}
+              <div className="absolute left-0 bottom-2 h-36 w-28 sm:w-32 rounded-2xl bg-[#F59E0B] p-3 text-[#0A0D14] shadow-xl rotate-[-14deg] transition-transform hover:rotate-[-10deg] cursor-pointer">
+                <div className="flex justify-between items-start">
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider">Khata</span>
+                  <Wallet className="size-3.5" />
+                </div>
+                <div className="mt-7">
+                  <p className="text-[9px] font-semibold opacity-80">UDHAAR</p>
+                  <p className="font-sans text-xs font-bold tabular-nums">₹2,950</p>
+                </div>
+                <p className="mt-2 text-[9px] font-bold">Ramesh Kirana</p>
+              </div>
+
+              {/* Card 2 (Crisp Pure White, angled middle, like Arya Hima) */}
+              <div className="absolute left-16 sm:left-20 bottom-1 h-38 w-30 sm:w-34 rounded-2xl bg-white p-3 text-[#0A0D14] shadow-xl rotate-[-4deg] transition-transform hover:rotate-0 cursor-pointer">
+                <div className="flex justify-between items-start">
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider">Soundbox</span>
+                  <Sparkles className="size-3.5 text-[#0D62FE]" />
+                </div>
+                <div className="mt-8">
+                  <p className="text-[9px] font-semibold text-gray-500">PAYTM UPI</p>
+                  <p className="font-sans text-xs font-bold tabular-nums">Instant Chime</p>
+                </div>
+                <p className="mt-2 text-[9px] font-bold">Annapurna Store</p>
+              </div>
+
+              {/* Card 3 (Cobalt Blue, front and prominent, like Standcard) */}
+              <div className="absolute left-32 sm:left-40 bottom-0 h-44 w-52 sm:w-60 rounded-2xl bg-gradient-to-br from-[#0D62FE] to-[#0047CC] p-4 text-white shadow-2xl ring-1 ring-white/20 rotate-[6deg] transition-transform hover:rotate-[3deg] cursor-pointer">
+                <div className="flex items-center justify-between">
+                  <span className="font-sans text-xs font-black tracking-wider uppercase">Standcard</span>
+                  <div className="flex items-center gap-1 text-[10px] font-semibold opacity-90">
+                    <span>Paytm</span>
+                    <span className="size-1.5 rounded-full bg-white" />
+                  </div>
+                </div>
+
+                <div className="mt-4 flex items-center gap-2">
+                  {/* Micro Chip graphic */}
+                  <div className="h-5 w-6 rounded-sm bg-[#F59E0B]/80 border border-yellow-200/50" />
+                  <span className="text-[9px] tracking-widest text-white/70">•••)))</span>
+                </div>
+
+                <div className="mt-3 flex items-end justify-between">
+                  <div>
+                    <p className="font-mono text-xs tracking-widest font-bold text-white">
+                      •••• 2568
+                    </p>
+                    <p className="mt-1 font-sans text-[11px] font-medium text-white/90">
+                      Ramesh Kumar
+                    </p>
+                  </div>
+                  <p className="font-mono text-[10px] text-white/80">05/28</p>
+                </div>
+              </div>
+
+              {/* Circular Star Badge (Directly like Roohi Koohi's badge) */}
+              <div className="absolute right-0 sm:-right-4 top-2 flex size-18 sm:size-20 items-center justify-center rounded-full border border-dashed border-[#8E98AA]/40 bg-[#121620]/90 backdrop-blur-md shadow-lg">
+                <div className="text-center">
+                  <Sparkles className="mx-auto size-4 text-[#0D62FE] animate-pulse" />
+                  <span className="block text-[8px] font-bold uppercase tracking-wider text-[#8E98AA] mt-0.5">
+                    BHARAT
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Key High-Trust Metrics & Solid Cobalt CTA */}
+          <div className="lg:col-span-5 flex flex-col justify-between rounded-2xl bg-[#121620]/90 p-6 sm:p-7 ring-1 ring-[#1F2637] backdrop-blur-md">
+            <div className="space-y-6">
+              {/* Metric 1: Satisfied Customers / Kirana Footfall */}
+              <div>
+                <p className="font-sans text-4xl sm:text-5xl font-bold tabular-nums tracking-[-0.03em] text-white">
+                  9.8<span className="text-2xl sm:text-3xl text-[#0D62FE]">k</span>
+                </p>
+                <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-[#8E98AA]">
+                  {isHindi ? "मासिक संतुष्ट ग्राहक आवागमन" : "Satisfied Customers / Footfall"}
+                </p>
+              </div>
+
+              {/* Metric 2: 0% Admin Fee */}
+              <div className="border-t border-[#1F2637] pt-5">
+                <p className="font-sans text-4xl sm:text-5xl font-bold tabular-nums tracking-[-0.03em] text-white">
+                  0<span className="text-2xl sm:text-3xl text-[#0D62FE]">%</span>
+                </p>
+                <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-[#8E98AA]">
+                  {isHindi ? "शून्य यूपीआई अतिरिक्त शुल्क" : "Admin Fee on Counter UPI"}
+                </p>
+              </div>
+
+              {/* Mission statement text */}
+              <div className="border-t border-[#1F2637] pt-5">
+                <p className="text-xs sm:text-sm text-[#8E98AA] leading-relaxed">
+                  {isHindi
+                    ? "खुला, ईमानदार, मेहनती। भारतीय दुकानदारों को सशक्त बनाना — एक समय में एक डिजिटल लेन-देन।"
+                    : "Open. Honest. Hardworking. Changing Kirana lives — one member at a time."}
+                </p>
+              </div>
+            </div>
+
+            {/* The Solid Electric Cobalt CTA Button (Just like "Get Started") */}
+            <button
+              type="button"
+              onClick={onReviewAll}
+              className="btn-cobalt mt-6 w-full inline-flex items-center justify-center gap-2 rounded-xl py-3.5 px-6 text-sm font-semibold tracking-wide text-white cursor-pointer"
+            >
+              <span>{isHindi ? "आज की कार्रवाई शुरू करें" : "Get Started"}</span>
+              <ArrowRight className="size-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* Trusted By Strip (Roohi Koohi Reference) */}
+        <div className="relative z-10 mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-[#1F2637] pt-5 text-xs text-[#8E98AA]">
+          <div className="flex items-center gap-2">
+            <span className="font-semibold text-white/90">
+              {isHindi ? "12,000+ भारतीय किराना स्टोर्स द्वारा भरोसेमंद" : "Trusted by 12,000+ Kirana Stores"}
+            </span>
+            <span className="text-[#1F2637]">·</span>
+            <span>{isHindi ? "पेटीएम साउंडबॉक्स व यूपीआई पावर्ड" : "Powered by Paytm Soundbox & UPI"}</span>
+          </div>
+
+          <div className="flex items-center gap-5 font-mono text-[11px] font-bold tracking-widest text-[#8E98AA]/70 uppercase">
+            <span>Paytm</span>
+            <span>UPI</span>
+            <span>RuPay</span>
+            <span>NPCI</span>
+          </div>
+        </div>
+      </div>
 
       {/* 1. Core Financial KPIs Ribbon */}
       <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
