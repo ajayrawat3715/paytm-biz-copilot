@@ -67,9 +67,14 @@ export function CopilotChat({
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const [apiKey, setApiKey] = useState(() => getGeminiApiKey());
+  const [mounted, setMounted] = useState(false);
   const [isKeyModalOpen, setIsKeyModalOpen] = useState(false);
   const [tempKeyInput, setTempKeyInput] = useState("");
   const [isKeySaved, setIsKeySaved] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleOpenKeyModal = () => {
     setTempKeyInput(apiKey);
@@ -212,14 +217,14 @@ export function CopilotChat({
                 onClick={handleOpenKeyModal}
                 className={cn(
                   "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-bold transition-all",
-                  apiKey
+                  mounted && apiKey
                     ? "bg-emerald/10 text-emerald hover:bg-emerald/15"
                     : "bg-rust/10 text-rust hover:bg-rust/15",
                 )}
-                title={apiKey ? "Gemini AI Active (Click to view/change key)" : "Click to enter Gemini API Key"}
+                title={mounted && apiKey ? "Gemini AI Active (Click to view/change key)" : "Click to enter Gemini API Key"}
               >
                 <Key className="size-2.5" />
-                <span>{apiKey ? "Gemini Active" : "Add Key"}</span>
+                <span>{mounted && apiKey ? "Gemini Active" : "Add Key"}</span>
               </button>
             </div>
             <p className="text-xs text-inksoft">
