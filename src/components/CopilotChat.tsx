@@ -20,15 +20,17 @@ import { getCopilotResponse, type LanguageMode } from "@/lib/copilot-ai";
 import { askGeminiCopilot, getGeminiApiKey, setGeminiApiKey } from "@/lib/gemini";
 import { shop } from "@/lib/khata";
 import { useLanguage } from "@/lib/language-context";
-import { cn } from "@/lib/utils";
 import {
   ArrowRight,
   Check,
+  ChevronDown,
+  ChevronUp,
   Key,
   Languages,
   Mic,
   MicOff,
   Sparkles,
+  TrendingDown,
   Volume2,
   VolumeX,
   X,
@@ -48,12 +50,14 @@ interface CopilotChatProps {
   shopContext: string;
   className?: string;
   onTriggerModal?: (type: "campaign" | "inventory" | "udhaar") => void;
+  onExplain?: (context: string) => void;
 }
 
 export function CopilotChat({
   shopContext,
   className,
   onTriggerModal,
+  onExplain,
 }: CopilotChatProps) {
   const { language, setLanguage } = useLanguage();
   const lang = language;
@@ -71,10 +75,18 @@ export function CopilotChat({
   const [isKeyModalOpen, setIsKeyModalOpen] = useState(false);
   const [tempKeyInput, setTempKeyInput] = useState("");
   const [isKeySaved, setIsKeySaved] = useState(false);
+  const [isProactiveExpanded, setIsProactiveExpanded] = useState(true);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const currentDayName = useMemo(() => {
+    return new Date().toLocaleDateString(lang === "hi" ? "hi-IN" : "en-IN", {
+      timeZone: "Asia/Kolkata",
+      weekday: "long",
+    });
+  }, [lang]);
 
   const handleOpenKeyModal = () => {
     setTempKeyInput(apiKey);
@@ -102,18 +114,16 @@ export function CopilotChat({
   const suggestions = useMemo(() => {
     return lang === "hi"
       ? [
-          "आज क्या फोकस करें?",
-          "उधार वसूली के लिए किसे याद दिलाएं?",
           "मंगलवार को बिक्री कम क्यों है?",
-          "कौन सा सामान रीस्टॉक करना है?",
-          "आज की बिक्री कैसे बढ़ाएं?",
+          "30 दिनों से कौन नहीं आया?",
+          "फॉर्च्यून तेल का स्टॉक चेक करें",
+          "उधार वसूली के लिए किसे याद दिलाएं?",
         ]
       : [
-          "What should I focus on today?",
-          "Who should I remind for udhaar?",
           "Why are Tuesday sales slow?",
-          "What should I reorder?",
-          "How can I increase today's sales?",
+          "Who hasn't visited in 30 days?",
+          "Check Fortune Oil stock",
+          "Who should I remind for udhaar?",
         ];
   }, [lang]);
 
@@ -263,11 +273,116 @@ export function CopilotChat({
         </div>
       </div>
 
+      {/* 7. THE BHARAT AI PANEL — Proactive Intelligence (Observation -> Reason -> Recommendation -> Impact -> Action) */}
+      <div className="border-b border-line bg-paper/95 p-4 shadow-xs">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-1.5">
+            <span className="size-2 rounded-full bg-rust" />
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-rust">
+              {lang === "hi" ? "दुकान अवलोकन (Live Intelligence)" : "Proactive Intelligence"}
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setIsProactiveExpanded(!isProactiveExpanded)}
+            className="flex items-center gap-1 text-[11px] font-medium text-inksoft hover:text-ink transition-colors"
+          >
+            <span>
+              {isProactiveExpanded
+                ? lang === "hi"
+                  ? "संक्षिप्त"
+                  : "Collapse"
+                : lang === "hi"
+                  ? "विस्तार"
+                  : "Expand"}
+            </span>
+            {isProactiveExpanded ? (
+              <ChevronUp className="size-3" />
+            ) : (
+              <ChevronDown className="size-3" />
+            )}
+          </button>
+        </div>
+
+        {/* 1. Observation */}
+        <p className="mt-2 font-sans text-sm font-semibold text-ink leading-snug">
+          {lang === "hi"
+            ? `${currentDayName} की बिक्री सामान्य से 16% कम चल रही है।`
+            : `${currentDayName} sales are running 16% below normal.`}
+        </p>
+
+        {isProactiveExpanded && (
+          <div className="mt-2.5 space-y-2.5 animate-settle">
+            {/* 2. Reason */}
+            <div className="rounded-xl bg-sand/40 p-2.5 ring-1 ring-line/60">
+              <p className="text-[11px] font-semibold text-inksoft">
+                {lang === "hi" ? "ऐसा क्यों हो रहा है?" : "Why is this happening?"}
+              </p>
+              <ul className="mt-1.5 space-y-1 text-xs text-inksoft leading-relaxed">
+                <li className="flex items-start gap-1.5">
+                  <span className="text-rust font-bold">•</span>
+                  <span>{lang === "hi" ? "240 ग्राहक इस महीने वापस नहीं आए" : "240 customers haven't returned this month"}</span>
+                </li>
+                <li className="flex items-start gap-1.5">
+                  <span className="text-rust font-bold">•</span>
+                  <span>{lang === "hi" ? "शाम के व्यस्त समय की बिक्री 22% गिरी" : "Evening rush hour sales dropped 22%"}</span>
+                </li>
+                <li className="flex items-start gap-1.5">
+                  <span className="text-rust font-bold">•</span>
+                  <span>{lang === "hi" ? "औसत बास्केट साइज़ ₹45 कम हुआ" : "Average basket size down ₹45"}</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* 3. Bharat Recommends & 4. Estimated Impact */}
+            <div className="rounded-xl bg-rust-light/40 p-3 ring-1 ring-rust/35">
+              <div className="flex items-center justify-between gap-1">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-rust">
+                  {lang === "hi" ? "भारत एआई की सलाह" : "Bharat recommends"}
+                </span>
+                <span className="text-[11px] font-bold text-emerald tabular-nums">
+                  {lang === "hi" ? "अवसर: +₹6,100" : "Estimated opportunity: ₹6,100"}
+                </span>
+              </div>
+              <p className="mt-1 font-sans text-xs font-semibold text-ink leading-relaxed">
+                {lang === "hi"
+                  ? "आवश्यक वस्तुओं पर 10% छूट के साथ 42 निष्क्रिय ग्राहकों को संदेश भेजें।"
+                  : "Target 42 inactive customers with a 10% offer on essentials."}
+              </p>
+
+              {/* 5. Actions */}
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => onTriggerModal?.("campaign")}
+                  className="inline-flex items-center gap-1.5 rounded-xl bg-rust px-3 py-1.5 text-xs font-semibold text-cream shadow-xs hover:bg-rust/95 active:scale-95 transition-all"
+                >
+                  <span>{lang === "hi" ? "ऑफ़र देखें →" : "Review action →"}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    onExplain?.(
+                      lang === "hi"
+                        ? "42 निष्क्रिय ग्राहकों को 10% ऑफ़र"
+                        : "Target 42 inactive customers with a 10% offer"
+                    )
+                  }
+                  className="text-[11px] font-medium text-inksoft underline hover:text-rust transition-colors"
+                >
+                  {lang === "hi" ? "यह सलाह क्यों?" : "Why this recommendation?"}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
       {/* Messages Conversation Area */}
       <Conversation className="min-h-0 flex-1">
         <ConversationContent className="gap-3 px-4 py-4">
           {/* Welcoming card */}
-          <div className="rounded-2xl rounded-bl-sm bg-paper p-3.5 text-xs text-inksoft ring-1 ring-line leading-relaxed">
+          <div className="rounded-2xl rounded-bl-sm bg-paper p-3.5 text-xs text-inksoft ring-1 ring-line leading-relaxed shadow-2xs">
             <div className="flex items-center justify-between text-rust font-semibold mb-1">
               <div className="flex items-center gap-1.5">
                 <Sparkles className="size-3" />
@@ -301,10 +416,10 @@ export function CopilotChat({
               >
                 <div
                   className={cn(
-                    "text-xs leading-relaxed whitespace-pre-line relative group",
+                    "text-xs leading-relaxed whitespace-pre-line relative group shadow-2xs",
                     isUser
-                      ? "rounded-2xl rounded-br-sm bg-rust px-3.5 py-2.5 text-cream font-medium shadow-sm"
-                      : "rounded-2xl rounded-bl-sm bg-paper p-3.5 text-ink ring-1 ring-line",
+                      ? "rounded-2xl rounded-br-xs bg-sand/80 px-3.5 py-2.5 text-ink font-medium ring-1 ring-line"
+                      : "rounded-2xl rounded-bl-xs bg-paper p-3.5 text-ink ring-1 ring-line border-l-[3px] border-l-rust",
                   )}
                 >
                   {message.text}
@@ -343,7 +458,7 @@ export function CopilotChat({
                   <button
                     type="button"
                     onClick={() => onTriggerModal(message.action!.type)}
-                    className="inline-flex items-center gap-1 rounded-full bg-rust/10 px-3 py-1.5 text-[11px] font-semibold text-rust hover:bg-rust/15 active:scale-95 transition-all shadow-sm"
+                    className="inline-flex items-center gap-1 rounded-xl bg-rust/10 px-3 py-1.5 text-[11px] font-semibold text-rust ring-1 ring-rust/20 hover:bg-rust/20 active:scale-95 transition-all shadow-2xs"
                   >
                     <span>{message.action.label}</span>
                     <ArrowRight className="size-3" />
@@ -354,7 +469,7 @@ export function CopilotChat({
           })}
 
           {isThinking && (
-            <div className="flex items-center gap-2 rounded-2xl rounded-bl-sm bg-paper px-3.5 py-2.5 ring-1 ring-line">
+            <div className="flex items-center gap-2 rounded-2xl rounded-bl-sm bg-paper px-3.5 py-2.5 ring-1 ring-line shadow-2xs">
               <span className="size-2 animate-ping rounded-full bg-rust" />
               <Shimmer className="text-xs text-inksoft">
                 {lang === "hi"
@@ -368,15 +483,15 @@ export function CopilotChat({
       </Conversation>
 
       {/* Suggested Questions & Input Bar */}
-      <div className="border-t border-line p-3.5 bg-paper/40">
+      <div className="border-t border-line p-3.5 bg-paper/60">
         {/* Suggested Chips */}
         <div className="mb-2.5 flex flex-wrap gap-1.5">
-          {suggestions.slice(0, 3).map((suggestion) => (
+          {suggestions.map((suggestion) => (
             <button
               key={suggestion}
               type="button"
               onClick={() => sendQuery(suggestion)}
-              className="rounded-full bg-paper px-2.5 py-1 text-[11px] font-medium text-inksoft ring-1 ring-line hover:bg-sand hover:text-ink active:scale-95 transition-all shadow-xs"
+              className="rounded-full bg-paper px-2.5 py-1 text-[11px] font-medium text-inksoft ring-1 ring-line hover:bg-sand hover:text-ink active:scale-95 transition-all shadow-2xs"
             >
               {suggestion}
             </button>
@@ -389,7 +504,7 @@ export function CopilotChat({
             e.preventDefault();
             sendQuery(input);
           }}
-          className="flex items-center gap-1.5 rounded-2xl bg-paper px-2.5 py-1.5 ring-1 ring-line focus-within:ring-rust"
+          className="flex items-center gap-1.5 rounded-xl bg-paper px-2.5 py-1.5 ring-1 ring-line focus-within:ring-rust shadow-2xs"
         >
           {/* Microphone Demo Interaction */}
           <button
@@ -397,7 +512,7 @@ export function CopilotChat({
             title={lang === "hi" ? "बोलकर पूछें (Voice Demo)" : "Voice input demo"}
             onClick={handleVoiceDemo}
             className={cn(
-              "grid size-8 shrink-0 place-items-center rounded-full transition-all",
+              "grid size-8 shrink-0 place-items-center rounded-lg transition-all",
               isListening
                 ? "bg-rust text-cream animate-pulse ring-2 ring-rust/30"
                 : "text-inksoft hover:bg-sand hover:text-ink",
@@ -412,16 +527,16 @@ export function CopilotChat({
             onChange={(e) => setInput(e.target.value)}
             placeholder={
               lang === "hi"
-                ? "हिंदी में पूछें (उदा. आज क्या फोकस करें, उधार किसका बाकी है?)..."
-                : "Ask in English or Hindi (e.g. what to focus on today?)..."
+                ? "दुकान के बारे में भारत से कुछ भी पूछें..."
+                : "Ask Bharat anything about your store..."
             }
-            className="flex-1 bg-transparent px-2 text-xs text-ink outline-none placeholder:text-inksoft/60"
+            className="flex-1 bg-transparent px-2 text-xs text-ink outline-none placeholder:text-inksoft/60 font-sans"
           />
 
           <button
             type="submit"
             disabled={!input.trim() || isThinking}
-            className="grid size-8 shrink-0 place-items-center rounded-full bg-ink text-cream disabled:opacity-40 hover:opacity-90 active:scale-95 transition-all"
+            className="grid size-8 shrink-0 place-items-center rounded-lg bg-ink text-cream disabled:opacity-40 hover:opacity-90 active:scale-95 transition-all"
           >
             <ArrowRight className="size-4" />
           </button>

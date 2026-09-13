@@ -59,14 +59,14 @@ function AnalyticsPage() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
-              <span className="rounded-full bg-paytm/15 px-2.5 py-0.5 text-xs font-bold text-paytm">
+              <span className="rounded-full bg-paytm/15 px-2.5 py-0.5 text-xs font-semibold text-paytm">
                 Paytm Pulse 4.0
               </span>
-              <span className="rounded-full bg-emerald/15 px-2.5 py-0.5 text-xs font-semibold text-emerald">
+              <span className="rounded-full bg-emerald-light px-2.5 py-0.5 text-xs font-semibold text-emerald">
                 {isHindi ? "● लाइव डेटा सिंक" : "● Live Data Stream"}
               </span>
             </div>
-            <h1 className="mt-1.5 font-display text-2xl font-bold text-ink sm:text-3xl">
+            <h1 className="mt-1.5 font-sans text-2xl sm:text-3xl font-semibold text-ink">
               {t.pulseTitle}
             </h1>
             <p className="mt-1 text-sm text-inksoft">
@@ -74,7 +74,7 @@ function AnalyticsPage() {
             </p>
           </div>
 
-          <div className="rounded-xl bg-paper px-3.5 py-2 ring-1 ring-line text-xs font-medium text-inksoft flex items-center gap-2">
+          <div className="rounded-xl bg-paper px-3.5 py-2 ring-1 ring-line text-xs font-medium text-inksoft flex items-center gap-2 shadow-2xs">
             <ShieldCheck className="size-4 text-emerald" />
             <span>{isHindi ? "पेटीएम साउंडबॉक्स आईडी: PB-4091" : "Paytm Soundbox ID: PB-4091"}</span>
           </div>
@@ -82,22 +82,22 @@ function AnalyticsPage() {
 
         {/* 4 Core Vital Cards */}
         <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line">
+          <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
             <div className="flex items-center justify-between">
               <span className="text-xs text-inksoft">
                 {isHindi ? "आज का कुल काउंटर" : "Total Collections Today"}
               </span>
-              <span className="grid size-7 place-items-center rounded-lg bg-emerald/10 text-emerald">
+              <span className="grid size-7 place-items-center rounded-lg bg-emerald-light text-emerald">
                 <Wallet className="size-4" />
               </span>
             </div>
-            <p className="mt-2 font-display text-2xl font-bold text-ink">₹18,420</p>
+            <p className="mt-2 font-sans text-2xl font-semibold text-ink tabular-nums">₹18,420</p>
             <p className="mt-1 text-[11px] text-inksoft">
               {isHindi ? "126 यूपीआई + 42 नकद बिल" : "126 UPI + 42 cash transactions"}
             </p>
           </div>
 
-          <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line">
+          <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
             <div className="flex items-center justify-between">
               <span className="text-xs text-inksoft">
                 {isHindi ? "पेटीएम साउंडबॉक्स/यूपीआई" : "Paytm Soundbox / UPI"}
@@ -106,14 +106,14 @@ function AnalyticsPage() {
                 <QrCode className="size-4" />
               </span>
             </div>
-            <p className="mt-2 font-display text-2xl font-bold text-ink">₹12,840</p>
+            <p className="mt-2 font-sans text-2xl font-semibold text-ink tabular-nums">₹12,840</p>
             <div className="mt-1 flex items-center gap-1 text-[11px] font-semibold text-emerald">
               <ArrowUpRight className="size-3" />
               <span>{isHindi ? "कुल बिक्री का 69.7%" : "69.7% of counter volume"}</span>
             </div>
           </div>
 
-          <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line">
+          <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
             <div className="flex items-center justify-between">
               <span className="text-xs text-inksoft">
                 {isHindi ? "औसत बिल (बास्केट साइज)" : "Average Ticket Size"}
@@ -122,13 +122,13 @@ function AnalyticsPage() {
                 <TrendingUp className="size-4" />
               </span>
             </div>
-            <p className="mt-2 font-display text-2xl font-bold text-ink">₹146</p>
+            <p className="mt-2 font-sans text-2xl font-semibold text-ink tabular-nums">₹146</p>
             <p className="mt-1 text-[11px] text-inksoft">
               {isHindi ? "शाम 6-8 बजे ₹192 तक बढ़ा" : "Peaked at ₹192 in evening rush"}
             </p>
           </div>
 
-          <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line">
+          <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
             <div className="flex items-center justify-between">
               <span className="text-xs text-inksoft">
                 {isHindi ? "कार्यशील पूंजी कुशन" : "Working Capital Runway"}
@@ -137,7 +137,7 @@ function AnalyticsPage() {
                 <Banknote className="size-4" />
               </span>
             </div>
-            <p className="mt-2 font-display text-2xl font-bold text-ink">₹38,500</p>
+            <p className="mt-2 font-sans text-2xl font-semibold text-ink tabular-nums">₹38,500</p>
             <p className="mt-1 text-[11px] text-emerald font-semibold">
               {isHindi ? "शुक्रवार का ₹22k सप्लायर बिल सुरक्षित" : "Covers ₹22k distributor dues"}
             </p>
@@ -145,10 +145,10 @@ function AnalyticsPage() {
         </div>
 
         {/* Hourly Footfall Heatmap & Activity */}
-        <section className="mt-6 rounded-[20px] bg-paper p-5 ring-1 ring-line sm:p-6">
+        <section className="mt-6 rounded-2xl bg-paper p-5 ring-1 ring-line sm:p-6 shadow-2xs">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div>
-              <h2 className="font-display text-lg font-bold text-ink">
+              <h2 className="font-sans text-lg font-semibold text-ink">
                 {isHindi ? "घंटेवार ग्राहक भीड़ व बिक्री गतिविधि (Heatmap)" : "Hourly Traffic & Transaction Velocity"}
               </h2>
               <p className="text-xs text-inksoft">
@@ -187,9 +187,9 @@ function AnalyticsPage() {
                     <div
                       style={{ height: `${heightPct}%` }}
                       className={cn(
-                        "w-full rounded-t-md transition-all duration-300",
+                        "w-full rounded-t-sm transition-all duration-300",
                         isSelected
-                          ? "bg-rust shadow-md scale-105 ring-2 ring-rust/30"
+                          ? "bg-rust shadow-xs scale-105 ring-2 ring-rust/30"
                           : isPeak
                           ? "bg-rust/70 group-hover:bg-rust"
                           : "bg-sand group-hover:bg-sand/80"
@@ -218,26 +218,26 @@ function AnalyticsPage() {
 
           {/* Selected Hour Insight Card */}
           {selectedHourData && (
-            <div className="mt-4 rounded-xl bg-sand/40 p-4 ring-1 ring-line flex flex-wrap items-center justify-between gap-3">
+            <div className="mt-4 rounded-xl bg-sand/40 p-4 ring-1 ring-line flex flex-wrap items-center justify-between gap-3 shadow-2xs">
               <div className="flex items-center gap-3">
                 <div className="grid size-10 place-items-center rounded-xl bg-rust text-cream font-mono font-bold text-xs">
                   {selectedHourData.time}
                 </div>
                 <div>
-                  <p className="font-display font-semibold text-sm text-ink">
+                  <p className="font-sans font-semibold text-sm text-ink">
                     {selectedHourData.label} ({selectedHourData.time})
                   </p>
-                  <p className="text-xs text-inksoft">
+                  <p className="text-xs text-inksoft tabular-nums">
                     {selectedHourData.txns} {isHindi ? "लेनदेन संपन्न" : "transactions completed"} · {isHindi ? "औसत टिकट" : "avg ticket"} ₹{Math.round(selectedHourData.sales / selectedHourData.txns)}
                   </p>
                 </div>
               </div>
 
               <div className="text-right">
-                <p className="font-display text-lg font-bold text-ink">
+                <p className="font-sans text-lg font-semibold text-ink tabular-nums">
                   ₹{selectedHourData.sales.toLocaleString("en-IN")}
                 </p>
-                <p className="text-[11px] text-emerald font-semibold">
+                <p className="text-[11px] text-emerald font-medium">
                   {selectedHourData.sales >= 2400 ? (isHindi ? "🔥 पीक समय" : "🔥 Peak Hour") : (isHindi ? "सामान्य गति" : "Normal Velocity")}
                 </p>
               </div>
@@ -248,8 +248,8 @@ function AnalyticsPage() {
         {/* Split: Payment Ratio & Instant Settlement Log */}
         <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
           {/* Payment Method Breakdown */}
-          <section className="rounded-[20px] bg-paper p-5 ring-1 ring-line">
-            <h2 className="font-display text-base font-bold text-ink">
+          <section className="rounded-2xl bg-paper p-5 ring-1 ring-line shadow-2xs">
+            <h2 className="font-sans text-base font-semibold text-ink">
               {isHindi ? "भुगतान माध्यम विभाजन" : "Payment Mode Breakdown"}
             </h2>
             <p className="text-xs text-inksoft">
@@ -257,25 +257,25 @@ function AnalyticsPage() {
             </p>
 
             {/* Combined Bar */}
-            <div className="mt-4 h-5 w-full overflow-hidden rounded-full bg-sand flex">
+            <div className="mt-4 h-4 w-full overflow-hidden rounded-full bg-sand flex">
               <div className="h-full bg-paytm transition-all" style={{ width: "69.7%" }} />
               <div className="h-full bg-rust transition-all" style={{ width: "30.3%" }} />
             </div>
 
             <div className="mt-3 flex justify-between text-xs">
               <div className="flex items-center gap-2">
-                <span className="size-3 rounded-full bg-paytm" />
+                <span className="size-2.5 rounded-full bg-paytm" />
                 <span className="font-semibold text-ink">
                   {isHindi ? "पेटीएम यूपीआई / साउंडबॉक्स" : "Paytm UPI / Soundbox"}
                 </span>
-                <span className="text-inksoft font-mono">₹12,840 (69.7%)</span>
+                <span className="text-inksoft font-mono tabular-nums">₹12,840 (69.7%)</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="size-3 rounded-full bg-rust" />
+                <span className="size-2.5 rounded-full bg-rust" />
                 <span className="font-semibold text-ink">
                   {isHindi ? "भौतिक नकद" : "Cash"}
                 </span>
-                <span className="text-inksoft font-mono">₹5,580 (30.3%)</span>
+                <span className="text-inksoft font-mono tabular-nums">₹5,580 (30.3%)</span>
               </div>
             </div>
 
@@ -284,7 +284,7 @@ function AnalyticsPage() {
                 <Sparkles className="size-3.5 text-rust" />
                 {isHindi ? "भारत एआई अंतर्दृष्टि:" : "Bharat AI Insight:"}
               </p>
-              <p className="mt-1">
+              <p className="mt-1 leading-relaxed">
                 {isHindi
                   ? "70% ग्राहक अब सीधे पेटीएम साउंडबॉक्स पर ₹100 से कम के छोटे भुगतान डिजिटल कर रहे हैं, जिससे रोज़ाना छुट्टे सिक्कों (change) की समस्या 82% कम हो गई है।"
                   : "Micro-transactions under ₹100 are now 70% digital via Soundbox 4.0, reducing change currency shortages by 82% at your counter."}
@@ -293,17 +293,17 @@ function AnalyticsPage() {
           </section>
 
           {/* Paytm Soundbox Payouts */}
-          <section className="rounded-[20px] bg-paper p-5 ring-1 ring-line">
+          <section className="rounded-2xl bg-paper p-5 ring-1 ring-line shadow-2xs">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="font-display text-base font-bold text-ink">
+                <h2 className="font-sans text-base font-semibold text-ink">
                   {isHindi ? "साउंडबॉक्स ऑटो-सेटलमेंट बही" : "Soundbox Auto-Settlement Log"}
                 </h2>
                 <p className="text-xs text-inksoft">
                   {isHindi ? "सीधे आपके एचडीएफसी बैंक खाते में स्वतः जमा" : "Direct auto-sweep into your linked bank account"}
                 </p>
               </div>
-              <span className="rounded-full bg-emerald/15 px-2.5 py-0.5 text-[11px] font-bold text-emerald">
+              <span className="rounded-full bg-emerald-light px-2.5 py-0.5 text-[11px] font-semibold text-emerald">
                 {isHindi ? "तत्काल शून्य शुल्क" : "0% MDR · Free"}
               </span>
             </div>
@@ -315,7 +315,7 @@ function AnalyticsPage() {
                   className="flex items-center justify-between rounded-xl bg-sand/30 p-3 ring-1 ring-line/70"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="grid size-8 place-items-center rounded-lg bg-emerald/10 text-emerald">
+                    <div className="grid size-8 place-items-center rounded-lg bg-emerald-light text-emerald">
                       <CheckCircle2 className="size-4" />
                     </div>
                     <div>
@@ -326,8 +326,8 @@ function AnalyticsPage() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="font-display text-sm font-bold text-ink">{log.amount}</p>
-                    <span className="text-[10px] text-emerald font-semibold">{log.status}</span>
+                    <p className="font-sans text-sm font-semibold text-ink tabular-nums">{log.amount}</p>
+                    <span className="text-[10px] text-emerald font-medium">{log.status}</span>
                   </div>
                 </div>
               ))}
@@ -336,18 +336,18 @@ function AnalyticsPage() {
         </div>
 
         {/* Paytm Merchant Capital / Loan Pre-Approval Banner */}
-        <section className="mt-6 rounded-[22px] bg-gradient-to-r from-[#172033] via-[#1c2c47] to-[#00BAF2] p-5 sm:p-6 text-white shadow-md">
+        <section className="mt-6 rounded-2xl bg-[#172033] p-5 sm:p-6 text-white shadow-2xs ring-1 ring-black/20">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="max-w-xl">
               <div className="flex items-center gap-2">
-                <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
+                <span className="rounded-full bg-white/15 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[#00BAF2]">
                   Paytm Merchant Lending
                 </span>
-                <span className="rounded-full bg-emerald-400/20 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-300">
+                <span className="rounded-full bg-emerald/20 px-2.5 py-0.5 text-[10px] font-medium text-emerald-300">
                   {isHindi ? "पूर्व-स्वीकृत" : "Pre-Approved"}
                 </span>
               </div>
-              <h3 className="mt-2 font-display text-xl font-bold sm:text-2xl text-white">
+              <h3 className="mt-2 font-sans text-xl font-semibold sm:text-2xl text-white">
                 {isHindi
                   ? "₹1,50,000 का संपार्श्विक-मुक्त व्यापार ऋण उपलब्ध"
                   : "₹1,50,000 Collateral-Free Kirana Growth Loan Available"}
@@ -366,7 +366,7 @@ function AnalyticsPage() {
               <button
                 type="button"
                 onClick={() => setLoanApplied(!loanApplied)}
-                className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-xs font-bold text-[#172033] shadow-sm hover:bg-white/90 active:scale-95 transition-all"
+                className="inline-flex items-center gap-2 rounded-xl bg-paper px-4 py-2 text-xs font-semibold text-ink shadow-2xs hover:bg-cream active:scale-95 transition-all"
               >
                 <Zap className="size-3.5 fill-[#00BAF2] text-[#00BAF2]" />
                 <span>

@@ -8,7 +8,7 @@ export function BusinessHealth() {
   return (
     <section className="mt-8 animate-settle">
       <div className="flex items-center justify-between">
-        <h2 className="font-display text-xl font-semibold text-ink">
+        <h2 className="font-sans text-xl font-semibold text-ink">
           {t.healthTitle}
         </h2>
         <span className="text-xs text-inksoft">
@@ -18,10 +18,10 @@ export function BusinessHealth() {
 
       <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {/* Sales */}
-        <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line">
+        <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
           <p className="text-xs text-inksoft">{t.sales}</p>
           <div className="mt-1 flex items-baseline gap-1.5">
-            <span className="font-display text-2xl font-semibold text-emerald">
+            <span className="font-sans text-2xl font-semibold text-emerald tabular-nums">
               ↑ 8%
             </span>
             <span className="text-[11px] text-inksoft">
@@ -34,10 +34,10 @@ export function BusinessHealth() {
         </div>
 
         {/* Customers */}
-        <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line">
+        <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
           <p className="text-xs text-inksoft">{t.customers}</p>
           <div className="mt-1 flex items-baseline gap-1.5">
-            <span className="font-display text-2xl font-semibold text-emerald">
+            <span className="font-sans text-2xl font-semibold text-emerald tabular-nums">
               ↑ 12%
             </span>
             <span className="text-[11px] text-inksoft">
@@ -50,23 +50,23 @@ export function BusinessHealth() {
         </div>
 
         {/* Inventory */}
-        <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line">
+        <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
           <p className="text-xs text-inksoft">{t.inventory}</p>
           <div className="mt-1 flex items-baseline gap-1.5">
-            <span className="font-display text-2xl font-semibold text-amber-700">
+            <span className="font-sans text-2xl font-semibold text-warning tabular-nums">
               {isHindi ? "3 आइटम" : "3 items"}
             </span>
           </div>
-          <p className="mt-1 text-[11px] text-amber-700 font-medium">
+          <p className="mt-1 text-[11px] text-warning font-medium">
             {t.itemsNeedAttention}
           </p>
         </div>
 
         {/* Udhaar */}
-        <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line">
+        <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
           <p className="text-xs text-inksoft">{t.udhaar}</p>
           <div className="mt-1 flex items-baseline gap-1.5">
-            <span className="font-display text-2xl font-semibold text-ink">
+            <span className="font-sans text-2xl font-semibold text-ink tabular-nums">
               ₹12,840
             </span>
           </div>

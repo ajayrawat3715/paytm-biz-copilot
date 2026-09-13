@@ -69,11 +69,11 @@ export function HeaderNav() {
         <div className="mx-auto max-w-[1180px] px-4 sm:px-7 py-3 flex flex-wrap items-center justify-between gap-3">
           {/* Brand & Store Info */}
           <Link to="/" className="flex items-center gap-2.5 transition-opacity hover:opacity-90">
-            <span className="grid size-9 place-items-center rounded-[10px] bg-rust font-display text-lg font-semibold leading-none text-cream shadow-sm">
+            <span className="grid size-9 place-items-center rounded-xl bg-rust font-sans text-lg font-semibold leading-none text-cream shadow-2xs">
               {shop.initial}
             </span>
             <div className="leading-tight">
-              <p className="font-display text-[15px] font-semibold text-ink">
+              <p className="font-sans text-[15px] font-semibold text-ink">
                 {t.shopName}
               </p>
               <p className="text-xs text-inksoft">{t.shopArea}</p>
@@ -81,7 +81,7 @@ export function HeaderNav() {
           </Link>
 
           {/* Center Navigation Tabs (Desktop) */}
-          <nav className="hidden md:flex items-center gap-1 rounded-full bg-sand/60 p-1 ring-1 ring-line/70">
+          <nav className="hidden md:flex items-center gap-1 rounded-full bg-sand/60 p-1 ring-1 ring-line/80">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = item.exact
@@ -93,13 +93,13 @@ export function HeaderNav() {
                   key={item.to}
                   to={item.to}
                   className={cn(
-                    "flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-semibold transition-all",
+                    "flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-medium transition-all",
                     isActive
-                      ? "bg-rust text-cream shadow-sm"
+                      ? "bg-rust text-cream shadow-2xs font-semibold"
                       : "text-inksoft hover:text-ink hover:bg-paper/70"
                   )}
                 >
-                  <Icon className={cn("size-4", isActive ? "text-cream" : "text-inksoft")} />
+                  <Icon className={cn("size-3.5", isActive ? "text-cream" : "text-inksoft")} />
                   <span>{item.label}</span>
                 </Link>
               );
@@ -112,9 +112,9 @@ export function HeaderNav() {
             <button
               type="button"
               onClick={() => setVoiceModalOpen(true)}
-              className="inline-flex items-center gap-1.5 rounded-full bg-rust/10 px-3.5 py-1.5 text-xs sm:text-sm font-bold text-rust ring-1 ring-rust/30 hover:bg-rust/20 active:scale-95 transition-all shadow-sm"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-rust/10 px-3 py-1.5 text-xs sm:text-sm font-medium text-rust ring-1 ring-rust/30 hover:bg-rust/20 active:scale-95 transition-all shadow-2xs"
             >
-              <Mic className="size-4 text-rust animate-pulse" />
+              <Mic className="size-3.5 text-rust animate-pulse" />
               <span>{t.voiceLedgerBtn}</span>
             </button>
 
@@ -122,9 +122,9 @@ export function HeaderNav() {
             <button
               type="button"
               onClick={() => setDukanBandiModalOpen(true)}
-              className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-slate-900 px-3.5 py-1.5 text-xs sm:text-sm font-bold text-amber-300 ring-1 ring-slate-800 hover:bg-slate-800 active:scale-95 transition-all shadow-sm"
+              className="hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-ink px-3 py-1.5 text-xs sm:text-sm font-medium text-warning-light ring-1 ring-line hover:bg-ink/90 active:scale-95 transition-all shadow-2xs"
             >
-              <Moon className="size-4 text-amber-300" />
+              <Moon className="size-3.5 text-warning" />
               <span>{t.dukanBandiBtn}</span>
             </button>
 
@@ -132,9 +132,9 @@ export function HeaderNav() {
             <button
               type="button"
               onClick={() => setLoyaltyModalOpen(true)}
-              className="hidden md:inline-flex items-center gap-1.5 rounded-full bg-emerald/10 px-3.5 py-1.5 text-xs sm:text-sm font-bold text-emerald ring-1 ring-emerald/30 hover:bg-emerald/20 active:scale-95 transition-all shadow-sm"
+              className="hidden md:inline-flex items-center gap-1.5 rounded-xl bg-emerald-light px-3 py-1.5 text-xs sm:text-sm font-medium text-emerald ring-1 ring-emerald/30 hover:bg-emerald-light/80 active:scale-95 transition-all shadow-2xs"
             >
-              <Award className="size-4 text-emerald" />
+              <Award className="size-3.5 text-emerald" />
               <span>{t.loyaltyBtn}</span>
             </button>
 
@@ -142,9 +142,9 @@ export function HeaderNav() {
             <button
               type="button"
               onClick={() => setMemoryDialogOpen(true)}
-              className="hidden lg:inline-flex items-center gap-1.5 rounded-full bg-sand/80 px-3.5 py-1.5 text-xs sm:text-sm font-semibold text-ink ring-1 ring-line hover:bg-paper transition-colors"
+              className="hidden lg:inline-flex items-center gap-1.5 rounded-xl bg-sand/80 px-3 py-1.5 text-xs sm:text-sm font-medium text-ink ring-1 ring-line hover:bg-paper transition-colors"
             >
-              <Brain className="size-4 text-rust" />
+              <Brain className="size-3.5 text-rust" />
               <span>{t.memoryBadge}</span>
             </button>
 

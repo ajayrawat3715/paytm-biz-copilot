@@ -98,7 +98,7 @@ export function WorthDoingToday({
     <section id="worth-doing-section" className="mt-8">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <div className="flex items-center gap-2">
-          <h2 className="font-display text-xl font-semibold text-ink">
+          <h2 className="font-sans text-xl font-semibold text-ink">
             {t.worthDoingTitle}
           </h2>
           <span className="rounded-full bg-rust/10 px-2.5 py-0.5 text-xs font-semibold text-rust">
@@ -132,7 +132,7 @@ export function WorthDoingToday({
             <article
               key={item.id}
               className={cn(
-                "animate-settle rounded-[20px] bg-paper p-5 ring-1 ring-line transition-all sm:p-6",
+                "animate-settle rounded-2xl bg-paper p-5 ring-1 ring-line transition-all sm:p-6 shadow-2xs",
                 isDone && "bg-cream/40 opacity-90",
               )}
               style={{ animationDelay: `${0.06 * (index + 1)}s` }}
@@ -140,11 +140,11 @@ export function WorthDoingToday({
               {isDone ? (
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-start gap-3">
-                    <span className="grid size-8 place-items-center rounded-full bg-emerald/10 text-emerald">
+                    <span className="grid size-8 place-items-center rounded-full bg-emerald-light text-emerald">
                       <CheckCircle2 className="size-5" />
                     </span>
                     <div>
-                      <p className="font-display text-base font-semibold text-ink">
+                      <p className="font-sans text-base font-semibold text-ink">
                         {title}
                       </p>
                       <p className="mt-0.5 text-sm text-emerald font-medium">
@@ -152,7 +152,7 @@ export function WorthDoingToday({
                       </p>
                     </div>
                   </div>
-                  <span className="shrink-0 rounded-full bg-emerald/10 px-3 py-1 text-xs font-semibold text-emerald">
+                  <span className="shrink-0 rounded-full bg-emerald-light px-3 py-1 text-xs font-semibold text-emerald">
                     {t.completed}
                   </span>
                 </div>
@@ -169,22 +169,22 @@ export function WorthDoingToday({
                         <button
                           type="button"
                           onClick={() => setExplainContext(title)}
-                          className="inline-flex items-center gap-1 text-[11px] font-medium text-inksoft hover:text-rust"
+                          className="inline-flex items-center gap-1 text-[11px] font-medium text-inksoft hover:text-rust transition-colors"
                         >
                           <HelpCircle className="size-3" />
                           {t.whyAmISeeingThis}
                         </button>
                       </div>
-                      <h3 className="mt-2 font-display text-lg font-semibold text-ink leading-snug sm:text-xl">
+                      <h3 className="mt-2 font-sans text-lg font-semibold text-ink leading-snug sm:text-xl">
                         {title}
                       </h3>
                     </div>
 
                     <span
                       className={cn(
-                        "shrink-0 rounded-full px-3 py-1 text-xs font-semibold",
+                        "shrink-0 rounded-full px-3 py-1 text-xs font-semibold tabular-nums",
                         item.tagTone === "gain"
-                          ? "bg-emerald/10 text-emerald"
+                          ? "bg-emerald-light text-emerald"
                           : "bg-sand text-ink",
                       )}
                     >
@@ -197,7 +197,7 @@ export function WorthDoingToday({
                     <p className="text-[11px] font-semibold uppercase tracking-wider text-inksoft">
                       {t.problemDetected}
                     </p>
-                    <p className="mt-1 text-sm font-medium text-ink">
+                    <p className="mt-1 text-sm font-medium text-ink leading-relaxed">
                       {problem}
                     </p>
                   </div>
@@ -207,7 +207,7 @@ export function WorthDoingToday({
                     <button
                       type="button"
                       onClick={() => toggleWhy(item.id)}
-                      className="flex w-full items-center justify-between text-xs font-semibold text-inksoft hover:text-ink"
+                      className="flex w-full items-center justify-between text-xs font-semibold text-inksoft hover:text-ink transition-colors"
                     >
                       <span className="flex items-center gap-1.5">
                         <Sparkles className="size-3.5 text-rust" />
@@ -233,7 +233,7 @@ export function WorthDoingToday({
 
                   {/* 3. Recommended Action & 4. Expected Impact */}
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                    <div className="rounded-xl bg-paper p-3 ring-1 ring-line">
+                    <div className="rounded-xl bg-paper p-3.5 ring-1 ring-line">
                       <p className="text-[11px] font-semibold uppercase tracking-wider text-inksoft">
                         {t.recommendedAction}
                       </p>
@@ -242,7 +242,7 @@ export function WorthDoingToday({
                       </p>
                     </div>
 
-                    <div className="rounded-xl bg-emerald/5 p-3 ring-1 ring-emerald/20">
+                    <div className="rounded-xl bg-emerald-light/40 p-3.5 ring-1 ring-emerald/25">
                       <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald">
                         {t.expectedImpact}
                       </p>
@@ -257,14 +257,14 @@ export function WorthDoingToday({
                     <button
                       type="button"
                       onClick={() => onTriggerAction(item)}
-                      className="rounded-full bg-rust px-5 py-2.5 text-sm font-semibold text-cream shadow-sm ring-1 ring-rust/40 hover:opacity-95 active:scale-[0.98]"
+                      className="rounded-xl bg-rust px-4 py-2 text-xs sm:text-sm font-semibold text-cream shadow-2xs ring-1 ring-rust/40 hover:bg-rust/95 active:scale-[0.98] transition-all"
                     >
                       {actionLabel}
                     </button>
                     <button
                       type="button"
                       onClick={() => onSetAside(item.id)}
-                      className="rounded-full px-4 py-2.5 text-sm font-medium text-inksoft hover:bg-sand/60 active:scale-[0.98]"
+                      className="rounded-xl px-3.5 py-2 text-xs sm:text-sm font-medium text-inksoft hover:bg-sand/60 active:scale-[0.98] transition-all"
                     >
                       {t.setAside}
                     </button>

@@ -264,30 +264,31 @@ function Home() {
         </main>
 
         {/* 9 & 10. Intelligent Right-Side Bharat Copilot Chat Panel */}
-        <aside className="sticky top-0 hidden h-screen w-[360px] shrink-0 flex-col border-l border-line bg-sand/30 lg:flex">
+        <aside className="sticky top-0 hidden h-screen w-[380px] shrink-0 flex-col border-l border-line bg-paper lg:flex">
           <CopilotChat
             shopContext={shopContext}
             onTriggerModal={handleChatTrigger}
+            onExplain={(title) => setExplainContext(title)}
             className="h-full"
           />
         </aside>
       </div>
 
       {/* Mobile Floating Bar for Bharat Chat */}
-      <div className="fixed inset-x-0 bottom-0 z-10 border-t border-line bg-sand/90 px-3 py-3 backdrop-blur lg:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-10 border-t border-line bg-paper/90 px-3 py-3 backdrop-blur lg:hidden">
         <button
           type="button"
           onClick={() => setChatOpen(true)}
           className="mx-auto flex w-full max-w-[1180px] items-center gap-2"
         >
-          <span className="grid size-10 shrink-0 place-items-center rounded-full bg-ink font-display text-cream">
+          <span className="grid size-10 shrink-0 place-items-center rounded-full bg-rust font-sans font-semibold text-cream">
             भ
           </span>
-          <span className="flex flex-1 items-center gap-2 rounded-full bg-paper px-4 py-2.5 ring-1 ring-line">
-            <span className="text-sm text-inksoft/70">
+          <span className="flex flex-1 items-center gap-2 rounded-full bg-paper px-4 py-2.5 ring-1 ring-line shadow-xs">
+            <span className="text-xs font-medium text-inksoft">
               {t.mobileAskBar}
             </span>
-            <span className="ml-auto grid size-8 shrink-0 place-items-center rounded-full bg-rust text-sm text-cream">
+            <span className="ml-auto grid size-7 shrink-0 place-items-center rounded-full bg-rust text-xs text-cream">
               →
             </span>
           </span>
@@ -298,7 +299,7 @@ function Home() {
       <Sheet open={chatOpen} onOpenChange={setChatOpen}>
         <SheetContent
           side="bottom"
-          className="h-[85vh] gap-0 border-line bg-sand/40 p-0"
+          className="h-[88vh] gap-0 border-line bg-paper p-0"
         >
           <SheetTitle className="sr-only">Ask Bharat</SheetTitle>
           <CopilotChat
@@ -306,6 +307,10 @@ function Home() {
             onTriggerModal={(type) => {
               setChatOpen(false);
               handleChatTrigger(type);
+            }}
+            onExplain={(title) => {
+              setChatOpen(false);
+              setExplainContext(title);
             }}
             className="h-full"
           />

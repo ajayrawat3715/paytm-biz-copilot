@@ -129,14 +129,14 @@ function CustomersPage() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
-              <span className="rounded-full bg-rust/15 px-2.5 py-0.5 text-xs font-bold text-rust">
+              <span className="rounded-full bg-rust-light px-2.5 py-0.5 text-xs font-semibold text-rust">
                 {isHindi ? "डिजिटल बही-खाता व ग्राहक संबंध" : "Digital Ledger & CRM"}
               </span>
-              <span className="rounded-full bg-emerald/15 px-2.5 py-0.5 text-xs font-semibold text-emerald">
+              <span className="rounded-full bg-emerald-light px-2.5 py-0.5 text-xs font-semibold text-emerald">
                 {isHindi ? "84% समय पर वसूली दर" : "84% On-Time Recovery Rate"}
               </span>
             </div>
-            <h1 className="mt-1.5 font-display text-2xl font-bold text-ink sm:text-3xl">
+            <h1 className="mt-1.5 font-sans text-2xl sm:text-3xl font-semibold text-ink">
               {t.khataPageTitle}
             </h1>
             <p className="mt-1 text-sm text-inksoft">
@@ -148,7 +148,7 @@ function CustomersPage() {
             <button
               type="button"
               onClick={() => setNewUdharOpen(true)}
-              className="inline-flex items-center gap-1.5 rounded-full bg-rust px-4 py-2 text-xs font-bold text-cream shadow-sm hover:bg-rust/90 active:scale-95 transition-all"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-rust px-4 py-2 text-xs font-semibold text-cream shadow-2xs hover:bg-rust/95 active:scale-95 transition-all"
             >
               <Plus className="size-4" />
               <span>{isHindi ? "+ नया उधार लिखें" : "+ Add New Udhaar"}</span>
@@ -158,7 +158,7 @@ function CustomersPage() {
               type="button"
               onClick={resetToDefault}
               title={isHindi ? "डेटा को प्रारंभिक स्थिति में लाएं" : "Reset data to default"}
-              className="rounded-full bg-sand p-2 text-inksoft hover:text-ink hover:bg-sand/80 ring-1 ring-line transition-colors"
+              className="rounded-xl bg-sand p-2 text-inksoft hover:text-ink hover:bg-sand/80 ring-1 ring-line transition-colors"
             >
               <RotateCcw className="size-3.5" />
             </button>
@@ -167,12 +167,12 @@ function CustomersPage() {
 
         {/* 4 Summary Cards — Live Synced */}
         <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line">
+          <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
             <div className="flex items-center justify-between">
               <span className="text-xs text-inksoft">{isHindi ? "कुल बकाया उधार" : "Total Credit Outstanding"}</span>
               <Wallet className="size-4 text-inksoft" />
             </div>
-            <p className="mt-2 font-display text-2xl font-bold text-ink">
+            <p className="mt-2 font-sans text-2xl font-semibold text-ink tabular-nums">
               ₹{totals.outstanding.toLocaleString("en-IN")}
             </p>
             <p className="mt-1 text-[11px] text-inksoft">
@@ -180,25 +180,25 @@ function CustomersPage() {
             </p>
           </div>
 
-          <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line border-l-4 border-l-red-500">
+          <div className="rounded-2xl bg-paper p-4 ring-1 ring-line border-l-[3px] border-l-rust shadow-2xs">
             <div className="flex items-center justify-between">
               <span className="text-xs text-inksoft">{isHindi ? "अतिदेय (Overdue) राशि" : "Overdue Bucket"}</span>
-              <ShieldAlert className="size-4 text-red-500" />
+              <ShieldAlert className="size-4 text-rust" />
             </div>
-            <p className="mt-2 font-display text-2xl font-bold text-red-600">
+            <p className="mt-2 font-sans text-2xl font-semibold text-rust tabular-nums">
               ₹{totals.overdueAmount.toLocaleString("en-IN")}
             </p>
-            <p className="mt-1 text-[11px] text-red-600 font-semibold">
+            <p className="mt-1 text-[11px] text-rust font-semibold">
               {totals.overdueCount} {isHindi ? "ग्राहकों पर अति ध्यान आवश्यक" : "customers overdue"}
             </p>
           </div>
 
-          <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line">
+          <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
             <div className="flex items-center justify-between">
               <span className="text-xs text-inksoft">{isHindi ? "आज की वसूली" : "Collected Today"}</span>
               <Coins className="size-4 text-emerald" />
             </div>
-            <p className="mt-2 font-display text-2xl font-bold text-emerald">
+            <p className="mt-2 font-sans text-2xl font-semibold text-emerald tabular-nums">
               ₹{totals.udharCollectedToday.toLocaleString("en-IN")}
             </p>
             <p className="mt-1 text-[11px] text-emerald font-semibold">
@@ -206,12 +206,12 @@ function CustomersPage() {
             </p>
           </div>
 
-          <div className="rounded-[18px] bg-paper p-4 ring-1 ring-line">
+          <div className="rounded-2xl bg-paper p-4 ring-1 ring-line shadow-2xs">
             <div className="flex items-center justify-between">
               <span className="text-xs text-inksoft">{isHindi ? "सुप्त (Inactive) ग्राहक" : "Inactive Cohort"}</span>
-              <Clock className="size-4 text-amber-500" />
+              <Clock className="size-4 text-warning" />
             </div>
-            <p className="mt-2 font-display text-2xl font-bold text-ink">240 {isHindi ? "खाते" : "Accounts"}</p>
+            <p className="mt-2 font-sans text-2xl font-semibold text-ink tabular-nums">240 {isHindi ? "खाते" : "Accounts"}</p>
             <p className="mt-1 text-[11px] text-rust font-semibold">
               {isHindi ? "10% ऑफर से ₹6,100 अवसर" : "Target 10% offer for ₹6.1k sales"}
             </p>
@@ -227,7 +227,7 @@ function CustomersPage() {
               className={cn(
                 "rounded-xl px-3.5 py-1.5 text-xs font-semibold transition-all",
                 activeTab === "overdue"
-                  ? "bg-red-500 text-white shadow-xs"
+                  ? "bg-rust text-cream shadow-2xs"
                   : "text-inksoft hover:text-ink",
               )}
             >
