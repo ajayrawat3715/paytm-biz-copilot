@@ -17,6 +17,7 @@ import {
 } from "@/components/ai-elements/prompt-input";
 import { Shimmer } from "@/components/ai-elements/shimmer";
 import { getCopilotResponse, type LanguageMode } from "@/lib/copilot-ai";
+import { askGeminiCopilot } from "@/lib/gemini";
 import { shop } from "@/lib/khata";
 import { useLanguage } from "@/lib/language-context";
 import { cn } from "@/lib/utils";
@@ -109,7 +110,7 @@ export function CopilotChat({
     window.speechSynthesis.speak(utterance);
   };
 
-  const sendQuery = (text: string) => {
+  const sendQuery = async (text: string) => {
     const query = text.trim();
     if (!query || isThinking) return;
 
@@ -123,9 +124,13 @@ export function CopilotChat({
     setInput("");
     setIsThinking(true);
 
-    // Simulate realistic 350ms neural reasoning time
-    setTimeout(() => {
-      const response = getCopilotResponse(query, lang);
+    try {
+      const response = await askGeminiCopilot({
+        query,
+        lang,
+        shopContext,
+      });
+
       const assistantMsg: ChatMessage = {
         id: `a-${Date.now()}`,
         role: "assistant",
@@ -133,8 +138,19 @@ export function CopilotChat({
         action: response.suggestedAction,
       };
       setMessages((prev) => [...prev, assistantMsg]);
+    } catch (err) {
+      console.warn("Copilot query failed, falling back to offline rules:", err);
+      const fallback = getCopilotResponse(query, lang);
+      const assistantMsg: ChatMessage = {
+        id: `a-${Date.now()}`,
+        role: "assistant",
+        text: fallback.text,
+        action: fallback.suggestedAction,
+      };
+      setMessages((prev) => [...prev, assistantMsg]);
+    } finally {
       setIsThinking(false);
-    }, 350);
+    }
   };
 
   const handleVoiceDemo = () => {
@@ -167,7 +183,7 @@ export function CopilotChat({
                 {lang === "hi" ? "भारत — किराना कोपायलट" : "Bharat, your copilot"}
               </p>
               <span className="rounded-full bg-rust/10 px-1.5 py-0.2 text-[9px] font-bold text-rust">
-                AI
+                Gemini AI
               </span>
             </div>
             <p className="text-xs text-inksoft">
@@ -273,8 +289,9 @@ export function CopilotChat({
                         )}
                       </button>
 
-                      <span className="text-[10px] text-inksoft">
-                        {lang === "hi" ? "पेटीएम एआई" : "Paytm AI"}
+                      <span className="text-[10px] text-inksoft flex items-center gap-1">
+                        <Sparkles className="size-2.5 text-rust" />
+                        {lang === "hi" ? "पेटीएम • जेमिनी एआई" : "Paytm • Gemini AI"}
                       </span>
                     </div>
                   )}
@@ -300,8 +317,8 @@ export function CopilotChat({
               <span className="size-2 animate-ping rounded-full bg-rust" />
               <Shimmer className="text-xs text-inksoft">
                 {lang === "hi"
-                  ? "दुकान का लाइव डेटा विश्लेषण कर रहा हूँ…"
-                  : "Analyzing live shop data…"}
+                  ? "जेमिनी एआई दुकान का लाइव डेटा विश्लेषण कर रहा है…"
+                  : "Gemini AI analyzing live shop data…"}
               </Shimmer>
             </div>
           )}
