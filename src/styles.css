@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
@@ -14,8 +14,8 @@
   --radius-3xl: 20px;
   --radius-4xl: 24px;
 
-  --font-display: "Inter", "Noto Sans Devanagari", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-sans: "Inter", "Noto Sans Devanagari", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Inter", "Noto Sans Devanagari", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: "Inter", "Noto Sans Devanagari", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: "Inter", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   --color-cream: var(--cream);
@@ -88,6 +88,11 @@
 
 :root {
   --radius: 16px;
+
+  /* Paytm-Standard Typography Variables */
+  --font-sans: "Inter", "Noto Sans Devanagari", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Inter", "Noto Sans Devanagari", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --default-font-family: "Inter", "Noto Sans Devanagari", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   /* Exact Fintech Editorial Palette */
   --cream: #F7F3EA;          /* Background */
@@ -180,38 +185,49 @@
 }
 
 @layer base {
-  * {
+  *, *::before, *::after {
     border-color: var(--color-border);
+    box-sizing: border-box;
   }
 
   html {
     font-size: 16px;
     -webkit-text-size-adjust: 100%;
-    font-family: var(--font-sans);
+    font-family: var(--font-sans) !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-family: var(--font-sans);
+    font-family: var(--font-sans) !important;
     font-weight: 400; /* Body text: Inter 400, 14-16px, line-height 1.5 */
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
     letter-spacing: -0.011em;
     line-height: 1.5;
   }
 
-  /* Headings: Inter 700 / 600 - Strong Paytm-style hierarchy */
+  button, input, optgroup, select, textarea {
+    font-family: inherit;
+  }
+
+  /* Headings: Inter 700 / 800 - Exact Paytm Website Hierarchy */
   h1, .font-display {
     font-family: var(--font-display);
     font-weight: 700;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
     color: var(--color-ink);
   }
 
   h2 {
     font-family: var(--font-display);
     font-weight: 700;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
     line-height: 1.2;
     color: var(--color-ink);
   }
@@ -219,7 +235,7 @@
   h3 {
     font-family: var(--font-display);
     font-weight: 600;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.018em;
     line-height: 1.25;
     color: var(--color-ink);
   }
@@ -227,7 +243,7 @@
   h4, h5, h6 {
     font-family: var(--font-display);
     font-weight: 600;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.012em;
     color: var(--color-ink);
   }
 
@@ -266,8 +282,8 @@
 /* Paytm-Style Typography Utility Classes */
 .hero-heading {
   font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.025em;
+  font-weight: 800;
+  letter-spacing: -0.035em;
   line-height: 1.08;
   font-size: clamp(32px, 5vw, 52px);
 }
@@ -283,7 +299,7 @@
 .kpi-number {
   font-family: var(--font-sans);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum";
 }
