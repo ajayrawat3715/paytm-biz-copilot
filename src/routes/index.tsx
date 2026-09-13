@@ -13,6 +13,7 @@ import { DemoTourBar } from "@/components/DemoTourBar";
 import { HeaderNav } from "@/components/HeaderNav";
 import { InventoryOrderModal } from "@/components/InventoryOrderModal";
 import { LanguageToggle } from "@/components/LanguageToggle";
+import { MerchantOffersBanner } from "@/components/MerchantOffersBanner";
 import { MorningBrief } from "@/components/MorningBrief";
 import { OpportunityRadar } from "@/components/OpportunityRadar";
 import { PaytmInsights } from "@/components/PaytmInsights";
@@ -155,7 +156,10 @@ function Home() {
       <HeaderNav />
 
       <div className="mx-auto flex min-h-screen max-w-[1180px] flex-col lg:flex-row">
-        <main className="flex-1 px-4 pb-32 pt-6 sm:px-7 lg:pb-12">
+        <main className="flex-1 px-4 pb-32 pt-4 sm:px-7 lg:pb-12">
+          {/* Merchant Schemes & Current Offers Carousel Banner */}
+          <MerchantOffersBanner />
+
           {/* 1. Upgraded Morning Brief & Forecast */}
           <MorningBrief
             collectedToday={dailyCash.cashSales + totals.udharCollectedToday}
