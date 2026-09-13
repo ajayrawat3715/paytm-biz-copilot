@@ -67,7 +67,7 @@ export function HeaderNav() {
     <>
       <header className="border-b border-line bg-paper/90 backdrop-blur-md sticky top-0 z-30 shadow-2xs">
         {/* Top Product Bar */}
-        <div className="mx-auto max-w-[1440px] px-4 sm:px-7 py-2.5 flex flex-wrap items-center justify-between gap-3">
+        <div className="mx-auto max-w-[1180px] px-4 sm:px-7 py-2.5 flex flex-wrap items-center justify-between gap-3">
           {/* Brand & Store Info */}
           <Link to="/" className="flex items-center gap-2.5 transition-opacity hover:opacity-90">
             <span className="grid size-9 place-items-center rounded-xl bg-rust font-sans text-base font-bold leading-none text-white shadow-2xs">
@@ -151,7 +151,7 @@ export function HeaderNav() {
 
         {/* Clean Horizontal Fintech Navigation Bar (Desktop) */}
         <div className="border-t border-line/70 bg-paper">
-          <div className="mx-auto max-w-[1440px] px-4 sm:px-7">
+          <div className="mx-auto max-w-[1180px] px-4 sm:px-7">
             <nav className="hidden md:flex items-center gap-6 overflow-x-auto py-0">
               {navItems.map((item) => {
                 const Icon = item.icon;

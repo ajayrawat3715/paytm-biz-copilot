@@ -147,14 +147,14 @@ function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-cream text-ink bg-blueprint-grid">
+    <div className="min-h-screen bg-cream text-ink">
       {/* Pitch Navigator Bar for Hackathon Presentation */}
       <DemoTourBar onStepClick={handleStepClick} />
 
       {/* Unified Multi-Page Header Navigation */}
       <HeaderNav />
 
-      <div className="mx-auto flex min-h-screen max-w-[1440px] flex-col lg:flex-row">
+      <div className="mx-auto flex min-h-screen max-w-[1180px] flex-col lg:flex-row">
         <main className="flex-1 px-4 pb-32 pt-6 sm:px-7 lg:pb-12">
           {/* 1. Upgraded Morning Brief & Forecast */}
           <MorningBrief
@@ -281,7 +281,7 @@ function Home() {
         <button
           type="button"
           onClick={() => setChatOpen(true)}
-          className="mx-auto flex w-full max-w-[1440px] items-center gap-2"
+          className="mx-auto flex w-full max-w-[1180px] items-center gap-2"
         >
           <span className="grid size-10 shrink-0 place-items-center rounded-full bg-rust font-sans font-semibold text-cream">
             भ

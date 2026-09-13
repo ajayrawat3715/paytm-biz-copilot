@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap");
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
@@ -14,14 +14,12 @@
   --radius-3xl: 20px;
   --radius-4xl: 24px;
 
-  --font-editorial: "Instrument Serif", Georgia, "Times New Roman", serif;
-  --font-display: "Plus Jakarta Sans", "Inter", "Noto Sans Devanagari", system-ui, -apple-system, sans-serif;
-  --font-sans: "Plus Jakarta Sans", "Inter", "Noto Sans Devanagari", system-ui, -apple-system, sans-serif;
+  --font-display: "Inter", "Noto Sans Devanagari", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: "Inter", "Noto Sans Devanagari", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "Inter", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   --color-cream: var(--cream);
   --color-paper: var(--paper);
-  --color-paper-elevated: var(--paper-elevated);
   --color-ink: var(--ink);
   --color-inksoft: var(--inksoft);
   --color-rust: var(--rust);
@@ -34,7 +32,6 @@
   --color-primary-dark: var(--primary-dark);
   --color-sand: var(--sand);
   --color-line: var(--line);
-  --color-line-bright: var(--line-bright);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -92,23 +89,21 @@
 :root {
   --radius: 16px;
 
-  /* Luxury Dark Banking Fintech Palette (Roohi Koohi Reference) */
-  --cream: #0A0D14;          /* Main Background: Obsidian Midnight */
-  --paper: #121620;          /* Card Background: Deep Slate Card */
-  --paper-elevated: #161C28; /* Elevated Card */
-  --ink: #FFFFFF;            /* Primary Text: Stark Pure White */
-  --inksoft: #8E98AA;        /* Secondary Text: Silver Slate */
-  --line: #1F2637;           /* Technical Border: Crisp 1px Dark Line */
-  --line-bright: #2E3A52;    /* Highlight / Active Border */
-  --rust: #0D62FE;           /* Primary Accent: Electric Cobalt Blue (Roohi Koohi "Get Started" & Standcard) */
-  --rust-light: rgba(13, 98, 254, 0.15); /* Subtle Blue Aura */
-  --emerald: #10B981;        /* Success: Emerald */
-  --emerald-light: rgba(16, 185, 129, 0.15);
-  --warning: #F59E0B;        /* Warning / Gold: Amber (Yurnero card) */
-  --warning-light: rgba(245, 158, 11, 0.15);
+  /* Exact Fintech Editorial Palette */
+  --cream: #F7F3EA;          /* Background */
+  --paper: #FFFDF8;          /* Cards */
+  --ink: #29231E;            /* Primary text */
+  --inksoft: #6F675E;        /* Secondary text */
+  --line: #E5DED2;           /* Borders */
+  --rust: #C6532D;           /* Bharat AI / primary accent */
+  --rust-light: #F4E2D7;     /* Light Bharat accent */
+  --emerald: #2F765B;        /* Success */
+  --emerald-light: #E4EFE8;  /* Light success */
+  --warning: #B87920;        /* Warning */
+  --warning-light: #F5EBD7;  /* Light warning */
   --paytm: #00BAF2;          /* Paytm Blue */
-  --primary-dark: #0A0D14;   /* Obsidian */
-  --sand: #181E2C;           /* Subtle Surface / Chips */
+  --primary-dark: #29231E;   /* Primary dark */
+  --sand: #EFE9DE;           /* Subtle surface / chips */
 
   --background: var(--cream);
   --foreground: var(--ink);
@@ -123,8 +118,8 @@
   --muted: var(--sand);
   --muted-foreground: var(--inksoft);
   --accent: var(--rust-light);
-  --accent-foreground: #FFFFFF;
-  --destructive: #EF4444;
+  --accent-foreground: var(--rust);
+  --destructive: #C6532D;
   --destructive-foreground: #FFFFFF;
   --border: var(--line);
   --input: var(--line);
@@ -140,22 +135,20 @@
 }
 
 .dark {
-  --cream: #0A0D14;
-  --paper: #121620;
-  --paper-elevated: #161C28;
-  --ink: #FFFFFF;
-  --inksoft: #8E98AA;
-  --line: #1F2637;
-  --line-bright: #2E3A52;
-  --rust: #0D62FE;
-  --rust-light: rgba(13, 98, 254, 0.15);
-  --emerald: #10B981;
-  --emerald-light: rgba(16, 185, 129, 0.15);
-  --warning: #F59E0B;
-  --warning-light: rgba(245, 158, 11, 0.15);
+  --cream: #1A1714;
+  --paper: #231F1B;
+  --ink: #F7F3EA;
+  --inksoft: #A8A096;
+  --line: #38322B;
+  --rust: #D96942;
+  --rust-light: #3D261C;
+  --emerald: #3DA07C;
+  --emerald-light: #1A3125;
+  --warning: #D89436;
+  --warning-light: #332612;
   --paytm: #00BAF2;
-  --primary-dark: #0A0D14;
-  --sand: #181E2C;
+  --primary-dark: #12100E;
+  --sand: #2C2621;
 
   --background: var(--cream);
   --foreground: var(--ink);
@@ -170,8 +163,8 @@
   --muted: var(--sand);
   --muted-foreground: var(--inksoft);
   --accent: var(--rust-light);
-  --accent-foreground: #FFFFFF;
-  --destructive: #EF4444;
+  --accent-foreground: var(--rust);
+  --destructive: #E05252;
   --destructive-foreground: #FFFFFF;
   --border: var(--line);
   --input: var(--line);
@@ -302,35 +295,3 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
-
-/* Roohi Koohi Inspired Luxury Editorial Italic & Blueprint Classes */
-.font-editorial {
-  font-family: var(--font-editorial);
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: normal;
-}
-
-.bg-blueprint-grid {
-  background-size: 36px 36px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-}
-
-.btn-cobalt {
-  background-color: #0D62FE;
-  color: #FFFFFF;
-  font-weight: 600;
-  box-shadow: 0 4px 20px -2px rgba(13, 98, 254, 0.4);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.btn-cobalt:hover {
-  background-color: #0052E0;
-  box-shadow: 0 6px 26px -2px rgba(13, 98, 254, 0.55);
-  transform: translateY(-1px);
-}
-.btn-cobalt:active {
-  transform: scale(0.98);
-}
-
