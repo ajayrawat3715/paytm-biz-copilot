@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { BusinessMemoryDialog } from "@/components/BusinessMemoryDialog";
 import { EveningReconciliationModal } from "@/components/EveningReconciliationModal";
-import { HeaderFinancialGraph } from "@/components/HeaderFinancialGraph";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { PaytmLoyaltyModal } from "@/components/PaytmLoyaltyModal";
 import { VoiceToLedgerModal } from "@/components/VoiceToLedgerModal";
@@ -163,9 +162,6 @@ export function HeaderNav() {
             </span>
           </div>
         </div>
-
-        {/* Global Store Financial Pulse & Graph Bar */}
-        <HeaderFinancialGraph />
       </header>
 
       {/* Mobile Bottom Navigation Bar */}
