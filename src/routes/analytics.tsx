@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { HeaderNav } from "@/components/HeaderNav";
+import { PaytmApiBadge } from "@/components/PaytmApiBadge";
 import { useLanguage } from "@/lib/language-context";
 import {
   hourlyTrafficData,
@@ -58,13 +59,14 @@ function AnalyticsPage() {
         {/* Page Hero Header */}
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <span className="rounded-full bg-[#002e6e]/10 px-2.5 py-0.5 text-xs font-bold text-[#002e6e]">
                 Paytm Pulse 4.0
               </span>
               <span className="rounded-full bg-emerald/15 px-2.5 py-0.5 text-xs font-semibold text-emerald">
                 {isHindi ? "● लाइव डेटा सिंक" : "● Live Data Stream"}
               </span>
+              <PaytmApiBadge type="pulse" />
             </div>
             <h1 className="mt-1.5 font-display text-2xl font-bold text-ink sm:text-3xl">
               {t.pulseTitle}

@@ -12,6 +12,7 @@ import {
   TrendingDown,
   Users,
 } from "lucide-react";
+import { PaytmApiBadge } from "@/components/PaytmApiBadge";
 
 interface MorningBriefProps {
   collectedToday: number;
@@ -73,11 +74,14 @@ export function MorningBrief({
       <div className="mt-5 rounded-[20px] bg-paper p-5 ring-1 ring-line sm:p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="space-y-1">
-            <div className="flex items-center gap-2 text-rust">
-              <TrendingDown className="size-4" />
-              <span className="text-xs font-semibold uppercase tracking-wider">
-                {t.forecastTitle}
-              </span>
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="flex items-center gap-2 text-rust">
+                <TrendingDown className="size-4" />
+                <span className="text-xs font-semibold uppercase tracking-wider">
+                  {t.forecastTitle}
+                </span>
+              </div>
+              <PaytmApiBadge type="forecast" variant="compact" />
             </div>
             <p className="font-display text-xl font-semibold text-ink sm:text-2xl">
               {t.forecastText(currentDayName)}

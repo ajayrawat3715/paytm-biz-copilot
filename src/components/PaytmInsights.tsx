@@ -7,6 +7,7 @@ import {
   QrCode,
   Sparkles,
 } from "lucide-react";
+import { PaytmApiBadge } from "@/components/PaytmApiBadge";
 
 interface PaytmInsightsProps {
   onTriggerCampaign?: () => void;
@@ -48,14 +49,15 @@ export function PaytmInsights({ onTriggerCampaign }: PaytmInsightsProps) {
 
   return (
     <section className="mt-8 animate-settle">
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <div className="grid size-6 place-items-center rounded-md bg-[#002e6e] text-white">
             <QrCode className="size-3.5" />
           </div>
           <h2 className="font-display text-xl font-semibold text-ink">
             {t.paytmInsightsTitle}
           </h2>
+          <PaytmApiBadge type="upi_insights" />
         </div>
         <span className="inline-flex items-center gap-1 rounded-full bg-sand px-2.5 py-0.5 text-[11px] font-medium text-inksoft ring-1 ring-line">
           <Info className="size-3 text-rust" />

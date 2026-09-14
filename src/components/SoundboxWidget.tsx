@@ -13,6 +13,7 @@ import {
   VolumeX,
   Wifi,
 } from "lucide-react";
+import { PaytmApiBadge } from "@/components/PaytmApiBadge";
 
 export function SoundboxWidget() {
   const { isHindi } = useLanguage();
@@ -67,13 +68,14 @@ export function SoundboxWidget() {
           </div>
 
           <div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <span className="text-[10px] font-bold tracking-widest uppercase text-white/70">
                 Paytm Soundbox 4.0
               </span>
               <span className="rounded-full bg-white/20 px-2 py-0.2 text-[9px] font-semibold text-white">
                 AI Voice Synced
               </span>
+              <PaytmApiBadge type="soundbox" variant="dark" />
             </div>
             <p className="font-display text-sm font-semibold sm:text-base">
               {isHindi ? "पेटीएम साउंडबॉक्स वॉयस ब्रीफिंग" : "Paytm Soundbox Morning Briefing"}
