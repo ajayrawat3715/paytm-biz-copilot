@@ -16,12 +16,42 @@ interface DemoTourBarProps {
 }
 
 const STEPS = [
-  { id: "step-forecast", label: "1. Quiet Day (16% low)", hiLabel: "1. शांत दिन (16% कम)" },
-  { id: "step-radar", label: "2. Opportunity Radar (₹10.7k)", hiLabel: "2. अवसर रडार (₹10.7k)" },
-  { id: "step-whatif", label: "3. What-If: 10% vs 15%", hiLabel: "3. व्हाट-इफ (10% vs 15%)" },
-  { id: "step-autopilot", label: "4. Bharat Autopilot", hiLabel: "4. भारत ऑटोपायलट" },
-  { id: "step-memory", label: "5. Business Memory", hiLabel: "5. बिजनेस मेमोरी" },
-  { id: "step-paytm", label: "6. Paytm UPI Insights", hiLabel: "6. पेटीएम यूपीआई इनसाइट्स" },
+  {
+    id: "step-roi",
+    label: "1. Money Made (+₹18.4k)",
+    hiLabel: "1. कुल लाभ (+₹18.4k)",
+    duration: 12000,
+  },
+  {
+    id: "step-radar",
+    label: "2. Today's Radar (+₹10.7k)",
+    hiLabel: "2. आज के अवसर (+₹10.7k)",
+    duration: 12000,
+  },
+  {
+    id: "step-udhaar",
+    label: "3. Paytm UPI Udhaar Flow",
+    hiLabel: "3. यूपीआई उधार वसूली",
+    duration: 15000,
+  },
+  {
+    id: "step-whatif",
+    label: "4. What-If: 10% vs 15%",
+    hiLabel: "4. व्हाट-इफ सिमुलेटर",
+    duration: 14000,
+  },
+  {
+    id: "step-autopilot",
+    label: "5. Bharat Autopilot",
+    hiLabel: "5. भारत ऑटोपायलट",
+    duration: 14000,
+  },
+  {
+    id: "step-soundbox",
+    label: "6. Soundbox Voice Brief",
+    hiLabel: "6. साउंडबॉक्स वॉयस ब्रीफिंग",
+    duration: 13000,
+  },
 ];
 
 export function DemoTourBar({ onStepClick }: DemoTourBarProps) {
@@ -33,7 +63,8 @@ export function DemoTourBar({ onStepClick }: DemoTourBarProps) {
   useEffect(() => {
     if (!isAutoPitching) return;
 
-    onStepClick(STEPS[activeStepIndex].id);
+    const currentStep = STEPS[activeStepIndex];
+    onStepClick(currentStep.id);
 
     const timer = setTimeout(() => {
       if (activeStepIndex < STEPS.length - 1) {
@@ -42,7 +73,7 @@ export function DemoTourBar({ onStepClick }: DemoTourBarProps) {
         setIsAutoPitching(false);
         setActiveStepIndex(0);
       }
-    }, 7000); // 7 seconds per stage
+    }, currentStep.duration);
 
     return () => clearTimeout(timer);
   }, [isAutoPitching, activeStepIndex, onStepClick]);
@@ -56,8 +87,13 @@ export function DemoTourBar({ onStepClick }: DemoTourBarProps) {
     }
   };
 
+  const handleManualClick = (index: number) => {
+    setActiveStepIndex(index);
+    onStepClick(STEPS[index].id);
+  };
+
   return (
-    <div className="border-b border-line bg-cream/95 px-4 py-2 backdrop-blur">
+    <div className="border-b border-line bg-cream/95 px-4 py-2 backdrop-blur sticky top-0 z-40 shadow-xs">
       <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-2.5 text-xs">
         <div className="flex items-center gap-2">
           <span className="grid size-5 place-items-center rounded-full bg-rust text-cream">
@@ -66,8 +102,8 @@ export function DemoTourBar({ onStepClick }: DemoTourBarProps) {
           <span className="font-display font-semibold text-ink">
             {isHindi ? "पेटीएम एआई हैकथॉन" : "Paytm AI Hackathon"}
           </span>
-          <span className="hidden text-inksoft sm:inline">
-            · {isHindi ? "60–90 सेकंड डेमो" : "60–90s Demo"}
+          <span className="hidden text-inksoft sm:inline font-mono text-[11px]">
+            · 80s Auto-Pitch
           </span>
         </div>
 
@@ -87,42 +123,41 @@ export function DemoTourBar({ onStepClick }: DemoTourBarProps) {
               <>
                 <Pause className="size-3" />
                 <span>
-                  {isHindi ? `स्टेज ${activeStepIndex + 1}/6 (रोकें)` : `Step ${activeStepIndex + 1}/6 (Pause)`}
+                  {isHindi
+                    ? `स्टेज ${activeStepIndex + 1}/6 (रोकें)`
+                    : `Step ${activeStepIndex + 1}/6 (Pause)`}
                 </span>
               </>
             ) : (
               <>
                 <Zap className="size-3 text-amber-300" />
-                <span>{isHindi ? "⚡ ऑटो-पिच (60s)" : "⚡ Auto-Pitch (60s)"}</span>
+                <span>{isHindi ? "⚡ ऑटो-पिच (80s)" : "⚡ Auto-Pitch (80s)"}</span>
               </>
             )}
           </button>
         </div>
 
-        {/* Step chips */}
-        {!collapsed && (
-          <div className="hidden flex-wrap items-center gap-1 md:flex">
-            {STEPS.map((s, idx) => (
+        {/* Manual Step Navigation Pills */}
+        <div className="hidden flex-wrap items-center gap-1 md:flex">
+          {STEPS.map((step, idx) => {
+            const isActive = isAutoPitching && activeStepIndex === idx;
+            return (
               <button
-                key={s.id}
+                key={step.id}
                 type="button"
-                onClick={() => {
-                  setIsAutoPitching(false);
-                  setActiveStepIndex(idx);
-                  onStepClick(s.id);
-                }}
+                onClick={() => handleManualClick(idx)}
                 className={cn(
                   "rounded-full px-2.5 py-1 text-[11px] font-medium transition-all ring-1",
-                  isAutoPitching && activeStepIndex === idx
-                    ? "bg-rust text-cream ring-rust font-bold scale-105"
+                  isActive
+                    ? "bg-rust text-cream ring-rust font-bold scale-105 shadow-sm"
                     : "bg-paper text-ink ring-line hover:bg-sand",
                 )}
               >
-                {isHindi ? s.hiLabel : s.label}
+                {isHindi ? step.hiLabel : step.label}
               </button>
-            ))}
-          </div>
-        )}
+            );
+          })}
+        </div>
 
         <button
           type="button"
@@ -131,37 +166,39 @@ export function DemoTourBar({ onStepClick }: DemoTourBarProps) {
         >
           {collapsed ? (
             <>
-              {isHindi ? "चरण दिखाएं" : "Steps"} <ChevronDown className="size-3" />
+              <span>{isHindi ? "दिखाएं" : "Steps"}</span>
+              <ChevronDown className="size-3" />
             </>
           ) : (
             <>
-              {isHindi ? "छिपाएं" : "Hide"} <ChevronUp className="size-3" />
+              <span>{isHindi ? "छिपाएं" : "Hide"}</span>
+              <ChevronUp className="size-3" />
             </>
           )}
         </button>
       </div>
 
+      {/* Mobile Step Pills Strip */}
       {!collapsed && (
         <div className="mt-2 flex flex-wrap gap-1 md:hidden">
-          {STEPS.map((s, idx) => (
-            <button
-              key={s.id}
-              type="button"
-              onClick={() => {
-                setIsAutoPitching(false);
-                setActiveStepIndex(idx);
-                onStepClick(s.id);
-              }}
-              className={cn(
-                "rounded-full px-2 py-0.5 text-[10px] font-medium ring-1",
-                isAutoPitching && activeStepIndex === idx
-                  ? "bg-rust text-cream ring-rust font-bold"
-                  : "bg-paper text-ink ring-line",
-              )}
-            >
-              {isHindi ? s.hiLabel : s.label}
-            </button>
-          ))}
+          {STEPS.map((step, idx) => {
+            const isActive = isAutoPitching && activeStepIndex === idx;
+            return (
+              <button
+                key={step.id}
+                type="button"
+                onClick={() => handleManualClick(idx)}
+                className={cn(
+                  "rounded-full px-2 py-0.5 text-[10px] font-medium ring-1",
+                  isActive
+                    ? "bg-rust text-cream ring-rust font-bold"
+                    : "bg-paper text-ink ring-line",
+                )}
+              >
+                {isHindi ? step.hiLabel : step.label}
+              </button>
+            );
+          })}
         </div>
       )}
     </div>

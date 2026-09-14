@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   Popover,
   PopoverContent,
@@ -151,142 +151,158 @@ export function PaytmApiBadge({
 }: PaytmApiBadgeProps) {
   const { isHindi } = useLanguage();
   const [open, setOpen] = useState(false);
+  const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const meta = PAYTM_INTEGRATIONS[type];
 
-  const defaultLabel = label || (isHindi ? "पेटीएम एपीआई" : "How this uses Paytm");
+  const handleMouseEnter = () => {
+    if (hoverTimer.current) clearTimeout(hoverTimer.current);
+    setOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    hoverTimer.current = setTimeout(() => {
+      setOpen(false);
+    }, 200);
+  };
+
+  const defaultLabel =
+    label || (isHindi ? "पेटीएम एपीआई इंटीग्रेशन" : "How this uses Paytm");
 
   const triggerClasses =
     variant === "dark"
-      ? "inline-flex items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-0.5 text-[10px] sm:text-[11px] font-semibold text-white ring-1 ring-white/25 hover:bg-white/25 active:scale-95 transition-all shadow-xs"
-      : variant === "compact"
-      ? "inline-flex items-center gap-1 rounded-full bg-[#002e6e]/10 px-2 py-0.5 text-[10px] font-semibold text-[#002e6e] ring-1 ring-[#002e6e]/20 hover:bg-[#002e6e]/15 active:scale-95 transition-all"
-      : "inline-flex items-center gap-1.5 rounded-full bg-[#002e6e]/10 px-2.5 py-0.5 text-[11px] font-semibold text-[#002e6e] ring-1 ring-[#002e6e]/20 hover:bg-[#002e6e]/15 active:scale-95 transition-all shadow-xs";
+      ? "inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-xs font-bold text-white ring-1 ring-white/30 hover:bg-white/30 active:scale-95 transition-all shadow-sm cursor-pointer"
+      : "inline-flex items-center gap-1.5 rounded-full bg-[#002e6e]/10 px-3 py-1 text-xs font-bold text-[#002e6e] ring-1 ring-[#002e6e]/25 hover:bg-[#002e6e]/15 active:scale-95 transition-all shadow-xs cursor-pointer";
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <button
-          type="button"
-          aria-label="Paytm API Architecture Info"
-          className={cn(triggerClasses, className)}
+    <div
+      className="inline-block"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <button
+            type="button"
+            aria-label="Paytm API Architecture Info"
+            className={cn(triggerClasses, className)}
+          >
+            <div className="flex items-center gap-0.5 select-none font-sans font-black text-[11px] tracking-tight">
+              <span className={variant === "dark" ? "text-white" : "text-[#002e6e]"}>pay</span>
+              <span className={variant === "dark" ? "text-cyan-300" : "text-[#00b9f5]"}>tm</span>
+            </div>
+            <span className="opacity-40">|</span>
+            <span className="font-semibold text-[11px]">{defaultLabel}</span>
+            <span
+              className={cn(
+                "size-1.5 rounded-full animate-pulse",
+                variant === "dark" ? "bg-cyan-300" : "bg-[#00b9f5]",
+              )}
+            />
+          </button>
+        </PopoverTrigger>
+
+        <PopoverContent
+          align="start"
+          sideOffset={8}
+          className="z-50 w-[330px] sm:w-[410px] p-0 rounded-2xl bg-paper border border-line shadow-2xl overflow-hidden animate-in fade-in-0 zoom-in-95"
         >
-          <span
-            className={cn(
-              "size-1.5 rounded-full animate-pulse",
-              variant === "dark" ? "bg-emerald-400" : "bg-[#00b9f5]",
-            )}
-          />
-          <span className="font-semibold">{defaultLabel}</span>
-          <Info
-            className={cn(
-              "size-3 shrink-0",
-              variant === "dark" ? "text-white/80" : "text-[#002e6e]/80",
-            )}
-          />
-        </button>
-      </PopoverTrigger>
-
-      <PopoverContent
-        align="start"
-        sideOffset={8}
-        className="z-50 w-[330px] sm:w-[410px] p-0 rounded-2xl bg-paper border border-line shadow-2xl overflow-hidden animate-in fade-in-0 zoom-in-95"
-      >
-        {/* Header Strip with Paytm Brand Blue */}
-        <div className="bg-gradient-to-r from-[#002e6e] to-[#004299] p-4 text-white">
-          <div className="flex items-center justify-between gap-2">
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white ring-1 ring-white/20">
-              <ShieldCheck className="size-3 text-[#00b9f5]" />
-              Paytm Production Integration
+          {/* Header Strip with Paytm Brand Blue */}
+          <div className="bg-gradient-to-r from-[#002e6e] to-[#004299] p-4 text-white">
+            <div className="flex items-center justify-between gap-2">
+              <div className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white ring-1 ring-white/20">
+                <ShieldCheck className="size-3 text-[#00b9f5]" />
+                Paytm Production Integration
+              </div>
+              <span className="text-[10px] font-mono text-[#00b9f5]">
+                LIVE ARCHITECTURE
+              </span>
             </div>
-            <span className="text-[10px] font-mono text-[#00b9f5]">
-              LIVE ARCHITECTURE
-            </span>
-          </div>
 
-          <h4 className="mt-2 font-display text-base font-bold text-white leading-tight">
-            {isHindi ? meta.titleHi : meta.titleEn}
-          </h4>
-          <p className="mt-0.5 text-xs text-white/80 leading-snug">
-            {isHindi ? meta.taglineHi : meta.taglineEn}
-          </p>
-        </div>
-
-        {/* Content Body */}
-        <div className="p-4 space-y-3.5 bg-paper text-ink">
-          {/* Endpoints & Protocol Box */}
-          <div>
-            <div className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-inksoft">
-              <Code2 className="size-3 text-rust" />
-              <span>{isHindi ? "पेटीएम एपीआई एंडपॉइंट्स" : "Paytm Production APIs"}</span>
-            </div>
-            <div className="mt-1.5 space-y-1.5">
-              {meta.endpoints.map((ep) => (
-                <div
-                  key={ep.path}
-                  className="flex items-center gap-2 rounded-lg bg-cream/70 px-2.5 py-1.5 text-xs font-mono ring-1 ring-line/80"
-                >
-                  <span
-                    className={cn(
-                      "rounded px-1.5 py-0.5 text-[10px] font-bold uppercase",
-                      ep.method === "GET"
-                        ? "bg-emerald/15 text-emerald"
-                        : ep.method === "POST"
-                        ? "bg-rust/15 text-rust"
-                        : ep.method === "MQTT"
-                        ? "bg-[#002e6e]/15 text-[#002e6e]"
-                        : "bg-amber-500/15 text-amber-700",
-                    )}
-                  >
-                    {ep.method}
-                  </span>
-                  <span className="truncate text-ink font-medium">{ep.path}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Pipeline 3-step breakdown */}
-          <div>
-            <div className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-inksoft">
-              <Cpu className="size-3 text-[#002e6e]" />
-              <span>{isHindi ? "डेटा पाइपलाइन और कार्यप्रणाली" : "How It Works (Data Pipeline)"}</span>
-            </div>
-            <ul className="mt-1.5 space-y-1.5">
-              {(isHindi ? meta.pipelineHi : meta.pipelineEn).map((step, idx) => (
-                <li
-                  key={idx}
-                  className="flex items-start gap-2 text-xs text-ink/90 leading-relaxed"
-                >
-                  <span className="grid size-4 shrink-0 place-items-center rounded-full bg-emerald/15 text-[10px] font-bold text-emerald mt-0.5">
-                    ✓
-                  </span>
-                  <span>{step}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Ecosystem Value Card */}
-          <div className="rounded-xl bg-[#002e6e]/5 p-2.5 ring-1 ring-[#002e6e]/15">
-            <div className="flex items-center gap-1.5 text-xs font-bold text-[#002e6e]">
-              <Sparkles className="size-3 text-[#00b9f5]" />
-              <span>{isHindi ? "पेटीएम व मर्चेंट प्रभाव" : "Paytm Ecosystem Impact"}</span>
-            </div>
-            <p className="mt-1 text-[11px] text-inksoft leading-relaxed">
-              {isHindi ? meta.businessImpactHi : meta.businessImpactEn}
+            <h4 className="mt-2 font-display text-base font-bold text-white leading-tight">
+              {isHindi ? meta.titleHi : meta.titleEn}
+            </h4>
+            <p className="mt-0.5 text-xs text-white/80 leading-snug">
+              {isHindi ? meta.taglineHi : meta.taglineEn}
             </p>
           </div>
-        </div>
 
-        {/* Footer */}
-        <div className="border-t border-line bg-cream/40 px-4 py-2 flex items-center justify-between text-[11px] text-inksoft">
-          <span className="font-mono text-[10px]">{meta.apiTag}</span>
-          <span className="inline-flex items-center gap-1 font-semibold text-emerald">
-            <span className="size-1.5 rounded-full bg-emerald" />
-            Production Spec
-          </span>
-        </div>
-      </PopoverContent>
-    </Popover>
+          {/* Content Body */}
+          <div className="p-4 space-y-3.5 bg-paper text-ink">
+            {/* Endpoints & Protocol Box */}
+            <div>
+              <div className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-inksoft">
+                <Code2 className="size-3 text-rust" />
+                <span>{isHindi ? "पेटीएम एपीआई एंडपॉइंट्स" : "Paytm Production APIs"}</span>
+              </div>
+              <div className="mt-1.5 space-y-1.5">
+                {meta.endpoints.map((ep) => (
+                  <div
+                    key={ep.path}
+                    className="flex items-center gap-2 rounded-lg bg-cream/70 px-2.5 py-1.5 text-xs font-mono ring-1 ring-line/80"
+                  >
+                    <span
+                      className={cn(
+                        "rounded px-1.5 py-0.5 text-[10px] font-bold uppercase",
+                        ep.method === "GET"
+                          ? "bg-emerald/15 text-emerald"
+                          : ep.method === "POST"
+                          ? "bg-rust/15 text-rust"
+                          : ep.method === "MQTT"
+                          ? "bg-[#002e6e]/15 text-[#002e6e]"
+                          : "bg-amber-500/15 text-amber-700",
+                      )}
+                    >
+                      {ep.method}
+                    </span>
+                    <span className="truncate text-ink font-medium">{ep.path}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Pipeline 3-step breakdown */}
+            <div>
+              <div className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-inksoft">
+                <Cpu className="size-3 text-[#002e6e]" />
+                <span>{isHindi ? "डेटा पाइपलाइन और कार्यप्रणाली" : "How It Works (Data Pipeline)"}</span>
+              </div>
+              <ul className="mt-1.5 space-y-1.5">
+                {(isHindi ? meta.pipelineHi : meta.pipelineEn).map((step, idx) => (
+                  <li
+                    key={idx}
+                    className="flex items-start gap-2 text-xs text-ink/90 leading-relaxed"
+                  >
+                    <span className="grid size-4 shrink-0 place-items-center rounded-full bg-emerald/15 text-[10px] font-bold text-emerald mt-0.5">
+                      ✓
+                    </span>
+                    <span>{step}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Ecosystem Value Card */}
+            <div className="rounded-xl bg-[#002e6e]/5 p-2.5 ring-1 ring-[#002e6e]/15">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-[#002e6e]">
+                <Sparkles className="size-3 text-[#00b9f5]" />
+                <span>{isHindi ? "पेटीएम व मर्चेंट प्रभाव" : "Paytm Ecosystem Impact"}</span>
+              </div>
+              <p className="mt-1 text-[11px] text-inksoft leading-relaxed">
+                {isHindi ? meta.businessImpactHi : meta.businessImpactEn}
+              </p>
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="border-t border-line bg-cream/40 px-4 py-2 flex items-center justify-between text-[11px] text-inksoft">
+            <span className="font-mono text-[10px]">{meta.apiTag}</span>
+            <span className="inline-flex items-center gap-1 font-semibold text-emerald">
+              <span className="size-1.5 rounded-full bg-emerald" />
+              Production Spec
+            </span>
+          </div>
+        </PopoverContent>
+      </Popover>
+    </div>
   );
 }

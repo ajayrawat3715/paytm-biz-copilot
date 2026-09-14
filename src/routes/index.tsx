@@ -111,19 +111,30 @@ function Home() {
 
   const handleStepClick = (stepId: string) => {
     switch (stepId) {
-      case "step-forecast":
-        window.scrollTo({ top: 0, behavior: "smooth" });
+      case "step-roi":
+        document
+          .getElementById("merchant-roi-section")
+          ?.scrollIntoView({ behavior: "smooth", block: "center" });
         break;
       case "step-radar":
         document
           .getElementById("opportunity-radar-section")
-          ?.scrollIntoView({ behavior: "smooth" });
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+        break;
+      case "step-udhaar":
+        setUdhaarReminderOpen(true);
         break;
       case "step-whatif":
         setCampaignModalOpen(true);
         break;
       case "step-autopilot":
         setAutopilotModalOpen(true);
+        break;
+      case "step-soundbox":
+        window.scrollTo({ top: 380, behavior: "smooth" });
+        break;
+      case "step-forecast":
+        window.scrollTo({ top: 0, behavior: "smooth" });
         break;
       case "step-memory":
         setMemoryDialogOpen(true);
@@ -132,9 +143,6 @@ function Home() {
         document
           .getElementById("paytm-insights-section")
           ?.scrollIntoView({ behavior: "smooth" });
-        break;
-      case "step-udhaar":
-        setUdhaarReminderOpen(true);
         break;
       default:
         break;
@@ -156,7 +164,7 @@ function Home() {
       <HeaderNav />
 
       <div className="mx-auto flex min-h-screen max-w-[1180px] flex-col lg:flex-row">
-        <main className="flex-1 px-4 pb-32 pt-4 sm:px-7 lg:pb-12">
+        <main className="flex-1 px-3 sm:px-7 pb-32 pt-4 lg:pb-12">
           {/* Merchant Schemes & Current Offers Carousel Banner */}
           <MerchantOffersBanner />
 

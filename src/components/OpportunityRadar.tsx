@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import {
   AlertTriangle,
   ArrowRight,
+  CheckCircle2,
   HelpCircle,
   Package,
   Radar,
@@ -124,6 +125,34 @@ export function OpportunityRadar({
             : `${activeCount} Live Opportunities`}
         </span>
       </div>
+
+      {/* Empty State Banner when all opportunities resolved */}
+      {activeCount === 0 && (
+        <div className="mt-4 rounded-2xl bg-emerald/10 border border-emerald/25 p-5 text-center animate-settle">
+          <div className="mx-auto grid size-12 place-items-center rounded-2xl bg-emerald text-white shadow-sm">
+            <CheckCircle2 className="size-6" />
+          </div>
+          <h3 className="mt-3 font-display text-lg font-bold text-ink">
+            {isHindi ? "दुकान पूरी तरह व्यवस्थित है! ✨" : "All clear! Your store is running smoothly"}
+          </h3>
+          <p className="mt-1 text-xs text-inksoft max-w-md mx-auto">
+            {isHindi
+              ? "0 जरूरी जोखिम या स्टॉक की कमी। आपके सभी अवसर व प्राथमिकताएं सफलतापूर्वक निष्पादित हो चुकी हैं।"
+              : "0 urgent cash leaks or stock-outs detected right now. Store is running smoothly at 94% health score."}
+          </p>
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
+            <span className="inline-flex items-center gap-1 rounded-full bg-emerald/20 px-3 py-1 text-xs font-semibold text-emerald">
+              ✓ Campaign Active
+            </span>
+            <span className="inline-flex items-center gap-1 rounded-full bg-emerald/20 px-3 py-1 text-xs font-semibold text-emerald">
+              ✓ Parle Stock Safe
+            </span>
+            <span className="inline-flex items-center gap-1 rounded-full bg-emerald/20 px-3 py-1 text-xs font-semibold text-emerald">
+              ✓ Udhaar Cleared via Paytm
+            </span>
+          </div>
+        </div>
+      )}
 
       {/* 3 Opportunity Cards */}
       <div className="mt-4 grid grid-cols-1 gap-3.5 md:grid-cols-3">

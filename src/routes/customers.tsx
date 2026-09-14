@@ -220,7 +220,7 @@ function CustomersPage() {
 
         {/* Tab Filters & Search Bar */}
         <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex flex-wrap items-center rounded-2xl bg-paper p-1 ring-1 ring-line">
+          <div className="flex items-center overflow-x-auto max-w-full rounded-2xl bg-paper p-1 ring-1 ring-line no-scrollbar">
             <button
               type="button"
               onClick={() => setActiveTab("overdue")}

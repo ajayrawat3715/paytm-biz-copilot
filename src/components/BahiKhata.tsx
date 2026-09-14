@@ -122,7 +122,7 @@ export function BahiKhata({ khata }: { khata: Khata }) {
                 <button
                   type="button"
                   onClick={() => openLedger(entry)}
-                  className="flex w-full items-center justify-between gap-3 px-5 py-4 text-left hover:bg-cream"
+                  className="flex w-full items-center justify-between gap-2 sm:gap-3 px-3.5 sm:px-5 py-3.5 sm:py-4 text-left hover:bg-cream transition-colors"
                 >
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
