@@ -69,7 +69,8 @@ interface KiranaDataContextType {
   orderInventoryStock: (itemId: string, quantity?: number) => void;
   approveAutopilotActions: () => void;
   launchCampaign: (campaignId: string) => void;
-  sendCustomerReminder: (customerId: string) => void;
+  sendCustomerReminder: (customerId: string, optimisticCollect?: boolean) => void;
+  sendAllOverdueReminders: (optimisticCollect?: boolean) => { count: number; totalAmount: number };
   resetToDefault: () => void;
 }
 
@@ -234,14 +235,15 @@ export function KiranaDataProvider({ children }: { children: React.ReactNode }) 
         (e) =>
           e.id === customerIdOrName ||
           e.customer.toLowerCase() === customerIdOrName.toLowerCase() ||
-          e.customer.toLowerCase().includes(customerIdOrName.toLowerCase())
+          e.customer.toLowerCase().includes(customerIdOrName.toLowerCase()) ||
+          customerIdOrName.toLowerCase().includes(e.customer.toLowerCase())
       );
 
       if (idx >= 0) {
         const entry = prev[idx];
         matchedCustomerName = entry.customer;
         const newPayment: Repayment = {
-          id: `r-${Date.now()}`,
+          id: `r-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
           amount,
           date: today,
           mode,
@@ -249,8 +251,25 @@ export function KiranaDataProvider({ children }: { children: React.ReactNode }) 
         const copy = [...prev];
         copy[idx] = { ...entry, repayments: [...entry.repayments, newPayment] };
         return copy;
+      } else {
+        const newPayment: Repayment = {
+          id: `r-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+          amount,
+          date: today,
+          mode,
+        };
+        const newEntry: UdharEntry = {
+          id: `u-paytm-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+          customer: matchedCustomerName || customerIdOrName,
+          phone: "98350 00000",
+          items: "Paytm UPI Repayment",
+          amount,
+          soldOn: today,
+          dueOn: today,
+          repayments: [newPayment],
+        };
+        return [newEntry, ...prev];
       }
-      return prev;
     });
 
     setCustomers((prev) =>
@@ -258,6 +277,8 @@ export function KiranaDataProvider({ children }: { children: React.ReactNode }) 
         const matches =
           c.id === customerIdOrName ||
           c.name.toLowerCase() === customerIdOrName.toLowerCase() ||
+          c.name.toLowerCase().includes(customerIdOrName.toLowerCase()) ||
+          customerIdOrName.toLowerCase().includes(c.name.toLowerCase()) ||
           (matchedCustomerName && c.name.toLowerCase() === matchedCustomerName.toLowerCase());
 
         if (matches) {
@@ -266,7 +287,9 @@ export function KiranaDataProvider({ children }: { children: React.ReactNode }) 
             ...c,
             balance: newBalance,
             status: newBalance === 0 ? "regular" : c.status,
-            lastPurchase: `Repaid ₹${amount} (${today})`,
+            daysOverdue: newBalance === 0 ? 0 : c.daysOverdue,
+            lastPurchase: `Repaid ₹${amount} via Paytm UPI (${today})`,
+            reminded: true,
           };
         }
         return c;
@@ -358,10 +381,8 @@ export function KiranaDataProvider({ children }: { children: React.ReactNode }) 
     // 2. Activate 10% campaign
     setActiveCampaigns((prev) => ({ ...prev, "lapsed-10": true, "tuesday-flash": true }));
 
-    // 3. Mark all overdue customer reminders sent
-    setCustomers((prev) =>
-      prev.map((c) => (c.status === "overdue" ? { ...c, reminded: true } : c))
-    );
+    // 3. Collect overdue customer reminders via Paytm UPI
+    sendAllOverdueReminders(true);
 
     setAutopilotCompleted(true);
   };
@@ -371,11 +392,35 @@ export function KiranaDataProvider({ children }: { children: React.ReactNode }) 
     setActiveCampaigns((prev) => ({ ...prev, [campaignId]: true }));
   };
 
-  // Mark reminder sent for a customer
-  const sendCustomerReminder = (customerId: string) => {
-    setCustomers((prev) =>
-      prev.map((c) => (c.id === customerId ? { ...c, reminded: true } : c))
-    );
+  // Mark reminder sent for a customer with optional optimistic repayment
+  const sendCustomerReminder = (customerId: string, optimisticCollect: boolean = true) => {
+    const cust = customers.find((c) => c.id === customerId);
+    if (optimisticCollect && cust && cust.balance > 0) {
+      recordCustomerRepayment(customerId, cust.balance, "paytm_qr");
+    } else {
+      setCustomers((prev) =>
+        prev.map((c) => (c.id === customerId ? { ...c, reminded: true } : c))
+      );
+    }
+  };
+
+  // Bulk send reminders with optimistic UPI recovery
+  const sendAllOverdueReminders = (optimisticCollect: boolean = true) => {
+    const overdueCusts = customers.filter((c) => c.status === "overdue" && c.balance > 0);
+    const totalAmount = overdueCusts.reduce((sum, c) => sum + c.balance, 0);
+    const count = overdueCusts.length;
+
+    overdueCusts.forEach((c) => {
+      if (optimisticCollect) {
+        recordCustomerRepayment(c.id, c.balance, "paytm_qr");
+      } else {
+        setCustomers((prev) =>
+          prev.map((cust) => (cust.id === c.id ? { ...cust, reminded: true } : cust))
+        );
+      }
+    });
+
+    return { count, totalAmount };
   };
 
   // Reset to initial seed data
@@ -451,6 +496,7 @@ export function KiranaDataProvider({ children }: { children: React.ReactNode }) 
       approveAutopilotActions,
       launchCampaign,
       sendCustomerReminder,
+      sendAllOverdueReminders,
       resetToDefault,
     }),
     [customers, inventory, khataEntries, activeCampaigns, autopilotCompleted, totals],

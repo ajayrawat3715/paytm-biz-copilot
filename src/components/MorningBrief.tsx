@@ -1,10 +1,12 @@
 import { dailyCash, morningForecast, rupees } from "@/lib/khata";
+import { useKiranaData } from "@/lib/kirana-context";
 import { useLanguage } from "@/lib/language-context";
 import { translations } from "@/lib/translations";
 import { cn } from "@/lib/utils";
 import {
   AlertTriangle,
   ArrowRight,
+  CheckCircle2,
   Clock,
   Sparkles,
   TrendingDown,
@@ -28,6 +30,8 @@ export function MorningBrief({
 }: MorningBriefProps) {
   const { language, isHindi } = useLanguage();
   const t = translations[language];
+  const { totals } = useKiranaData();
+  const isUdhaarResolved = totals.overdueAmount === 0;
 
   const currentDayName = new Date().toLocaleDateString(
     isHindi ? "hi-IN" : "en-IN",
@@ -198,33 +202,90 @@ export function MorningBrief({
             </div>
 
             {/* Priority 3 */}
-            <div className="flex flex-col justify-between rounded-2xl bg-cream/60 p-4 ring-1 ring-line/80 transition-all hover:bg-cream">
+            <div
+              className={cn(
+                "flex flex-col justify-between rounded-2xl p-4 ring-1 transition-all",
+                isUdhaarResolved
+                  ? "bg-emerald/5 ring-emerald/30 hover:bg-emerald/10"
+                  : "bg-cream/60 ring-line/80 hover:bg-cream",
+              )}
+            >
               <div>
                 <div className="flex items-center justify-between gap-1">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-sand px-2 py-0.5 text-[11px] font-semibold text-inksoft">
-                    <Clock className="size-3" />
+                  <span
+                    className={cn(
+                      "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold",
+                      isUdhaarResolved
+                        ? "bg-emerald/15 text-emerald"
+                        : "bg-sand text-inksoft",
+                    )}
+                  >
+                    {isUdhaarResolved ? (
+                      <CheckCircle2 className="size-3 text-emerald" />
+                    ) : (
+                      <Clock className="size-3" />
+                    )}
                     {isHindi ? "प्राथमिकता 3" : "Priority 3"}
                   </span>
-                  <span className="text-[11px] font-medium text-ink">
-                    {isHindi ? "कैश रिकवर" : "Recover cash"}
+                  <span
+                    className={cn(
+                      "text-[11px] font-medium",
+                      isUdhaarResolved ? "text-emerald font-bold" : "text-ink",
+                    )}
+                  >
+                    {isUdhaarResolved
+                      ? isHindi
+                        ? "✓ वसूल हुआ (+₹2,800)"
+                        : "✓ Recovered (+₹2,800)"
+                      : isHindi
+                      ? "कैश रिकवर"
+                      : "Recover cash"}
                   </span>
                 </div>
                 <h3 className="mt-2 font-display text-[15px] font-semibold text-ink leading-snug">
-                  {t.p3Title}
+                  {isUdhaarResolved
+                    ? isHindi
+                      ? "उधार वसूली संपन्न"
+                      : "Overdue Udhaar Recovered"
+                    : t.p3Title}
                 </h3>
                 <p className="mt-1 text-xs text-inksoft leading-relaxed">
-                  {t.p3Desc}
+                  {isUdhaarResolved
+                    ? isHindi
+                      ? "पेटीएम यूपीआई लिंक द्वारा सभी पुराने खाते वसूल हो गए हैं।"
+                      : "All overdue balances cleared via Paytm UPI link."
+                    : t.p3Desc}
                 </p>
-                <p className="mt-1 text-xs font-medium text-ink">
-                  {t.p3Impact}
+                <p
+                  className={cn(
+                    "mt-1 text-xs font-medium",
+                    isUdhaarResolved ? "text-emerald font-semibold" : "text-ink",
+                  )}
+                >
+                  {isUdhaarResolved
+                    ? isHindi
+                      ? "काउंटर नकद में ₹2,800 जुड़ गया"
+                      : "₹2,800 added to counter cash"
+                    : t.p3Impact}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={onOpenUdhaar}
-                className="mt-3.5 inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-sand py-2 text-xs font-semibold text-ink ring-1 ring-line hover:bg-paper active:scale-[0.98]"
+                className={cn(
+                  "mt-3.5 inline-flex w-full items-center justify-center gap-1.5 rounded-xl py-2 text-xs font-semibold shadow-sm active:scale-[0.98] transition-all",
+                  isUdhaarResolved
+                    ? "bg-emerald text-white hover:bg-emerald/90"
+                    : "bg-sand text-ink ring-1 ring-line hover:bg-paper",
+                )}
               >
-                {t.p3Action}
+                <span>
+                  {isUdhaarResolved
+                    ? isHindi
+                      ? "खाता देखें"
+                      : "View Khata"
+                    : t.p3Action}
+                </span>
                 <ArrowRight className="size-3" />
               </button>
             </div>

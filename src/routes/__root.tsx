@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { LanguageProvider } from "../lib/language-context";
 import { ThemeProvider } from "../lib/theme-context";
 import { KiranaDataProvider } from "../lib/kirana-context";
+import { Toaster } from "../components/ui/sonner";
 
 function NotFoundComponent() {
   return (
@@ -138,6 +139,7 @@ function RootComponent() {
           <KiranaDataProvider>
             {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
             <Outlet />
+            <Toaster richColors position="top-right" />
           </KiranaDataProvider>
         </ThemeProvider>
       </LanguageProvider>
