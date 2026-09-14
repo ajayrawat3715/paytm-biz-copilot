@@ -155,9 +155,9 @@ export function HeaderNav() {
             <ThemeToggle />
 
             {/* Copilot Active Status */}
-            <span className="hidden xl:inline-flex items-center gap-1.5 rounded-full bg-paper px-3 py-1.5 text-xs font-medium text-inksoft ring-1 ring-line">
-              <span className="size-1.5 animate-tick rounded-full bg-emerald" />
-              {t.copilotOn}
+            <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-emerald/10 border border-emerald/30 px-2.5 py-1 text-xs font-bold text-emerald">
+              <span className="size-1.5 animate-pulse rounded-full bg-emerald" />
+              v2.4 Live
             </span>
 
             {/* Shop Owner Avatar */}
