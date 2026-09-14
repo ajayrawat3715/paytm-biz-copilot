@@ -8,6 +8,7 @@ import { BusinessHealth } from "@/components/BusinessHealth";
 import { BusinessMemoryDialog } from "@/components/BusinessMemoryDialog";
 import { CampaignSimulationModal } from "@/components/CampaignSimulationModal";
 import { CopilotChat } from "@/components/CopilotChat";
+import { CustomerReminderModal } from "@/components/CustomerReminderModal";
 import { DailyActionPlan } from "@/components/DailyActionPlan";
 import { DemoTourBar } from "@/components/DemoTourBar";
 import { HeaderNav } from "@/components/HeaderNav";
@@ -80,6 +81,12 @@ function Home() {
   const [memoryDialogOpen, setMemoryDialogOpen] = useState(false);
   const [explainContext, setExplainContext] = useState<string | null>(null);
 
+  // Dedicated Customer Reminder Modal for Inactive & Udhaar outreach
+  const [customerModalConfig, setCustomerModalConfig] = useState<{
+    open: boolean;
+    mode: "inactive" | "udhaar";
+  }>({ open: false, mode: "udhaar" });
+
   const shopContext = useMemo(() => {
     const lines = entries
       .map(
@@ -101,11 +108,11 @@ function Home() {
 
   const handleTriggerAction = (item: WorthDoingItem) => {
     if (item.actionType === "campaign") {
-      setCampaignModalOpen(true);
+      setCustomerModalConfig({ open: true, mode: "inactive" });
     } else if (item.actionType === "inventory") {
       setInventoryModalOpen(true);
     } else if (item.actionType === "udhaar") {
-      setUdhaarReminderOpen(true);
+      setCustomerModalConfig({ open: true, mode: "udhaar" });
     }
   };
 
@@ -122,7 +129,7 @@ function Home() {
           ?.scrollIntoView({ behavior: "smooth", block: "start" });
         break;
       case "step-udhaar":
-        setUdhaarReminderOpen(true);
+        setCustomerModalConfig({ open: true, mode: "udhaar" });
         break;
       case "step-whatif":
         setCampaignModalOpen(true);
@@ -150,9 +157,9 @@ function Home() {
   };
 
   const handleChatTrigger = (type: "campaign" | "inventory" | "udhaar") => {
-    if (type === "campaign") setCampaignModalOpen(true);
+    if (type === "campaign") setCustomerModalConfig({ open: true, mode: "inactive" });
     else if (type === "inventory") setInventoryModalOpen(true);
-    else if (type === "udhaar") setUdhaarReminderOpen(true);
+    else if (type === "udhaar") setCustomerModalConfig({ open: true, mode: "udhaar" });
   };
 
   return (
@@ -171,9 +178,9 @@ function Home() {
           {/* 1. Upgraded Morning Brief & Forecast */}
           <MorningBrief
             collectedToday={dailyCash.cashSales + totals.udharCollectedToday}
-            onOpenCampaign={() => setCampaignModalOpen(true)}
+            onOpenCampaign={() => setCustomerModalConfig({ open: true, mode: "inactive" })}
             onOpenInventory={() => setInventoryModalOpen(true)}
-            onOpenUdhaar={() => setUdhaarReminderOpen(true)}
+            onOpenUdhaar={() => setCustomerModalConfig({ open: true, mode: "udhaar" })}
             onReviewAll={() => setAutopilotModalOpen(true)}
           />
 
@@ -182,17 +189,17 @@ function Home() {
 
           {/* FEATURE 1: BHARAT OPPORTUNITY RADAR */}
           <OpportunityRadar
-            onOpenCampaign={() => setCampaignModalOpen(true)}
+            onOpenCampaign={() => setCustomerModalConfig({ open: true, mode: "inactive" })}
             onOpenInventory={() => setInventoryModalOpen(true)}
-            onOpenUdhaar={() => setUdhaarReminderOpen(true)}
+            onOpenUdhaar={() => setCustomerModalConfig({ open: true, mode: "udhaar" })}
             onExplain={(title) => setExplainContext(title)}
           />
 
           {/* FEATURE 2: TODAY'S ACTION PLAN */}
           <DailyActionPlan
-            onOpenCampaign={() => setCampaignModalOpen(true)}
+            onOpenCampaign={() => setCustomerModalConfig({ open: true, mode: "inactive" })}
             onOpenInventory={() => setInventoryModalOpen(true)}
-            onOpenUdhaar={() => setUdhaarReminderOpen(true)}
+            onOpenUdhaar={() => setCustomerModalConfig({ open: true, mode: "udhaar" })}
             onReviewAllActions={() => setAutopilotModalOpen(true)}
             onExplain={(title) => setExplainContext(title)}
           />
@@ -367,6 +374,22 @@ function Home() {
         onSuccessOrder={(summary) =>
           setDone((d) => ({ ...d, "inventory-card": summary }))
         }
+      />
+
+      {/* State-backed Customer Reminder & Reactivation Modal */}
+      <CustomerReminderModal
+        open={customerModalConfig.open}
+        mode={customerModalConfig.mode}
+        onOpenChange={(open) =>
+          setCustomerModalConfig((prev) => ({ ...prev, open }))
+        }
+        onSuccess={(summary) => {
+          if (customerModalConfig.mode === "inactive") {
+            setDone((d) => ({ ...d, "campaign-card": summary }));
+          } else {
+            setDone((d) => ({ ...d, "udhaar-card": summary }));
+          }
+        }}
       />
     </div>
   );
